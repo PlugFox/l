@@ -1,0 +1,18 @@
+name: l
+description: >
+  [L]ogger library
+version: 0.0.0-dev
+#author: Plague Fox <Plugfox@gmail.com>
+homepage: https://github.com/plugfox/
+
+#publish_to: 'none' 
+
+environment:
+  sdk: ">=2.6.0 <3.0.0"
+
+dependencies:
+  meta: '>=1.0.0 <2.0.0'
+
+dev_dependencies:
+
+dependency_overrides:
