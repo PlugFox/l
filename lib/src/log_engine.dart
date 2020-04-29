@@ -88,7 +88,7 @@ class _LEngine {
   int _currentLvl;
   static const int _defaultLvl =
       bool.fromEnvironment('dart.vm.product') ? 3 : 6;
-  bool _storeLogs;
+  bool _storeLogs = false;
 
   _LEngine() {
     _currentLvl = _defaultLvl;

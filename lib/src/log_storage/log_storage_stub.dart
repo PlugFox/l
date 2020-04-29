@@ -1,4 +1,3 @@
-// ignore_for_file: avoid_print
 import 'dart:async' show FutureOr;
 import '../log_message.dart';
 import 'log_storage_base.dart';
@@ -57,6 +56,7 @@ class LogStorageStub implements LogStorage {
 
   void _print(LogMessage logMessage) {
     final String _message = logMessage.toString();
+    // ignore: avoid_print
     print(_message);
   }
 

@@ -8,9 +8,8 @@ LogStorage getLogStorage() => LogStorageIO();
 
 /// I/O
 class LogStorageIO implements LogStorage {
-  final String _logPath = '${io.Directory.current.path}'
-      '${io.Platform.pathSeparator}l'
-      '${io.Platform.pathSeparator}';
+  String _logPath;
+  bool _writeAccess = false;
   io.Stdout _console;
   bool _isInit = false;
 
@@ -20,16 +19,33 @@ class LogStorageIO implements LogStorage {
   /// Init
   @override
   FutureOr<void> init() async {
-    if (_isInit) return null;
-    _console = io.stdout;
+    if (_isInit) return;
+    if (io.stdout.hasTerminal) {
+      _console = io.stdout;
+    }
+    _logPath = io.Directory.current.path;
+    if (!_logPath.endsWith(io.Platform.pathSeparator)) {
+      _logPath += io.Platform.pathSeparator;
+    }
+    _logPath += 'l${io.Platform.pathSeparator}';
+    try {
+      io.Directory(_logPath).createSync(recursive: false);
+      _writeAccess = true;
+      // ignore: unused_catch_clause
+    } on dynamic catch (error) {
+      _writeAccess = false;
+    }
     _isInit = true;
+    return;
   }
 
   /// Clear console
   @override
   FutureOr<void> clear() async {
     await init();
-    await _console.flush();
+    if (_console != null) {
+      await _console.flush();
+    }
   }
 
   /// Dispose
@@ -37,8 +53,10 @@ class LogStorageIO implements LogStorage {
   FutureOr<void> dispose() async {
     if (!_isInit) return null;
     _isInit = false;
-    await _console.close();
-    _console = null;
+    if (_console != null) {
+      await _console.close();
+      _console = null;
+    }
   }
 
   /// Write to store and console
@@ -60,12 +78,16 @@ class LogStorageIO implements LogStorage {
 
   void _print(LogMessage logMessage) {
     final String _message = logMessage.toString();
-    _console.writeln(_message);
-    //print(_message);
+    if (_console != null) {
+      _console.writeln(_message);
+    } else {
+      // ignore: avoid_print
+      print(_message);
+    }
   }
 
   FutureOr<void> _storeMessage(LogMessage logMessage) async {
-    if (!logMessage.store) return;
+    if (!_writeAccess || !logMessage.store) return;
     final String fileName = '${_logPath}logs_'
         '${logMessage.date.year.toString().padLeft(4, '0')}-'
         '${logMessage.date.month.toString().padLeft(2, '0')}-'
