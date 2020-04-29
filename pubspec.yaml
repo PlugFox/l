@@ -1,9 +1,10 @@
 name: l
 description: >
-  [L]ogger library
-version: 0.0.0-dev
+  Crossplatform html/io [L]ogger library with simple API.
+  Manipulate with native console and store logs in txt files and indexedDB.
+version: 0.0.1+1
 #author: Plague Fox <Plugfox@gmail.com>
-homepage: https://github.com/plugfox/
+homepage: https://github.com/plugfox/l
 
 #publish_to: 'none' 
 
@@ -14,5 +15,6 @@ dependencies:
   meta: '>=1.0.0 <2.0.0'
 
 dev_dependencies:
+  test: any
 
 dependency_overrides:

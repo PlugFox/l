@@ -1,6 +1,12 @@
-# 0.0.0-dev  
-##### 2020-04-27  
+# 0.0.1+1  
+##### 2020-04-29  
   
-Placeholder  
+Some cosmetic changes  
   
+  
+# 0.0.1  
+##### 2020-04-29  
+  
+Initial release with main functional  
+   
   

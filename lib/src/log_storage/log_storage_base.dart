@@ -3,17 +3,20 @@ import '../log_message.dart';
 
 typedef LogWriter = FutureOr<void> Function(LogMessage logMessage);
 
-///
+/// Log storage
 abstract class LogStorage {
-  ///
+  /// Constructor
   LogStorage._();
 
-  /// Инициализировать
-  void init();
+  /// Init object
+  FutureOr<void> init();
 
-  /// Уничтожить
+  /// Kill object
   FutureOr<void> dispose();
 
-  /// Запись в хранилище
+  /// Write log
   FutureOr<void> write(LogMessage logMessage);
+
+  /// Clear console
+  FutureOr<void> clear();
 }

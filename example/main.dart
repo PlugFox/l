@@ -1,17 +1,4 @@
-# [L]ogger  
-  
-  
-### About  
-Crossplatform html/io [L]ogger with simple API.  
-Manipulate with native console and store logs in txt files and indexedDB.  
-You can change verbose level and resume/pause log queue, also you can clear console.  
-  
-  
----
-  
-### Example:  
-  
-```dart
+// ignore_for_file: unnecessary_statements
 import 'package:l/l.dart';
 
 void main() {
@@ -35,6 +22,3 @@ void main() {
   l.clear(); // clear console
   l.close(); // kill logger
 }
-```  
-  
-  
