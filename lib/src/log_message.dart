@@ -1,29 +1,30 @@
 import 'package:meta/meta.dart';
 
 import 'log_level.dart';
+import 'log_level_map.dart' show levelsAllocation;
 
-/// Log Message
+/// Message for logging
 @immutable
 class LogMessage {
   /// Log date
   final DateTime date;
 
-  /// Message
+  /// Message data
   final Object message;
 
-  /// Log level
+  /// Verbose level
   final LogLevel level;
 
-  /// Display in console
+  /// Display in console?
   final bool print;
 
-  /// Store?
+  /// Store in txt/indexedDB?
   final bool store;
 
   /// Prefix from log level
   String get prefix => _prefixFromLogLevel();
 
-  /// Log Message constructor
+  /// Message for logging
   const LogMessage(
       {this.date,
       @required this.message,
@@ -37,6 +38,8 @@ class LogMessage {
 
   String _prefixFromLogLevel() {
     switch (level) {
+      case (LogLevel.shout):
+        return '!!!!!!';
       case (LogLevel.v):
         return '     *';
       case (LogLevel.vv):
@@ -65,7 +68,7 @@ class LogMessage {
   @override
   String toString() => '[$prefix] $message';
 
-  /// LogMessage to Map<String, dynamic>
+  /// Message for logging to Map<String, dynamic>
   Map<String, dynamic> toMap() => <String, dynamic>{
         'date': date.millisecondsSinceEpoch,
         'message': message?.toString(),

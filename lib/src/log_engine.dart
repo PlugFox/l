@@ -1,23 +1,60 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:math' as math;
 
 import 'package:meta/meta.dart' show mustCallSuper;
 
 import 'log_level.dart';
+import 'log_level_map.dart' show logLevelsAllocation;
 import 'log_message.dart';
 import 'log_storage.dart';
 
 /// [L]ogger
 ///
-/// Verbose levels:
-///  * Release:
-///    + 1 - v, e
-///    + 2 - vv, w
-///    + 3 - vvv, i
-///  * Debug:
-///    + 4 - vvvv, d
-///    + 5 - vvvvv
-///    + 6 - vvvvvv
+/// Cross-platform html/io Logger with simple API.
+/// No need to create an object. Just import and use.
+/// Simple and w/o boilerplate.
+/// Work with native console and can store logs in
+/// txt files (io) and indexedDB (web).
+/// You can change verbose level and resume/pause
+/// log queue, also you can clear console.
+///
+///
+/// Key features
+///
+/// | Method   | Description                          |
+/// |----------|--------------------------------------|
+/// | [s]      | A shout is always displayed          |
+/// | [v]      | Regular message with verbose level 1 |
+/// | [e]      | Error message with verbose level 1   |
+/// | [vv]     | Regular message with verbose level 2 |
+/// | [w]      | Warning message with verbose level 2 |
+/// | [vvv]    | Regular message with verbose level 3 |
+/// | [i]      | Inform message with verbose level 3  |
+/// | [vvvv]   | Regular message with verbose level 4 |
+/// | [d]      | Debug message with verbose level 4   |
+/// | [vvvvv]  | Regular message with verbose level 5 |
+/// | [vvvvvv] | Regular message with verbose level 6 |
+///
+///
+/// Setup and management
+///
+/// | Method      | Description                       |
+/// |-------------|-----------------------------------|
+/// | [lvl]       | Limiting output level             |
+/// | [store]     | Set to true to save logs (default |
+/// | [pause]     | Pause for message queue           |
+/// | [resume]    | Continued after a pause           |
+/// | [clear]     | Console cleaning                  |
+///
+///
+/// Integration capabilities
+///
+/// | Method      | Description                       |
+/// |-------------|-----------------------------------|
+/// | [stream]    | Broadcast stream receiving logs.  |
+/// | [mw]        | Middleware queue with functions   |
+///
 ///
 class L extends _LEngine {
   /// Factory singleton instance of [L]ogger
@@ -25,34 +62,38 @@ class L extends _LEngine {
   static final L _instance = L._internalSingleton();
   L._internalSingleton();
 
-  /// Verbose level 1
+  /// A shout is always displayed
+  void s(dynamic message) =>
+      super._l(message.toString().toUpperCase(), LogLevel.shout);
+
+  /// Regular message with verbose level 1
   void v(dynamic message) => super._l(message, LogLevel.v);
 
-  /// Verbose level 2
+  /// Regular message with verbose level 2
   void vv(dynamic message) => super._l(message, LogLevel.vv);
 
-  /// Verbose level 3
+  /// Regular message with verbose level 3
   void vvv(dynamic message) => super._l(message, LogLevel.vvv);
 
-  /// Verbose level 4
+  /// Regular message with verbose level 4
   void vvvv(dynamic message) => super._l(message, LogLevel.vvvv);
 
-  /// Verbose level 5
+  /// Regular message with verbose level 5
   void vvvvv(dynamic message) => super._l(message, LogLevel.vvvvv);
 
-  /// Verbose level 6
+  /// Regular message with verbose level 6
   void vvvvvv(dynamic message) => super._l(message, LogLevel.vvvvvv);
 
-  /// Info
+  /// Inform message with verbose level 3
   void i(dynamic message) => super._l(message, LogLevel.info);
 
-  /// Warning
+  /// Warning message with verbose level 2
   void w(dynamic message) => super._l(message, LogLevel.warning);
 
-  /// Error
+  /// Error message with verbose level 1
   void e(dynamic message) => super._l(message, LogLevel.error);
 
-  /// Debug
+  /// Debug message with verbose level 4
   void d(dynamic message) => super._l(message, LogLevel.debug);
 
   /// Decrement log level
@@ -61,11 +102,16 @@ class L extends _LEngine {
   /// Increment log level
   void operator +(int v) => lvl = (lvl + v);
 
-  /// Add info message
-  void operator <(Object verbose) => i(verbose);
+  /// ________________
+  /// Small easter egg
+  ///    ¯\_(ツ)_/¯
+  void operator ~() => s(r'¯\_(ツ)_/¯');
 
-  /// Add debug message
-  void operator <<(Object verbose) => d(verbose);
+  /// Add Inform message with verbose level 3
+  void operator <(Object info) => i(info);
+
+  /// Add Debug message with verbose level 4
+  void operator <<(Object debug) => d(debug);
 
   @override
   final int hashCode = 0;
@@ -88,34 +134,48 @@ class _LEngine {
   int _currentLvl;
   static const int _defaultLvl =
       bool.fromEnvironment('dart.vm.product') ? 3 : 6;
-  bool _storeLogs = false;
+  bool _store;
 
   _LEngine() {
+    _store = false;
     _currentLvl = _defaultLvl;
     _startLogIterator();
   }
 
+  /// Broadcast stream instantly receiving logs.
+  final Stream<LogMessage> stream = _queue.stream;
+
+  /// Middleware queue with functions
+  final Queue<Future<void> Function(LogMessage)> mw =
+      Queue<Future<void> Function(LogMessage)>();
+
+  /// Limiting output level
+  /// (default 3 in release, 6 in debug)
   /// Set new log level in range 0..6
   set lvl(int newLevel) => _setCurrentLvl(newLevel);
 
+  /// Limiting output level
+  /// (default 3 in release, 6 in debug)
   /// Get current log level in range 0..6
   int get lvl => _getCurrentLvl();
 
-  /// Store logs?
-  bool get storeLogs => _storeLogs;
+  /// Set to true to save logs
+  /// (default is false)
+  bool get store => _store;
 
-  /// Set bool store logs
-  set storeLogs(bool v) => _storeLogs = (v ?? true);
+  /// Set to true to save logs
+  /// (default is false)
+  set store(bool v) => _store = (v ?? true);
 
-  /// Resume [L]ogger
+  /// Continued after a pause
   @mustCallSuper
   void resume() => _subscription?.resume();
 
-  /// Pause [L]ogger
+  /// Pause for message queue
   @mustCallSuper
   void pause() => _subscription?.pause();
 
-  /// Clear [L]ogger console
+  /// Console cleaning (if a terminal is connected)
   FutureOr<void> clear() => _logStorage?.clear();
 
   /// Close [L]ogger
@@ -159,12 +219,24 @@ class _LEngine {
         StreamController<void>(sync: true) as SynchronousStreamController<void>;
     Future.doWhile(() => iterator.moveNext().then<bool>((bool hasNext) =>
         hasNext
-            ? Future<void>.value(writer(iterator.current))
+            ? _doTask(iterator.current, writer)
                 .then<void>(_resultSC.sink.add)
                 .then<bool>((void _) => true)
             : _resultSC?.close()?.then<bool>((void _) => false) ??
                 Future<bool>.value(false)));
     return _resultSC.stream;
+  }
+
+  Future<void> _doTask(LogMessage logMessage, LogWriter writer) async {
+    Iterator<Future<void> Function(LogMessage)> iter = mw.iterator;
+    Future<void> mws = Future.doWhile(() async {
+      if (!iter.moveNext()) return false;
+      if (iter.current == null) return true;
+      await iter.current(logMessage);
+      return true;
+    });
+    await writer(logMessage);
+    await mws;
   }
 
   /// Add log to queue
@@ -182,7 +254,7 @@ class _LEngine {
           message: message,
           level: prefix,
           displayInConsole: displayInConsole,
-          store: _storeLogs));
+          store: _store));
       // ignore: unused_catch_stack
     } on dynamic catch (error, stackTrace) {
       bool releaseMode = true;

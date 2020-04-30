@@ -61,6 +61,9 @@ class LogStorageHTML implements LogStorage {
   void _print(LogMessage logMessage) {
     final String _message = logMessage.toString();
     switch (logMessage.level) {
+      case (LogLevel.shout):
+        _console.warn(_message);
+        break;
       case (LogLevel.v):
         _console.log(_message);
         break;
