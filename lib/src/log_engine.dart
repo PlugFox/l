@@ -41,8 +41,9 @@ import 'log_storage.dart';
 ///
 /// | Method      | Description                       |
 /// |-------------|-----------------------------------|
-/// | [lvl]       | Limiting output level             |
-/// | [store]     | Set to true to save logs (default |
+/// | [lvl]       | Limiting output level (r: 3, d: 6)|
+/// | [store]     | Set to true to save logs (false)  |
+/// | [wide]      | Display wide prefix entry (false) |
 /// | [pause]     | Pause for message queue           |
 /// | [resume]    | Continued after a pause           |
 /// | [clear]     | Console cleaning                  |
@@ -64,37 +65,37 @@ class L extends _LEngine {
 
   /// A shout is always displayed
   void s(dynamic message) =>
-      super._l(message.toString().toUpperCase(), LogLevel.shout);
+      super.log(message.toString().toUpperCase(), LogLevel.shout);
 
   /// Regular message with verbose level 1
-  void v(dynamic message) => super._l(message, LogLevel.v);
+  void v(dynamic message) => super.log(message, LogLevel.v);
 
   /// Regular message with verbose level 2
-  void vv(dynamic message) => super._l(message, LogLevel.vv);
+  void vv(dynamic message) => super.log(message, LogLevel.vv);
 
   /// Regular message with verbose level 3
-  void vvv(dynamic message) => super._l(message, LogLevel.vvv);
+  void vvv(dynamic message) => super.log(message, LogLevel.vvv);
 
   /// Regular message with verbose level 4
-  void vvvv(dynamic message) => super._l(message, LogLevel.vvvv);
+  void vvvv(dynamic message) => super.log(message, LogLevel.vvvv);
 
   /// Regular message with verbose level 5
-  void vvvvv(dynamic message) => super._l(message, LogLevel.vvvvv);
+  void vvvvv(dynamic message) => super.log(message, LogLevel.vvvvv);
 
   /// Regular message with verbose level 6
-  void vvvvvv(dynamic message) => super._l(message, LogLevel.vvvvvv);
+  void vvvvvv(dynamic message) => super.log(message, LogLevel.vvvvvv);
 
   /// Inform message with verbose level 3
-  void i(dynamic message) => super._l(message, LogLevel.info);
+  void i(dynamic message) => super.log(message, LogLevel.info);
 
   /// Warning message with verbose level 2
-  void w(dynamic message) => super._l(message, LogLevel.warning);
+  void w(dynamic message) => super.log(message, LogLevel.warning);
 
   /// Error message with verbose level 1
-  void e(dynamic message) => super._l(message, LogLevel.error);
+  void e(dynamic message) => super.log(message, LogLevel.error);
 
   /// Debug message with verbose level 4
-  void d(dynamic message) => super._l(message, LogLevel.debug);
+  void d(dynamic message) => super.log(message, LogLevel.debug);
 
   /// Decrement log level
   void operator -(int v) => lvl = (lvl - v);
@@ -135,6 +136,14 @@ class _LEngine {
   static const int _defaultLvl =
       bool.fromEnvironment('dart.vm.product') ? 3 : 6;
   bool _store;
+
+  bool _wide = false;
+
+  /// Display wide prefix entry
+  bool get wide => _wide ?? false;
+
+  /// Display wide prefix entry
+  set wide(bool v) => _wide = (v ?? false);
 
   _LEngine() {
     _store = false;
@@ -240,7 +249,7 @@ class _LEngine {
   }
 
   /// Add log to queue
-  void _l(Object message, LogLevel prefix) {
+  void log(Object message, LogLevel prefix) {
     try {
       bool displayInConsole;
       if (!(_logLevelsAllocation[_currentLvl]?.contains(prefix) ?? false)) {
@@ -254,7 +263,8 @@ class _LEngine {
           message: message,
           level: prefix,
           displayInConsole: displayInConsole,
-          store: _store));
+          store: _store,
+          wide: _wide));
       // ignore: unused_catch_stack
     } on dynamic catch (error, stackTrace) {
       bool releaseMode = true;

@@ -30,8 +30,9 @@
 ///
 /// | Method      | Description                       |
 /// |-------------|-----------------------------------|
-/// | [lvl]       | Limiting output level             |
-/// | [store]     | Set to true to save logs (default |
+/// | [lvl]       | Limiting output level (r: 3, d: 6)|
+/// | [store]     | Set to true to save logs (false)  |
+/// | [wide]      | Display wide prefix entry (false) |
 /// | [pause]     | Pause for message queue           |
 /// | [resume]    | Continued after a pause           |
 /// | [clear]     | Console cleaning                  |
@@ -90,8 +91,9 @@ export 'src/log_message.dart';
 ///
 /// | Method      | Description                       |
 /// |-------------|-----------------------------------|
-/// | [lvl]       | Limiting output level             |
-/// | [store]     | Set to true to save logs (default |
+/// | [lvl]       | Limiting output level (r: 3, d: 6)|
+/// | [store]     | Set to true to save logs (false)  |
+/// | [wide]      | Display wide prefix entry (false) |
 /// | [pause]     | Pause for message queue           |
 /// | [resume]    | Continued after a pause           |
 /// | [clear]     | Console cleaning                  |

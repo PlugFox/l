@@ -17,7 +17,8 @@ void main() {
   ]);
 
   l.lvl = 4; // set verbose level
-  l.store = true; // store logs
+  l.store = false; // don't store logs
+  l.wide = true; // print l.vvv as [   ***]
   l.s('shout me');
   l.e('error msg');
   l.w('warning msg');

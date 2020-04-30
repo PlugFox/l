@@ -54,6 +54,7 @@ l.vvvvvv('verbose lvl #6');
 |---------------|----------------------------------------------------------|
 | **lvl**       | Limiting output level (default 3 in release, 6 in debug) |
 | **store**     | Set to true to save logs (default is false)              |
+| **wide**      | Display wide prefix entry (default is false)             |
 | **pause**     | Pause for message queue                                  |
 | **resume**    | Continued after a pause                                  |
 | **clear**     | Console cleaning (if a terminal is connected)            |
@@ -61,6 +62,7 @@ l.vvvvvv('verbose lvl #6');
 ```dart
 l.lvl = 4;
 l.store = true;
+l.wide = false;
 l.pause();
 l.resume();
 l.clear();

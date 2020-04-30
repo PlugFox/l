@@ -21,6 +21,9 @@ class LogMessage {
   /// Store in txt/indexedDB?
   final bool store;
 
+  /// Display wide prefix entry
+  final bool _wide;
+
   /// Prefix from log level
   String get prefix => _prefixFromLogLevel();
 
@@ -30,38 +33,40 @@ class LogMessage {
       @required this.message,
       LogLevel level,
       bool displayInConsole,
-      bool store})
+      bool store,
+      bool wide})
       : assert(date is DateTime && message != null),
         level = level ?? LogLevel.vvvvvv,
         print = displayInConsole ?? true,
-        store = store ?? true;
+        store = store ?? true,
+        _wide = wide ?? false;
 
   String _prefixFromLogLevel() {
     switch (level) {
       case (LogLevel.shout):
-        return '!!!!!!';
+        return _wide ? '!!!!!!' : '!';
       case (LogLevel.v):
-        return '     *';
+        return _wide ? '     *' : '1';
       case (LogLevel.vv):
-        return '    **';
+        return _wide ? '    **' : '2';
       case (LogLevel.vvv):
-        return '   ***';
+        return _wide ? '   ***' : '3';
       case (LogLevel.vvvv):
-        return '  ****';
+        return _wide ? '  ****' : '4';
       case (LogLevel.vvvvv):
-        return ' *****';
+        return _wide ? ' *****' : '5';
       case (LogLevel.vvvvvv):
-        return '******';
+        return _wide ? '******' : '6';
       case (LogLevel.info):
-        return '     i';
+        return _wide ? '     i' : 'i';
       case (LogLevel.warning):
-        return '     w';
+        return _wide ? '     W' : 'W';
       case (LogLevel.error):
-        return '     e';
+        return _wide ? '     E' : 'E';
       case (LogLevel.debug):
-        return '     d';
+        return _wide ? '     d' : 'd';
       default:
-        return '      ';
+        return _wide ? '      ' : ' ';
     }
   }
 

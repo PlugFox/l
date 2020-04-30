@@ -1,3 +1,9 @@
+# 1.0.0  
+##### 2020-04-30  
+  
+Add [wide] for display wide prefix entry  
+  
+  
 # 0.9.0  
 ##### 2020-04-30  
   
