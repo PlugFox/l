@@ -2,7 +2,7 @@ name: l
 description: >
   Crossplatform html/io [L]ogger library with simple API.
   Manipulate with native console and store logs in txt files and indexedDB.
-version: 1.0.0
+version: 1.0.1
 #author: Plague Fox <Plugfox@gmail.com>
 homepage: https://github.com/plugfox/l
 

@@ -58,13 +58,13 @@ class LogMessage {
       case (LogLevel.vvvvvv):
         return _wide ? '******' : '6';
       case (LogLevel.info):
-        return _wide ? '     i' : 'i';
+        return _wide ? '     I' : 'I';
       case (LogLevel.warning):
         return _wide ? '     W' : 'W';
       case (LogLevel.error):
         return _wide ? '     E' : 'E';
       case (LogLevel.debug):
-        return _wide ? '     d' : 'd';
+        return _wide ? '     D' : 'D';
       default:
         return _wide ? '      ' : ' ';
     }
