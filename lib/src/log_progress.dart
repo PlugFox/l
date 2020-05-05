@@ -31,8 +31,7 @@ abstract class Progress {
   }
 
   /// Reset progress bar
-  static void discard() =>
-    _printer.discard();
+  static void discard() => _printer.discard();
 
   static String _buildHeader(String header, int width) {
     if (header is! String) return null;

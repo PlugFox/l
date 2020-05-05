@@ -205,7 +205,7 @@ class _LEngine {
   /// Pause for message queue
   @mustCallSuper
   void pause() {
-    if(isPaused) return;
+    if (isPaused) return;
     _subscription?.pause();
   }
 

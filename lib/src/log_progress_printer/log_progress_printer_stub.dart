@@ -13,11 +13,11 @@ class ProgressPrinter implements ProgressPrinterBase {
 
   @override
   bool get supportsAnsiEscapes => false;
-  
+
   @override
   void discard() => null;
-  
+
   @override
   void printLines(String header, String content, String footer, int width) =>
-    null;
+      null;
 }
