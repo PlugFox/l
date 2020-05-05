@@ -4,7 +4,7 @@
   
 ### About  
 Cross-platform html/io `[L]`ogger with simple API.  
-No need to create an object. Just import and use. Simple and w/o boilerplate.  
+No need to create an logger object. Just import and use. Simple and w/o boilerplate.  
 Work with native console and can store logs in txt files (io) and indexedDB (web).  
 You can change verbose level and resume/pause log queue, also you can clear console.  
   
@@ -72,6 +72,9 @@ l.clear();
 
 ##### Progress  
   
+Only works in io environments with a connected terminal.  
+If it is impossible to output - ignored.  
+Pauses the output of the remaining logs, do not forget to use the "resume".  
 | Method         | Description                          |
 |----------------|--------------------------------------|
 | **p**          | Displays a progress bar              |
@@ -83,17 +86,17 @@ Stream<int>.fromIterable(List<int>.generate(101, (int v) => v))
         Future<int>.delayed(const Duration(milliseconds: 25), () => v))
     .forEach((int v) => l.p(
         percent: v,
-        header: '{{ HEADER #$v }}',
-        footer: '{{ footer #$v }}',
-        data: '{{ data $v% }}'))
+        header: '{{ HEADER $v }}',
+        data: '{{ data $v% }}',
+        footer: '{{ footer $v }}',))
       ..whenComplete(l.resume); // Must use 'resume'
 ```  
 
 Output:
 ```
-                {{ HEADER #21 }}
+                {{ HEADER 21 }}
 [========>       {{ data 21% }}                ]
-                                {{ footer #21 }}
+                                {{ footer 21 }}
 ```
   
   
@@ -109,6 +112,7 @@ l.stream.forEach((LogMessage log) => print('* ${log.level}'));
 
 // Middleware queue, functions are called 
 // at the time of log processing
+// and block further until complete execution
 l.mw.addAll(<Future<void> Function(LogMessage)>[
   (LogMessage log) async {print('# ${log.date}');},
   (LogMessage log) async {print('# ${log.message}');},
@@ -124,5 +128,17 @@ l.mw.addAll(<Future<void> Function(LogMessage)>[
 * When it is not possible to get write access to the working directory, the logs are not saved.  
 * Do not log sensitive information.  
   
-    
+
+---
+  
+### License  
+  
+[MIT](https://github.com/PlugFox/l/blob/master/LICENSE)  
+   
+  
+---
+  
+### Tags  
+  
+logger, log, logs, logging, logging-library, cross-platform, io, html  
   

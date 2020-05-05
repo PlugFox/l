@@ -38,6 +38,7 @@ linter:
     omit_local_variable_types: false # I really like type annotation
 
     # true
+    avoid_init_to_null: true
     lines_longer_than_80_chars: true # I have two eyes
     public_member_api_docs: true # Only for package
     always_specify_types: true

@@ -1,12 +1,18 @@
-# 1.1.0+1  
-##### 2020-05-05+1  
+# 1.1.0+2  
+##### 2020-05-05  
 
+Upd readme  
+  
+  
+# 1.1.0+1  
+##### 2020-05-05  
+  
 dartfmt    
   
 
 # 1.1.0  
 ##### 2020-05-05  
-
+  
 Add progress as p method  
 Colorize output if supported  
   
