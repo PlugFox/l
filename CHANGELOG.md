@@ -1,3 +1,10 @@
+# 1.1.0  
+##### 2020-05-05  
+
+Add progress as p method  
+Colorize output if supported  
+  
+  
 # 1.0.1  
 ##### 2020-04-01  
   

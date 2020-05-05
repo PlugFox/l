@@ -7,6 +7,7 @@ import 'package:meta/meta.dart' show mustCallSuper;
 import 'log_level.dart';
 import 'log_level_map.dart' show logLevelsAllocation;
 import 'log_message.dart';
+import 'log_progress.dart';
 import 'log_storage.dart';
 
 /// [L]ogger
@@ -97,6 +98,23 @@ class L extends _LEngine {
   /// Debug message with verbose level 4
   void d(dynamic message) => super.log(message, LogLevel.debug);
 
+  /// Progress bar
+  ///
+  /// percent is int in range 0..100
+  ///
+  /// ```
+  ///       {{header}}
+  /// [======{{data}}=>   ]
+  ///              {{footer}}
+  /// ```
+  ///
+  /// !!! Use [l.resume()] after complete !!!
+  void p({String header, String data, String footer, int percent = 0}) {
+    pause();
+    Progress.update(
+        header: header, data: data, footer: footer, percent: percent);
+  }
+
   /// Decrement log level
   void operator -(int v) => lvl = (lvl - v);
 
@@ -105,8 +123,8 @@ class L extends _LEngine {
 
   /// ________________
   /// Small easter egg
-  ///    ¯\_(ツ)_/¯
-  void operator ~() => s(r'¯\_(ツ)_/¯');
+  ///  ¯\_(o . O,)_/¯
+  void operator ~() => s(r'¯\_(@ . @,)_/¯');
 
   /// Add Inform message with verbose level 3
   void operator <(Object info) => i(info);
@@ -178,11 +196,21 @@ class _LEngine {
 
   /// Continued after a pause
   @mustCallSuper
-  void resume() => _subscription?.resume();
+  void resume() {
+    if (!isPaused) return;
+    _subscription?.resume();
+    Progress.discard();
+  }
 
   /// Pause for message queue
   @mustCallSuper
-  void pause() => _subscription?.pause();
+  void pause() {
+    if(isPaused) return;
+    _subscription?.pause();
+  }
+
+  /// Message queie is paused?
+  bool get isPaused => _subscription?.isPaused;
 
   /// Console cleaning (if a terminal is connected)
   FutureOr<void> clear() => _logStorage?.clear();
@@ -191,6 +219,8 @@ class _LEngine {
   /// Caution, this is permanent!
   @mustCallSuper
   Future<void> close() async {
+    pause();
+    Progress.discard();
     await _queue.close();
     await _queue.stream.last.catchError((Object _) => null);
     await _subscription?.cancel();
@@ -246,6 +276,7 @@ class _LEngine {
     });
     await writer(logMessage);
     await mws;
+    return;
   }
 
   /// Add log to queue
@@ -281,3 +312,5 @@ class _LEngine {
   int _getCurrentLvl() =>
       math.min(math.max(_currentLvl is int ? _currentLvl : _defaultLvl, 0), 6);
 }
+
+/// TODO: добавить прогресс бар из future

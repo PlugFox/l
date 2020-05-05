@@ -9,6 +9,7 @@ Work with native console and can store logs in txt files (io) and indexedDB (web
 You can change verbose level and resume/pause log queue, also you can clear console.  
   
   
+![](https://github.com/PlugFox/l/raw/master/.img/l.gif)  
   
 ---
   
@@ -67,6 +68,33 @@ l.pause();
 l.resume();
 l.clear();
 ```  
+  
+
+##### Progress  
+  
+| Method         | Description                          |
+|----------------|--------------------------------------|
+| **p**          | Displays a progress bar              |
+| **resume**     | Continued after progress finished    |
+  
+```dart
+Stream<int>.fromIterable(List<int>.generate(101, (int v) => v))
+    .asyncMap<int>((int v) =>
+        Future<int>.delayed(const Duration(milliseconds: 25), () => v))
+    .forEach((int v) => l.p(
+        percent: v,
+        header: '{{ HEADER #$v }}',
+        footer: '{{ footer #$v }}',
+        data: '{{ data $v% }}'))
+      ..whenComplete(l.resume); // Must use 'resume'
+```  
+
+Output:
+```
+                {{ HEADER #21 }}
+[========>       {{ data 21% }}                ]
+                                {{ footer #21 }}
+```
   
   
 ##### Integration capabilities  

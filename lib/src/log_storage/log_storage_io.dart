@@ -1,5 +1,7 @@
 import 'dart:async' show FutureOr;
 import 'dart:io' as io;
+
+import '../log_level.dart';
 import '../log_message.dart';
 import 'log_storage_base.dart';
 
@@ -9,9 +11,11 @@ LogStorage getLogStorage() => LogStorageIO();
 /// I/O
 class LogStorageIO implements LogStorage {
   String _logPath;
-  bool _writeAccess = false;
-  io.Stdout _console;
+  bool _writeAccess;
+  bool _hasTerminal = false;
+  io.Stdout get _console => io.stdout;
   bool _isInit = false;
+  bool _ansi = false;
 
   /// Init
   LogStorageIO();
@@ -20,21 +24,15 @@ class LogStorageIO implements LogStorage {
   @override
   FutureOr<void> init() async {
     if (_isInit) return;
-    if (io.stdout.hasTerminal) {
-      _console = io.stdout;
+    _hasTerminal = io.stdout.hasTerminal;
+    if (_hasTerminal) {
+      _ansi = _console.supportsAnsiEscapes;
     }
     _logPath = io.Directory.current.path;
     if (!_logPath.endsWith(io.Platform.pathSeparator)) {
       _logPath += io.Platform.pathSeparator;
     }
     _logPath += 'l${io.Platform.pathSeparator}';
-    try {
-      io.Directory(_logPath).createSync(recursive: false);
-      _writeAccess = true;
-      // ignore: unused_catch_clause
-    } on dynamic catch (error) {
-      _writeAccess = false;
-    }
     _isInit = true;
     return;
   }
@@ -53,10 +51,12 @@ class LogStorageIO implements LogStorage {
   FutureOr<void> dispose() async {
     if (!_isInit) return null;
     _isInit = false;
+    /*
     if (_console != null) {
       await _console.close();
       _console = null;
     }
+    */
   }
 
   /// Write to store and console
@@ -79,7 +79,7 @@ class LogStorageIO implements LogStorage {
   void _print(LogMessage logMessage) {
     final String _message = logMessage.toString();
     if (_console != null) {
-      _console.writeln(_message);
+      _console.writeln(_formatMessage(_message, logMessage.level));
     } else {
       // ignore: avoid_print
       print(_message);
@@ -87,7 +87,7 @@ class LogStorageIO implements LogStorage {
   }
 
   FutureOr<void> _storeMessage(LogMessage logMessage) async {
-    if (!_writeAccess || !logMessage.store) return;
+    if (!logMessage.store || !_hasWriteAccess()) return;
     final String fileName = '${_logPath}logs_'
         '${logMessage.date.year.toString().padLeft(4, '0')}-'
         '${logMessage.date.month.toString().padLeft(2, '0')}-'
@@ -96,12 +96,105 @@ class LogStorageIO implements LogStorage {
     io.File file = io.File(fileName);
     if (!file.existsSync()) {
       file = await file.create(recursive: true);
-      await file.writeAsString('    UNIX TIME  ______  LOGS',
-          mode: io.FileMode.writeOnlyAppend);
+      //await file.writeAsString('    UNIX TIME  ______  LOGS',
+      //    mode: io.FileMode.writeOnlyAppend);
     }
     return file.writeAsString(
         '\r\n${logMessage.date.millisecondsSinceEpoch} '
         '${logMessage.toString()}',
         mode: io.FileMode.writeOnlyAppend);
   }
+
+  String _formatMessage(String message, LogLevel lvl) {
+    if (!_ansi) return message;
+    switch (lvl) {
+      case (LogLevel.shout):
+        return _addFgBgDc(message, dc: 'underline', fg: 'black', bg: 'white');
+      case (LogLevel.v):
+        return _addFgBgDc(message, dc: 'bold', fg: 'magenta', bg: '');
+      case (LogLevel.vv):
+        return _addFgBgDc(message, dc: '', fg: '', bg: '');
+      case (LogLevel.vvv):
+        return _addFgBgDc(message, dc: '', fg: '', bg: '');
+      case (LogLevel.vvvv):
+        return _addFgBgDc(message, dc: '', fg: '', bg: '');
+      case (LogLevel.vvvvv):
+        return _addFgBgDc(message, dc: '', fg: '', bg: '');
+      case (LogLevel.vvvvvv):
+        return _addFgBgDc(message, dc: '', fg: '', bg: '');
+      case (LogLevel.info):
+        return _addFgBgDc(message, dc: '', fg: 'green', bg: '');
+      case (LogLevel.warning):
+        return _addFgBgDc(message, dc: '', fg: 'yellow', bg: '');
+      case (LogLevel.error):
+        return _addFgBgDc(message, dc: 'bold', fg: 'white', bg: 'red');
+      case (LogLevel.debug):
+        return _addFgBgDc(message, dc: '', fg: 'cyan', bg: '');
+      default:
+        return _addFgBgDc(message, dc: '', fg: '', bg: '');
+    }
+  }
+
+  String _addFgBgDc(String message, {String dc, String fg, String bg}) {
+    dc = _decorations[dc];
+    fg = _fgColors[fg];
+    bg = _bgColors[bg];
+    if (dc is String) {
+      message = '$_esc$dc$message$_esc$_reset';
+    }
+    if (fg is String) {
+      message = '$_esc$fg$message$_esc$_reset';
+    }
+    if (bg is String) {
+      message = '$_esc$bg$message$_esc$_reset';
+    }
+    return message;
+  }
+
+  bool _hasWriteAccess() {
+    if (_writeAccess is bool) return _writeAccess;
+    try {
+      io.Directory(_logPath).createSync(recursive: false);
+      _writeAccess = true;
+      // ignore: unused_catch_clause
+    } on dynamic catch (error) {
+      _writeAccess = false;
+    }
+    return _writeAccess;
+  }
 }
+
+/// Ansi escape
+const String _esc = '\x1B[';
+const String _reset = '0m';
+
+/// Ansi foreground colors for terminal
+const Map<String, String> _fgColors = <String, String>{
+  'black': '30m',
+  'red': '31m',
+  'green': '32m',
+  'yellow': '33m',
+  'blue': '34m',
+  'magenta': '35m',
+  'cyan': '36m',
+  'white': '37m',
+};
+
+/// Ansi background colors for terminal
+const Map<String, String> _bgColors = <String, String>{
+  'black': '40m',
+  'red': '41m',
+  'green': '42m',
+  'yellow': '43m',
+  'blue': '44m',
+  'magenta': '45m',
+  'cyan': '46m',
+  'white': '47m',
+};
+
+/// Ansi decorations for terminal
+const Map<String, String> _decorations = <String, String>{
+  'bold': '1m',
+  'underline': '4m',
+  'reversed': '7m',
+};

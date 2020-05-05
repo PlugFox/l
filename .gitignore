@@ -21,3 +21,6 @@ coverage*
 
 # Codegen
 *.g.dart
+
+# Logs
+l/
