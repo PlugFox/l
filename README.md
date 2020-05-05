@@ -75,10 +75,11 @@ l.clear();
 Only works in io environments with a connected terminal.  
 If it is impossible to output - ignored.  
 Pauses the output of the remaining logs, do not forget to use the "resume".  
-| Method         | Description                          |
-|----------------|--------------------------------------|
-| **p**          | Displays a progress bar              |
-| **resume**     | Continued after progress finished    |
+  
+| Method     | Description                       |
+|------------|-----------------------------------|
+| **p**      | Displays a progress bar           |
+| **resume** | Continued after progress finished |
   
 ```dart
 Stream<int>.fromIterable(List<int>.generate(101, (int v) => v))
@@ -106,6 +107,7 @@ Output:
 |---------------|--------------------------------------------|
 | **stream**    | Broadcast stream instantly receiving logs. |
 | **mw**        | Middleware queue with functions            |
+  
 ```dart
 // Broadcast stream instantly receiving logs.
 l.stream.forEach((LogMessage log) => print('* ${log.level}'));
