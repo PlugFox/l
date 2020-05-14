@@ -1,7 +1,13 @@
+# 1.1.1  
+##### 2020-05-14  
+  
+Fix terminal at Android Studio in Linux  
+  
+  
 # 1.1.0+3  
 ##### 2020-05-05  
   
-Fix progress table  
+Fix progress table in Readme  
   
   
 # 1.1.0+2  
