@@ -3,7 +3,7 @@ description: >
   Crossplatform html/io [L]ogger library with simple API.
   Manipulate with native console and store logs in txt files and indexedDB.
   Support ascii colorize output.
-version: 1.1.0+3
+version: 1.1.1-dev
 #author: Plague Fox <Plugfox@gmail.com>
 homepage: https://github.com/plugfox/l
 

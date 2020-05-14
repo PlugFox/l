@@ -78,7 +78,7 @@ class LogStorageIO implements LogStorage {
 
   void _print(LogMessage logMessage) {
     final String _message = logMessage.toString();
-    if (_console != null) {
+    if (_hasTerminal) {
       _console.writeln(_formatMessage(_message, logMessage.level));
     } else {
       // ignore: avoid_print
