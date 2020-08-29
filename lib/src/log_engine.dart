@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:collection';
-import 'dart:math' as math;
 
 import 'package:meta/meta.dart' show mustCallSuper;
 
@@ -40,14 +39,15 @@ import 'log_storage.dart';
 ///
 /// Setup and management
 ///
-/// | Method      | Description                       |
-/// |-------------|-----------------------------------|
-/// | [lvl]       | Limiting output level (r: 3, d: 6)|
-/// | [store]     | Set to true to save logs (false)  |
-/// | [wide]      | Display wide prefix entry (false) |
-/// | [pause]     | Pause for message queue           |
-/// | [resume]    | Continued after a pause           |
-/// | [clear]     | Console cleaning                  |
+/// | Method       | Description                       |
+/// |--------------|-----------------------------------|
+/// | [lvl]        | Limiting output level (r: 3, d: 6)|
+/// | [store]      | Set to true to save logs (false)  |
+/// | [wide]       | Display wide prefix entry (false) |
+/// | [pause]      | Pause for message queue           |
+/// | [resume]     | Continued after a pause           |
+/// | [clear]      | Console cleaning                  |
+/// | [length]     | Logger max line length            |
 ///
 ///
 /// Integration capabilities
@@ -59,44 +59,49 @@ import 'log_storage.dart';
 ///
 ///
 class L extends _LEngine {
+  /// Access to the Singleton instance of [L]ogger
+  static L get instance => _instance;
+
+  /// Short form to access the instance of [L]ogger
+  static L get I => _instance;
+
   /// Factory singleton instance of [L]ogger
-  factory L() => _instance;
   static final L _instance = L._internalSingleton();
   L._internalSingleton();
 
   /// A shout is always displayed
-  void s(dynamic message) =>
+  void s(Object message) =>
       super.log(message.toString().toUpperCase(), LogLevel.shout);
 
   /// Regular message with verbose level 1
-  void v(dynamic message) => super.log(message, LogLevel.v);
+  void v(Object message) => super.log(message, LogLevel.v);
 
   /// Regular message with verbose level 2
-  void vv(dynamic message) => super.log(message, LogLevel.vv);
+  void vv(Object message) => super.log(message, LogLevel.vv);
 
   /// Regular message with verbose level 3
-  void vvv(dynamic message) => super.log(message, LogLevel.vvv);
+  void vvv(Object message) => super.log(message, LogLevel.vvv);
 
   /// Regular message with verbose level 4
-  void vvvv(dynamic message) => super.log(message, LogLevel.vvvv);
+  void vvvv(Object message) => super.log(message, LogLevel.vvvv);
 
   /// Regular message with verbose level 5
-  void vvvvv(dynamic message) => super.log(message, LogLevel.vvvvv);
+  void vvvvv(Object message) => super.log(message, LogLevel.vvvvv);
 
   /// Regular message with verbose level 6
-  void vvvvvv(dynamic message) => super.log(message, LogLevel.vvvvvv);
+  void vvvvvv(Object message) => super.log(message, LogLevel.vvvvvv);
 
   /// Inform message with verbose level 3
-  void i(dynamic message) => super.log(message, LogLevel.info);
+  void i(Object message) => super.log(message, LogLevel.info);
 
   /// Warning message with verbose level 2
-  void w(dynamic message) => super.log(message, LogLevel.warning);
+  void w(Object message) => super.log(message, LogLevel.warning);
 
   /// Error message with verbose level 1
-  void e(dynamic message) => super.log(message, LogLevel.error);
+  void e(Object message) => super.log(message, LogLevel.error);
 
   /// Debug message with verbose level 4
-  void d(dynamic message) => super.log(message, LogLevel.debug);
+  void d(Object message) => super.log(message, LogLevel.debug);
 
   /// Progress bar
   ///
@@ -116,10 +121,10 @@ class L extends _LEngine {
   }
 
   /// Decrement log level
-  void operator -(int v) => lvl = (lvl - v);
+  void operator -(int v) => lvl = lvl - v;
 
   /// Increment log level
-  void operator +(int v) => lvl = (lvl + v);
+  void operator +(int v) => lvl = lvl + v;
 
   /// ________________
   /// Small easter egg
@@ -136,9 +141,9 @@ class L extends _LEngine {
   final int hashCode = 0;
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object obj) => obj is L;
+  bool operator ==(Object other) => other is L;
   @override
-  String toString() => r'[L]ogger';
+  String toString() => '[L]ogger';
 }
 
 /// Engine for [L]ogger
@@ -149,23 +154,28 @@ class _LEngine {
   static const Map<int, List<LogLevel>> _logLevelsAllocation =
       logLevelsAllocation;
 
+  static const bool _kIsRelease =
+      bool.fromEnvironment('dart.vm.product', defaultValue: true);
+  static const int _defaultLvl = _kIsRelease ? 3 : 6;
+  static const int _defaultLineLength = 120;
+  static const bool _defaultStore = false;
+  static const bool _defaultWide = false;
+
   StreamSubscription<void> _subscription;
+
   int _currentLvl;
-  static const int _defaultLvl =
-      bool.fromEnvironment('dart.vm.product') ? 3 : 6;
+
   bool _store;
 
-  bool _wide = false;
+  bool _wide;
 
-  /// Display wide prefix entry
-  bool get wide => _wide ?? false;
-
-  /// Display wide prefix entry
-  set wide(bool v) => _wide = (v ?? false);
+  int _length;
 
   _LEngine() {
-    _store = false;
+    _store = _defaultStore;
     _currentLvl = _defaultLvl;
+    _length = _defaultLineLength;
+    _wide = _defaultWide;
     _startLogIterator();
   }
 
@@ -192,7 +202,21 @@ class _LEngine {
 
   /// Set to true to save logs
   /// (default is false)
-  set store(bool v) => _store = (v ?? true);
+  set store(bool v) => _store = v ?? true;
+
+  /// Display wide prefix entry
+  bool get wide => _wide ?? false;
+
+  /// Display wide prefix entry
+  set wide(bool v) => _wide = v ?? false;
+
+  /// Maximum log line length
+  /// If less than 12 then it is displayed as is
+  set length(int v) => _setLineLength(v);
+
+  /// Maximum log line length
+  /// If less than 12 then it is displayed as is
+  int get length => _getLineLength();
 
   /// Continued after a pause
   @mustCallSuper
@@ -222,7 +246,8 @@ class _LEngine {
     pause();
     Progress.discard();
     await _queue.close();
-    await _queue.stream.last.catchError((Object _) => null);
+    // ignore: avoid_annotating_with_dynamic
+    await _queue.stream.last.catchError((dynamic err) => null);
     await _subscription?.cancel();
     await _logStorage?.dispose();
   }
@@ -230,16 +255,14 @@ class _LEngine {
   /// Start log iterator
   void _startLogIterator() {
     // Controller for stream iterrator
-    final SynchronousStreamController<LogMessage> _controller =
-        StreamController<LogMessage>(
+    final _controller = StreamController<LogMessage>(
       onResume: () => _subscription.resume(),
       onPause: () => _subscription.pause(),
       onCancel: () => _subscription.cancel(),
       sync: true,
     ) as SynchronousStreamController<LogMessage>;
     // Iterator for stream with log message
-    final StreamIterator<LogMessage> _logIterator =
-        StreamIterator<LogMessage>(_controller.stream);
+    final _logIterator = StreamIterator<LogMessage>(_controller.stream);
     // Subscription with pause ability
     _subscription = _queue.stream.listen(
       _controller.add,
@@ -254,24 +277,24 @@ class _LEngine {
   /// Iterate log
   Stream<void> _iterateLog(
       StreamIterator<LogMessage> iterator, LogWriter writer) {
-    SynchronousStreamController<void> _resultSC =
+    final _resultSC =
         StreamController<void>(sync: true) as SynchronousStreamController<void>;
-    Future.doWhile(() => iterator.moveNext().then<bool>((bool hasNext) =>
-        hasNext
-            ? _doTask(iterator.current, writer)
-                .then<void>(_resultSC.sink.add)
-                .then<bool>((void _) => true)
-            : _resultSC?.close()?.then<bool>((void _) => false) ??
-                Future<bool>.value(false)));
+    Future.doWhile(() => iterator.moveNext().then<bool>((hasNext) => hasNext
+        ? _doTask(iterator.current, writer)
+            .then<void>(_resultSC.sink.add)
+            .then<bool>((_) => true)
+        // ignore: avoid_annotating_with_dynamic
+        : _resultSC?.close()?.then<bool>((dynamic _) => false) ??
+            Future<bool>.value(false)));
     return _resultSC.stream;
   }
 
   Future<void> _doTask(LogMessage logMessage, LogWriter writer) async {
-    Iterator<Future<void> Function(LogMessage)> iter = mw.iterator;
-    Future<void> mws = Future.doWhile(() async {
-      if (!iter.moveNext()) return false;
-      if (iter.current == null) return true;
-      await iter.current(logMessage);
+    final iterator = mw.iterator;
+    final Future<void> mws = Future.doWhile(() async {
+      if (!iterator.moveNext()) return false;
+      if (iterator.current == null) return true;
+      await iterator.current(logMessage);
       return true;
     });
     await writer(logMessage);
@@ -282,35 +305,38 @@ class _LEngine {
   /// Add log to queue
   void log(Object message, LogLevel prefix) {
     try {
-      bool displayInConsole;
-      if (!(_logLevelsAllocation[_currentLvl]?.contains(prefix) ?? false)) {
-        displayInConsole = false;
-      } else {
-        displayInConsole = true;
-      }
-      final DateTime _now = DateTime.now();
-      _queue.sink.add(LogMessage(
+      final displayInConsole =
+          _logLevelsAllocation[_currentLvl]?.contains(prefix) ?? false;
+      final _now = DateTime.now();
+      _queue.sink.add(
+        LogMessage(
           date: _now,
           message: message,
           level: prefix,
           displayInConsole: displayInConsole,
           store: _store,
-          wide: _wide));
-      // ignore: unused_catch_stack
-    } on dynamic catch (error, stackTrace) {
-      bool releaseMode = true;
-      assert(() {
-        releaseMode = false;
-      }());
-      if (!releaseMode) rethrow;
+          wide: _wide,
+          length: _length,
+        ),
+      );
+    } on dynamic catch (_) {
+      if (!_kIsRelease) rethrow;
     }
   }
 
-  void _setCurrentLvl(int lvl) =>
-      _currentLvl = math.min(math.max(lvl is int ? lvl : _defaultLvl, 0), 6);
+  void _setCurrentLvl(int value) =>
+      _currentLvl = (value is int ? value : _defaultLvl).clamp(0, 6).toInt();
 
   int _getCurrentLvl() =>
-      math.min(math.max(_currentLvl is int ? _currentLvl : _defaultLvl, 0), 6);
-}
+      (_currentLvl is int ? _currentLvl : _defaultLvl).clamp(0, 6).toInt();
 
-/// TODO: добавить прогресс бар из future
+  void _setLineLength(int value) {
+    _length = value is int ? value : _defaultLineLength;
+    if (_length < 12) {
+      _length = 0;
+    }
+  }
+
+  int _getLineLength() =>
+      (_length is int ? _length : _defaultLineLength).gcd(0);
+}

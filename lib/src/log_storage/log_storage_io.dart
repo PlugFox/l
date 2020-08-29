@@ -67,17 +67,17 @@ class LogStorageIO implements LogStorage {
       if (logMessage.print) _print(logMessage);
       await _storeMessage(logMessage);
     } on dynamic catch (_) {
-      bool releaseMode = true;
-      assert(() {
-        releaseMode = false;
-      }());
+      const releaseMode = bool.fromEnvironment(
+        'dart.vm.product',
+        defaultValue: true,
+      );
       if (!releaseMode) rethrow;
     }
     return;
   }
 
   void _print(LogMessage logMessage) {
-    final String _message = logMessage.toString();
+    final _message = logMessage.toString();
     if (_hasTerminal) {
       _console.writeln(_formatMessage(_message, logMessage.level));
     } else {
@@ -88,12 +88,12 @@ class LogStorageIO implements LogStorage {
 
   FutureOr<void> _storeMessage(LogMessage logMessage) async {
     if (!logMessage.store || !_hasWriteAccess()) return;
-    final String fileName = '${_logPath}logs_'
+    final fileName = '${_logPath}logs_'
         '${logMessage.date.year.toString().padLeft(4, '0')}-'
         '${logMessage.date.month.toString().padLeft(2, '0')}-'
         '${logMessage.date.day.toString().padLeft(2, '0')}'
         '.txt';
-    io.File file = io.File(fileName);
+    var file = io.File(fileName);
     if (!file.existsSync()) {
       file = await file.create(recursive: true);
       //await file.writeAsString('    UNIX TIME  ______  LOGS',
@@ -108,27 +108,27 @@ class LogStorageIO implements LogStorage {
   String _formatMessage(String message, LogLevel lvl) {
     if (!_ansi) return message;
     switch (lvl) {
-      case (LogLevel.shout):
+      case LogLevel.shout:
         return _addFgBgDc(message, dc: 'underline', fg: 'black', bg: 'white');
-      case (LogLevel.v):
+      case LogLevel.v:
         return _addFgBgDc(message, dc: 'bold', fg: 'magenta', bg: '');
-      case (LogLevel.vv):
+      case LogLevel.vv:
         return _addFgBgDc(message, dc: '', fg: '', bg: '');
-      case (LogLevel.vvv):
+      case LogLevel.vvv:
         return _addFgBgDc(message, dc: '', fg: '', bg: '');
-      case (LogLevel.vvvv):
+      case LogLevel.vvvv:
         return _addFgBgDc(message, dc: '', fg: '', bg: '');
-      case (LogLevel.vvvvv):
+      case LogLevel.vvvvv:
         return _addFgBgDc(message, dc: '', fg: '', bg: '');
-      case (LogLevel.vvvvvv):
+      case LogLevel.vvvvvv:
         return _addFgBgDc(message, dc: '', fg: '', bg: '');
-      case (LogLevel.info):
+      case LogLevel.info:
         return _addFgBgDc(message, dc: '', fg: 'green', bg: '');
-      case (LogLevel.warning):
+      case LogLevel.warning:
         return _addFgBgDc(message, dc: '', fg: 'yellow', bg: '');
-      case (LogLevel.error):
+      case LogLevel.error:
         return _addFgBgDc(message, dc: 'bold', fg: 'white', bg: 'red');
-      case (LogLevel.debug):
+      case LogLevel.debug:
         return _addFgBgDc(message, dc: '', fg: 'cyan', bg: '');
       default:
         return _addFgBgDc(message, dc: '', fg: '', bg: '');
@@ -136,19 +136,20 @@ class LogStorageIO implements LogStorage {
   }
 
   String _addFgBgDc(String message, {String dc, String fg, String bg}) {
-    dc = _decorations[dc];
-    fg = _fgColors[fg];
-    bg = _bgColors[bg];
-    if (dc is String) {
-      message = '$_esc$dc$message$_esc$_reset';
+    final dcString = _decorations[dc];
+    final fgString = _fgColors[fg];
+    final bgString = _bgColors[bg];
+    var result = message;
+    if (dcString is String) {
+      result = '$_esc$dcString$message$_esc$_reset';
     }
-    if (fg is String) {
-      message = '$_esc$fg$message$_esc$_reset';
+    if (fgString is String) {
+      result = '$_esc$fgString$message$_esc$_reset';
     }
-    if (bg is String) {
-      message = '$_esc$bg$message$_esc$_reset';
+    if (bgString is String) {
+      result = '$_esc$bgString$message$_esc$_reset';
     }
-    return message;
+    return result;
   }
 
   bool _hasWriteAccess() {

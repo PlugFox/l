@@ -112,4 +112,4 @@ export 'src/log_message.dart';
 /// When it is not possible to get write access
 /// to the working directory, the logs are not saved.
 /// Do not log sensitive information.
-final L l = L();
+L get l => L.instance;

@@ -1,6 +1,12 @@
-[![Pub](https://img.shields.io/pub/v/l.svg)](https://pub.dartlang.org/packages/l)  
+# [L]ogger  
   
 ![](https://github.com/PlugFox/l/raw/master/.img/l.png)  
+  
+[![Actions Status](https://github.com/PlugFox/l/workflows/Logger/badge.svg)](https://github.com/PlugFox/l/actions)
+[![Pub](https://img.shields.io/pub/v/l.svg)](https://pub.dev/packages/l)
+[![License: WTFPL](https://img.shields.io/badge/License-WTFPL-brightgreen.svg)](https://en.wikipedia.org/wiki/WTFPL)
+[![effective_dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://github.com/tenhobi/effective_dart)
+  
   
 ### About  
 Cross-platform html/io `[L]`ogger with simple API.  
@@ -51,19 +57,21 @@ l.vvvvvv('verbose lvl #6');
   
 ##### Setup and management  
   
-| Method        | Description                                              |
-|---------------|----------------------------------------------------------|
-| **lvl**       | Limiting output level (default 3 in release, 6 in debug) |
-| **store**     | Set to true to save logs (default is false)              |
-| **wide**      | Display wide prefix entry (default is false)             |
-| **pause**     | Pause for message queue                                  |
-| **resume**    | Continued after a pause                                  |
-| **clear**     | Console cleaning (if a terminal is connected)            |
+| Method         | Description                                              |
+|----------------|----------------------------------------------------------|
+| **lvl**        | Limiting output level (default 3 in release, 6 in debug) |
+| **store**      | Set to true to save logs (default is false)              |
+| **wide**       | Display wide prefix entry (default is false)             |
+| **pause**      | Pause for message queue                                  |
+| **resume**     | Continued after a pause                                  |
+| **clear**      | Console cleaning (if a terminal is connected)            |
+| **length**     | Logger max line length                                   |
   
 ```dart
 l.lvl = 4;
 l.store = true;
 l.wide = false;
+l.lineLength = 120;
 l.pause();
 l.resume();
 l.clear();
@@ -130,17 +138,32 @@ l.mw.addAll(<Future<void> Function(LogMessage)>[
 * When it is not possible to get write access to the working directory, the logs are not saved.  
 * Do not log sensitive information.  
   
-
+  
+---  
+  
+## Changelog  
+  
+Refer to the [Changelog](https://github.com/plugfox/platform_info/blob/master/CHANGELOG.md) to get all release notes.  
+  
+  
+---
+  
+## Maintainers  
+  
+[Plague Fox](https://plugfox.dev)  
+  
+  
 ---
   
 ### License  
   
-[MIT](https://github.com/PlugFox/l/blob/master/LICENSE)  
-   
+[WTFPL](https://github.com/plugfox/platform_info/blob/master/LICENSE)  
+  
   
 ---
   
 ### Tags  
   
 logger, log, logs, logging, logging-library, cross-platform, io, html  
+  
   

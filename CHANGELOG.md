@@ -1,68 +1,72 @@
-# 1.1.1  
-##### 2020-05-14  
+## 2.0.0-dev - 2020-08-29  
+### Added    
+- Support max line length and multiline pretty output  
+- Three short form to access the instance of Logger  
+   + `L.instance`  
+   + `L.I`  
+   + `l`  
   
-Fix terminal at Android Studio in Linux  
+### Changed  
+- refactoring and new lints (pedantic + effective dart)  
+  
+### Removed  
+- Remove default factory L()  
   
   
-# 1.1.0+3  
-##### 2020-05-05  
+## 1.1.1 - 2020-05-14  
   
-Fix progress table in Readme  
+- Fix terminal at Android Studio in Linux  
   
   
-# 1.1.0+2  
-##### 2020-05-05  
+## 1.1.0+3 - 2020-05-05  
+  
+- Fix progress table in Readme  
+  
+  
+## 1.1.0+2 - 2020-05-05  
 
-Upd readme  
+- Upd readme  
   
   
-# 1.1.0+1  
-##### 2020-05-05  
+# 1.1.0+1 - 2020-05-05  
   
-dartfmt    
+- dartfmt    
   
 
-# 1.1.0  
-##### 2020-05-05  
+## 1.1.0 - 2020-05-05  
   
-Add progress as p method  
-Colorize output if supported  
-  
-  
-# 1.0.1  
-##### 2020-04-01  
-  
-Made all prefixes uppercase  
+- Add progress as p method  
+- Colorize output if supported  
   
   
-# 1.0.0  
-##### 2020-04-30  
+## 1.0.1 - 2020-04-01  
   
-Add [wide] for display wide prefix entry  
-  
-  
-# 0.9.0  
-##### 2020-04-30  
-  
-Add middleware and stream.  
-Everything is documented.  
+- Made all prefixes uppercase  
   
   
-# 0.1.0  
-##### 2020-04-30  
+## 1.0.0 - 2020-04-30  
   
-Add mobile support  
-  
-  
-# 0.0.1+1  
-##### 2020-04-29  
-  
-Some cosmetic changes  
+- Add [wide] for display wide prefix entry  
   
   
-# 0.0.1  
-##### 2020-04-29  
+## 0.9.0 - 2020-04-30  
   
-Initial release with main functional  
+- Add a middleware and stream  
+- Everything is documented  
+  
+  
+## 0.1.0 - 2020-04-30  
+  
+- Add mobile support  
+  
+  
+## 0.0.1+1 - 2020-04-29  
+  
+- Some cosmetic changes  
+  
+  
+## 0.0.1 - 2020-04-29  
+  
+- Initial release with main functional  
   
   

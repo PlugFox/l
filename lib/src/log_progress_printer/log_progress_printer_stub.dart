@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_returning_null_for_void
+
 import 'log_progress_printer_base.dart';
 
 ///
@@ -9,7 +11,7 @@ class ProgressPrinter implements ProgressPrinterBase {
   bool get available => false;
 
   @override
-  int get columns => null;
+  int get columns => 0;
 
   @override
   bool get supportsAnsiEscapes => false;
@@ -18,6 +20,11 @@ class ProgressPrinter implements ProgressPrinterBase {
   void discard() => null;
 
   @override
-  void printLines(String header, String content, String footer, int width) =>
+  void printLines(
+    String header,
+    String content,
+    String footer,
+    int width,
+  ) =>
       null;
 }
