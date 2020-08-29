@@ -24,46 +24,52 @@ class LogMessage {
   /// Display wide prefix entry
   final bool _wide;
 
+  /// Maximum log line length
+  final int length;
+
   /// Prefix from log level
   String get prefix => _prefixFromLogLevel();
 
   /// Message for logging
-  const LogMessage(
-      {this.date,
-      @required this.message,
-      LogLevel level,
-      bool displayInConsole,
-      bool store,
-      bool wide})
-      : assert(date is DateTime && message != null),
+  const LogMessage({
+    @required this.message,
+    @required this.date,
+    LogLevel level,
+    bool displayInConsole,
+    bool store,
+    bool wide,
+    int length,
+  })  : assert(date is DateTime && message != null,
+            'date and message must not be null'),
         level = level ?? LogLevel.vvvvvv,
         print = displayInConsole ?? true,
         store = store ?? true,
-        _wide = wide ?? false;
+        _wide = wide ?? false,
+        length = length ?? 0;
 
   String _prefixFromLogLevel() {
     switch (level) {
-      case (LogLevel.shout):
+      case LogLevel.shout:
         return _wide ? '!!!!!!' : '!';
-      case (LogLevel.v):
+      case LogLevel.v:
         return _wide ? '     *' : '1';
-      case (LogLevel.vv):
+      case LogLevel.vv:
         return _wide ? '    **' : '2';
-      case (LogLevel.vvv):
+      case LogLevel.vvv:
         return _wide ? '   ***' : '3';
-      case (LogLevel.vvvv):
+      case LogLevel.vvvv:
         return _wide ? '  ****' : '4';
-      case (LogLevel.vvvvv):
+      case LogLevel.vvvvv:
         return _wide ? ' *****' : '5';
-      case (LogLevel.vvvvvv):
+      case LogLevel.vvvvvv:
         return _wide ? '******' : '6';
-      case (LogLevel.info):
+      case LogLevel.info:
         return _wide ? '     I' : 'I';
-      case (LogLevel.warning):
+      case LogLevel.warning:
         return _wide ? '     W' : 'W';
-      case (LogLevel.error):
+      case LogLevel.error:
         return _wide ? '     E' : 'E';
-      case (LogLevel.debug):
+      case LogLevel.debug:
         return _wide ? '     D' : 'D';
       default:
         return _wide ? '      ' : ' ';
@@ -71,7 +77,33 @@ class LogMessage {
   }
 
   @override
-  String toString() => '[$prefix] $message';
+  String toString() {
+    final prefixString = '[$prefix] ';
+    final prefixStringLength = prefixString.length;
+    final messageString = message.toString();
+    final messageStringLength = messageString.length;
+    final padding = prefixStringLength - 2;
+    if ((length < 12) || (prefixStringLength + messageStringLength <= length)) {
+      return '$prefixString'
+          '${messageString.replaceAll('\n', '\n${' ' * padding}| ')}';
+    }
+    final builder = StringBuffer(prefixString);
+    final lineLength = length - prefixStringLength;
+    final lines = (messageStringLength / lineLength).ceil();
+    for (var i = 0; i < lines; i++) {
+      if (i != 0) {
+        builder.writeln();
+      }
+      final messagePadding = i * lineLength;
+      builder.write(
+        messageString.substring(
+          messagePadding,
+          (messagePadding + lineLength).clamp(0, messageStringLength).toInt(),
+        ),
+      );
+    }
+    return builder.toString().replaceAll('\n', '\n${' ' * padding}| ');
+  }
 
   /// Message for logging to Map<String, dynamic>
   Map<String, dynamic> toMap() => <String, dynamic>{

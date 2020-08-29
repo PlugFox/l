@@ -4,9 +4,13 @@ import 'log_storage_base.dart';
 
 ///
 LogStorage getLogStorage() {
-  assert(() {
+  const releaseMode = bool.fromEnvironment(
+    'dart.vm.product',
+    defaultValue: true,
+  );
+  if (!releaseMode) {
     throw UnsupportedError('Unknown unsupported platform for logger');
-  }());
+  }
   return LogStorageStub();
 }
 
@@ -45,20 +49,17 @@ class LogStorageStub implements LogStorage {
       if (logMessage.print) _print(logMessage);
       await _storeMessage(logMessage);
     } on dynamic catch (_) {
-      bool releaseMode = true;
-      assert(() {
-        releaseMode = false;
-      }());
+      const releaseMode = bool.fromEnvironment(
+        'dart.vm.product',
+        defaultValue: true,
+      );
       if (!releaseMode) rethrow;
     }
     return;
   }
 
-  void _print(LogMessage logMessage) {
-    final String _message = logMessage.toString();
-    // ignore: avoid_print
-    print(_message);
-  }
+  void _print(LogMessage logMessage) =>
+      print(logMessage.toString()); // ignore: avoid_print
 
   FutureOr<void> _storeMessage(LogMessage logMessage) async {
     if (!logMessage.store) return;

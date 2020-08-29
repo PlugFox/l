@@ -9,6 +9,8 @@ void main() {
 
 void mainFunctional() {
   test('shouldExists', () {
-    expect(l != null, true);
+    expect(l != null, isTrue);
+    expect(L.instance != null, isTrue);
+    expect(L.I != null, isTrue);
   });
 }

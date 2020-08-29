@@ -49,14 +49,13 @@ class ProgressPrinter implements ProgressPrinterBase {
       _console.flush();
     }
 
-    ///
-    final List<String> strings = <String>[];
-    strings.addAll(header?.split('\n') ?? <String>[]);
-    strings.add(content);
-    strings.addAll(footer?.split('\n') ?? <String>[]);
+    final strings = <String>[
+      ...?header?.split('\n'),
+      content,
+      ...?footer?.split('\n'),
+    ];
     _prevHeight = strings.length;
     _prevWidth = width;
-
-    strings.forEach((String line) => _console.writeln(line));
+    strings.forEach(_console.writeln);
   }
 }

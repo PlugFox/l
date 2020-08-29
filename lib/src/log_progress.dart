@@ -20,11 +20,14 @@ abstract class Progress {
   static void update(
       {String header, String data, String footer, int percent = 0}) {
     if (!_printer.available) return;
-    percent = (percent ?? percent ?? 0).clamp(0, 100).toInt();
-    int width = _printer.columns.clamp(7, 80).toInt();
+    final width = _printer.columns.clamp(7, 80).toInt();
     _printer.printLines(
       _buildHeader(header, width),
-      _buildProgressBar(percent, data, width),
+      _buildProgressBar(
+        (percent ?? percent ?? 0).clamp(0, 100).toInt(),
+        data,
+        width,
+      ),
       _buildFooter(footer, width),
       width,
     );
@@ -36,25 +39,26 @@ abstract class Progress {
   static String _buildHeader(String header, int width) {
     if (header is! String) return null;
     if (header.length > width) {
-      return header.substring(0, width - 3) + '...';
+      return '${header.substring(0, width - 3)}...';
     } else if (header.length == width) {
       return header;
     }
-    header = ' ' * ((width - header.length) ~/ 2) + header;
-    header = header.padRight(width, ' ');
+    var result = ' ' * ((width - header.length) ~/ 2);
+    result += header;
+    result = result.padRight(width, ' ');
     if (_printer.supportsAnsiEscapes) {
-      return '\x1B[1m' '\x1B[34m' + header + '\x1B[0m' '\x1B[0m';
+      return '\x1B[1m\x1B[34m$result\x1B[0m\x1B[0m';
     } else {
-      return header;
+      return result;
     }
   }
 
   static String _buildProgressBar(int percent, String data, int width) {
-    List<String> progressBar = List<String>(width);
-    progressBar.first = '[';
-    progressBar.last = ']';
-    int filled = percent * (width - 2) ~/ 100;
-    for (int idx = 1; idx <= filled; idx++) {
+    final progressBar = List<String>(width)
+      ..first = '['
+      ..last = ']';
+    final filled = percent * (width - 2) ~/ 100;
+    for (var idx = 1; idx <= filled; idx++) {
       if (idx == filled && percent != 100) {
         progressBar[idx] = '>';
       } else {
@@ -62,34 +66,34 @@ abstract class Progress {
       }
     }
     if (data is String) {
-      data = data.replaceAll('\n', ' ');
-      data = data.length > (width - 4)
-          ? data.substring(0, width - 5) + '...'
-          : ' ' + data + ' ';
-      int dataLength = data.length;
-      int dataPadding = (width - dataLength) ~/ 2;
-      for (int idx = 0; idx < dataLength; idx++) {
-        progressBar[idx + dataPadding] = data[idx];
+      var result = data.replaceAll('\n', ' ');
+      result = result.length > (width - 4)
+          ? '${result.substring(0, width - 5)}...'
+          : ' $result ';
+      final dataLength = result.length;
+      final dataPadding = (width - dataLength) ~/ 2;
+      for (var idx = 0; idx < dataLength; idx++) {
+        progressBar[idx + dataPadding] = result[idx];
       }
     }
     if (_printer.supportsAnsiEscapes) {
-      return '\x1B[1m' '\x1B[47m' '\x1B[45m' +
-          progressBar.map((String v) => v is String ? v : ' ').join() +
-          '\x1B[0m' '\x1B[0m' '\x1B[0m';
+      return '\x1B[1m\x1B[47m\x1B[45m'
+          '${progressBar.map((v) => v is String ? v : ' ').join()}'
+          '\x1B[0m\x1B[0m\x1B[0m';
     } else {
-      return progressBar.map((String v) => v is String ? v : ' ').join();
+      return progressBar.map((v) => v is String ? v : ' ').join();
     }
   }
 
   static String _buildFooter(String footer, int width) {
     if (footer is! String) return null;
     if (footer.length > width) {
-      return footer.substring(0, width - 3) + '...';
+      return '${footer.substring(0, width - 3)}...';
     } else if (footer.length == width) {
       return footer;
     }
     if (_printer.supportsAnsiEscapes) {
-      return '\x1B[34m' + footer.padLeft(width, ' ') + '\x1B[0m';
+      return '\x1B[34m${footer.padLeft(width, ' ')}\x1B[0m';
     } else {
       return footer.padLeft(width, ' ');
     }

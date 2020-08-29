@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_statements, avoid_print
+// ignore_for_file: unnecessary_statements, avoid_print, cascade_invocations
 import 'dart:async' show Future;
 
 import 'package:l/l.dart';
@@ -19,10 +19,10 @@ Future<void> _displayStatuses() async {
 }
 
 Future<void> _showProgressBar() =>
-    Stream<int>.fromIterable(List<int>.generate(101, (int v) => v))
-        .asyncMap<int>((int v) =>
+    Stream<int>.fromIterable(List<int>.generate(101, (v) => v))
+        .asyncMap<int>((v) =>
             Future<int>.delayed(const Duration(milliseconds: 50), () => v))
-        .forEach((int v) => l.p(
+        .forEach((v) => l.p(
             percent: v,
             header: '{{ HEADER #$v }}',
             footer: '{{ footer #$v }}',

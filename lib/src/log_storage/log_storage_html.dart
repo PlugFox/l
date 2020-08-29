@@ -49,49 +49,49 @@ class LogStorageHTML implements LogStorage {
       if (logMessage.print) _print(logMessage);
       await _storeMessage(logMessage);
     } on dynamic catch (_) {
-      bool releaseMode = true;
-      assert(() {
-        releaseMode = false;
-      }());
+      const releaseMode = bool.fromEnvironment(
+        'dart.vm.product',
+        defaultValue: true,
+      );
       if (!releaseMode) rethrow;
     }
     return;
   }
 
   void _print(LogMessage logMessage) {
-    final String _message = logMessage.toString();
+    final _message = logMessage.toString();
     switch (logMessage.level) {
-      case (LogLevel.shout):
+      case LogLevel.shout:
         _console.warn(_message);
         break;
-      case (LogLevel.v):
+      case LogLevel.v:
         _console.log(_message);
         break;
-      case (LogLevel.vv):
+      case LogLevel.vv:
         _console.log(_message);
         break;
-      case (LogLevel.vvv):
+      case LogLevel.vvv:
         _console.log(_message);
         break;
-      case (LogLevel.vvvv):
+      case LogLevel.vvvv:
         _console.log(_message);
         break;
-      case (LogLevel.vvvvv):
+      case LogLevel.vvvvv:
         _console.log(_message);
         break;
-      case (LogLevel.vvvvvv):
+      case LogLevel.vvvvvv:
         _console.log(_message);
         break;
-      case (LogLevel.info):
+      case LogLevel.info:
         _console.info(_message);
         break;
-      case (LogLevel.warning):
+      case LogLevel.warning:
         _console.warn(_message);
         break;
-      case (LogLevel.error):
+      case LogLevel.error:
         _console.error(_message);
         break;
-      case (LogLevel.debug):
+      case LogLevel.debug:
         _console.debug(_message);
         break;
       default:
@@ -103,26 +103,23 @@ class LogStorageHTML implements LogStorage {
 
   FutureOr<void> _storeMessage(LogMessage logMessage) async {
     if (_db is! idb.Database || !logMessage.store) return;
-    final idb.Transaction tx = _db.transaction('logs', 'readwrite');
-    final idb.ObjectStore store = tx.objectStore('logs');
+    final tx = _db.transaction('logs', 'readwrite');
+    final store = tx.objectStore('logs');
     if (store is! idb.ObjectStore) return;
     await store.add(logMessage.toMap());
-    return await tx.completed;
+    return tx.completed;
   }
 
   FutureOr<void> _openIDB() async {
     if (!idb.IdbFactory.supported) return null;
     void _createLogObjectStore(idb.Database db) {
-      final idb.ObjectStore _store =
-          db.createObjectStore('logs', autoIncrement: true);
-      _store.createIndex('lvl_idx', 'level', unique: false);
-      _store.createIndex('date_idx', 'date', unique: false);
+      db.createObjectStore('logs', autoIncrement: true)
+        ..createIndex('lvl_idx', 'level', unique: false)
+        ..createIndex('date_idx', 'date', unique: false);
     }
 
-    void _initializeDatabase(idb.VersionChangeEvent e) {
-      final idb.Database db = e.target.result as idb.Database;
-      _createLogObjectStore(db);
-    }
+    void _initializeDatabase(idb.VersionChangeEvent e) =>
+        _createLogObjectStore(e.target.result as idb.Database);
 
     _db = await html.window.indexedDB
         .open('l', version: 1, onUpgradeNeeded: _initializeDatabase);

@@ -9,15 +9,19 @@ class ProgressPrinter implements ProgressPrinterBase {
   bool get available => false;
 
   @override
-  int get columns => null;
+  int get columns => 0;
 
   @override
   bool get supportsAnsiEscapes => false;
 
   @override
-  void discard() => null;
+  void discard() => null; // ignore: avoid_returning_null_for_void
 
   @override
-  void printLines(String header, String content, String footer, int width) =>
-      null;
+  void printLines(
+    String header,
+    String content,
+    String footer,
+    int width,
+  ) => null; // ignore: avoid_returning_null_for_void
 }

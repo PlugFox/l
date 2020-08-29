@@ -1,9 +1,9 @@
 name: l
 description: >
-  Crossplatform html/io [L]ogger library with simple API.
+  Cross-platform html/io Logger library with simple API.
   Manipulate with native console and store logs in txt files and indexedDB.
   Support ascii colorize output.
-version: 1.1.1
+version: 2.0.0-dev
 #author: Plague Fox <Plugfox@gmail.com>
 homepage: https://github.com/plugfox/l
 
@@ -16,6 +16,7 @@ dependencies:
   meta: '>=1.0.0 <2.0.0'
 
 dev_dependencies:
-  test: any
+  test_coverage: ^0.4.3
+  test: ^1.15.3
 
-dependency_overrides:
+#dependency_overrides:
