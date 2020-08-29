@@ -4,8 +4,11 @@ description: >
   Manipulate with native console and store logs in txt files and indexedDB.
   Support ascii colorize output.
 version: 2.0.0-dev
-#author: Plague Fox <Plugfox@gmail.com>
+repository: https://github.com/plugfox/l/tree/master
+issue_tracker: https://github.com/plugfox/l/issues
 homepage: https://github.com/plugfox/l
+#author: Plague Fox <Plugfox@gmail.com>
+#documentation: https://pub.dev/documentation/l/latest
 
 #publish_to: 'none' 
 

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_returning_null_for_void
+
 import 'log_progress_printer_base.dart';
 
 ///
@@ -15,7 +17,7 @@ class ProgressPrinter implements ProgressPrinterBase {
   bool get supportsAnsiEscapes => false;
 
   @override
-  void discard() => null; // ignore: avoid_returning_null_for_void
+  void discard() => null;
 
   @override
   void printLines(
@@ -23,5 +25,6 @@ class ProgressPrinter implements ProgressPrinterBase {
     String content,
     String footer,
     int width,
-  ) => null; // ignore: avoid_returning_null_for_void
+  ) =>
+      null;
 }
