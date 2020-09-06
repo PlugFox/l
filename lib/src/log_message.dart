@@ -24,9 +24,6 @@ class LogMessage {
   /// Display wide prefix entry
   final bool _wide;
 
-  /// Maximum log line length
-  final int length;
-
   /// Prefix from log level
   String get prefix => _prefixFromLogLevel();
 
@@ -38,14 +35,12 @@ class LogMessage {
     bool displayInConsole,
     bool store,
     bool wide,
-    int length,
   })  : assert(date is DateTime && message != null,
             'date and message must not be null'),
         level = level ?? LogLevel.vvvvvv,
         print = displayInConsole ?? true,
         store = store ?? true,
-        _wide = wide ?? false,
-        length = length ?? 0;
+        _wide = wide ?? false;
 
   String _prefixFromLogLevel() {
     switch (level) {
@@ -81,28 +76,9 @@ class LogMessage {
     final prefixString = '[$prefix] ';
     final prefixStringLength = prefixString.length;
     final messageString = message.toString();
-    final messageStringLength = messageString.length;
     final padding = prefixStringLength - 2;
-    if ((length < 12) || (prefixStringLength + messageStringLength <= length)) {
-      return '$prefixString'
-          '${messageString.replaceAll('\n', '\n${' ' * padding}| ')}';
-    }
-    final builder = StringBuffer(prefixString);
-    final lineLength = length - prefixStringLength;
-    final lines = (messageStringLength / lineLength).ceil();
-    for (var i = 0; i < lines; i++) {
-      if (i != 0) {
-        builder.writeln();
-      }
-      final messagePadding = i * lineLength;
-      builder.write(
-        messageString.substring(
-          messagePadding,
-          (messagePadding + lineLength).clamp(0, messageStringLength).toInt(),
-        ),
-      );
-    }
-    return builder.toString().replaceAll('\n', '\n${' ' * padding}| ');
+    return '$prefixString'
+        '${messageString.replaceAll('\n', '\n${' ' * padding}| ')}';
   }
 
   /// Message for logging to Map<String, dynamic>

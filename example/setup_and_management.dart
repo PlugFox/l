@@ -5,7 +5,6 @@ void main() {
   l.lvl = 2; // set verbose level
   l.store = false; // don't store logs
   l.wide = true; // print l.vv as [    **]
-  l.length = 40;
 
   l.v('verbose lvl #1');
   l.pause(); // pause log queue

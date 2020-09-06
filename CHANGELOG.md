@@ -1,6 +1,6 @@
 ## 2.0.0-dev - 2020-08-29  
 ### Added    
-- Support max line length and multiline pretty output  
+- Support multiline pretty output  
 - Three short form to access the instance of Logger  
    + `L.instance`  
    + `L.I`  

@@ -157,7 +157,6 @@ class _LEngine {
   static const bool _kIsRelease =
       bool.fromEnvironment('dart.vm.product', defaultValue: true);
   static const int _defaultLvl = _kIsRelease ? 3 : 6;
-  static const int _defaultLineLength = 120;
   static const bool _defaultStore = false;
   static const bool _defaultWide = false;
 
@@ -169,12 +168,9 @@ class _LEngine {
 
   bool _wide;
 
-  int _length;
-
   _LEngine() {
     _store = _defaultStore;
     _currentLvl = _defaultLvl;
-    _length = _defaultLineLength;
     _wide = _defaultWide;
     _startLogIterator();
   }
@@ -209,14 +205,6 @@ class _LEngine {
 
   /// Display wide prefix entry
   set wide(bool v) => _wide = v ?? false;
-
-  /// Maximum log line length
-  /// If less than 12 then it is displayed as is
-  set length(int v) => _setLineLength(v);
-
-  /// Maximum log line length
-  /// If less than 12 then it is displayed as is
-  int get length => _getLineLength();
 
   /// Continued after a pause
   @mustCallSuper
@@ -316,7 +304,6 @@ class _LEngine {
           displayInConsole: displayInConsole,
           store: _store,
           wide: _wide,
-          length: _length,
         ),
       );
     } on dynamic catch (_) {
@@ -329,14 +316,4 @@ class _LEngine {
 
   int _getCurrentLvl() =>
       (_currentLvl is int ? _currentLvl : _defaultLvl).clamp(0, 6).toInt();
-
-  void _setLineLength(int value) {
-    _length = value is int ? value : _defaultLineLength;
-    if (_length < 12) {
-      _length = 0;
-    }
-  }
-
-  int _getLineLength() =>
-      (_length is int ? _length : _defaultLineLength).gcd(0);
 }

@@ -8,7 +8,7 @@
 [![effective_dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://github.com/tenhobi/effective_dart)
   
   
-### About  
+## About  
 Cross-platform html/io `[L]`ogger with simple API.  
 No need to create an logger object. Just import and use. Simple and w/o boilerplate.  
 Work with native console and can store logs in txt files (io) and indexedDB (web).  
@@ -19,9 +19,9 @@ You can change verbose level and resume/pause log queue, also you can clear cons
   
 ---
   
-### Core API  
+## Core API  
   
-##### Key features  
+### Key features  
   
 | Method          | Description                          |
 |-----------------|--------------------------------------|
@@ -55,7 +55,7 @@ l.vvvvvv('verbose lvl #6');
 ```  
   
   
-##### Setup and management  
+### Setup and management  
   
 | Method         | Description                                              |
 |----------------|----------------------------------------------------------|
@@ -78,7 +78,7 @@ l.clear();
 ```  
   
 
-##### Progress  
+### Progress  
   
 Only works in io environments with a connected terminal.  
 If it is impossible to output - ignored.  
@@ -109,7 +109,7 @@ Output:
 ```
   
   
-##### Integration capabilities  
+### Integration capabilities  
   
 | Method        | Description                                |
 |---------------|--------------------------------------------|
@@ -132,7 +132,7 @@ l.mw.addAll(<Future<void> Function(LogMessage)>[
   
 ---
   
-### Limitations  
+## Limitations  
   
 * When there is no direct access to the terminal, it works through print.  
 * When it is not possible to get write access to the working directory, the logs are not saved.  
@@ -155,14 +155,14 @@ Refer to the [Changelog](https://github.com/plugfox/platform_info/blob/master/CH
   
 ---
   
-### License  
+## License  
   
 [WTFPL](https://github.com/plugfox/platform_info/blob/master/LICENSE)  
   
   
 ---
   
-### Tags  
+## Tags  
   
 logger, log, logs, logging, logging-library, cross-platform, io, html  
   
