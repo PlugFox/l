@@ -1,3 +1,7 @@
+## 3.0.0-nullsafety.0 - 2021-02-19
+### Changed  
+- Non nullable ready  
+
 ## 2.0.0-dev - 2020-08-29  
 ### Added    
 - Support multiline pretty output  
