@@ -14,19 +14,19 @@ import 'log_message.dart';
 ///
 /// ### Key features
 ///
-/// | Method   | Description                          |
-/// |----------|--------------------------------------|
-/// | [s]      | A shout is always displayed          |
-/// | [v]      | Regular message with verbose level 1 |
-/// | [e]      | Error message with verbose level 1   |
-/// | [vv]     | Regular message with verbose level 2 |
-/// | [w]      | Warning message with verbose level 2 |
-/// | [vvv]    | Regular message with verbose level 3 |
-/// | [i]      | Inform message with verbose level 3  |
-/// | [vvvv]   | Regular message with verbose level 4 |
-/// | [d]      | Debug message with verbose level 4   |
-/// | [vvvvv]  | Regular message with verbose level 5 |
-/// | [vvvvvv] | Regular message with verbose level 6 |
+/// |     Method     | Description                          |
+/// |----------------|--------------------------------------|
+/// | [s]            | A shout is always displayed          |
+/// | [v1], [v]      | Regular message with verbose level 1 |
+/// | [e]            | Error message with verbose level 1   |
+/// | [v2], [vv]     | Regular message with verbose level 2 |
+/// | [w]            | Warning message with verbose level 2 |
+/// | [v3], [vvv]    | Regular message with verbose level 3 |
+/// | [i], [<]       | Inform message with verbose level 3  |
+/// | [v4], [vvvv]   | Regular message with verbose level 4 |
+/// | [d], [<<]      | Debug message with verbose level 4   |
+/// | [v5], [vvvvv]  | Regular message with verbose level 5 |
+/// | [v6], [vvvvvv] | Regular message with verbose level 6 |
 ///
 ///
 /// ### Integration capabilities
@@ -41,42 +41,60 @@ import 'log_message.dart';
 abstract class L extends Stream<LogMessage> {
   L._();
 
-  /// A shout is always displayed
+  /// A shout [message] is always displayed
   void s(Object message);
 
-  /// Regular message with verbose level 1
+  /// Regular [message] with verbose level 1
   void v(Object message);
 
-  /// Regular message with verbose level 2
+  /// Regular [message] with verbose level 1
+  void v1(Object message);
+
+  /// Regular [message] with verbose level 2
   void vv(Object message);
 
-  /// Regular message with verbose level 3
+  /// Regular [message] with verbose level 2
+  void v2(Object message);
+
+  /// Regular [message] with verbose level 3
   void vvv(Object message);
 
-  /// Regular message with verbose level 4
+  /// Regular [message] with verbose level 3
+  void v3(Object message);
+
+  /// Regular [message] with verbose level 4
   void vvvv(Object message);
 
-  /// Regular message with verbose level 5
+  /// Regular [message] with verbose level 4
+  void v4(Object message);
+
+  /// Regular [message] with verbose level 5
   void vvvvv(Object message);
 
-  /// Regular message with verbose level 6
+  /// Regular [message] with verbose level 5
+  void v5(Object message);
+
+  /// Regular [message] with verbose level 6
   void vvvvvv(Object message);
 
-  /// Inform message with verbose level 3
+  /// Regular [message] with verbose level 6
+  void v6(Object message);
+
+  /// Inform [message] with verbose level 3
   void i(Object message);
 
-  /// Warning message with verbose level 2
-  void w(Object message);
+  /// Warning [message] with verbose level 2
+  void w(Object message, [StackTrace stackTrace]);
 
-  /// Error message with verbose level 1
-  void e(Object message);
+  /// Error [message] with verbose level 1
+  void e(Object message, [StackTrace stackTrace]);
 
-  /// Debug message with verbose level 4
+  /// Debug [message] with verbose level 4
   void d(Object message);
 
-  /// Add Inform message with verbose level 3
+  /// Add Inform [message] with verbose level 3
   void operator <(Object info);
 
-  /// Add Debug message with verbose level 4
+  /// Add Debug [message] with verbose level 4
   void operator <<(Object debug);
 }
