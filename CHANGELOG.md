@@ -1,9 +1,24 @@
-## 3.0.0-nullsafety.0 - 2021-02-19
+## 3.0.0-dev - 2021-10-03  
+### Added  
+- New badges  
+  
+### Changed  
+- Non nullable by default  
+- Full refactoring  
+- Simplification  
+  
+### Removed  
+- **BREAKING:** Remove progress feature  
+- **BREAKING:** Remove middleware function feature  
+- **BREAKING:** Store logs at txt file and indexed db feature  
+  
+  
+## 3.0.0-nullsafety.0 - 2021-02-19  
 ### Changed  
 - Non nullable ready  
 
 ## 2.0.0-dev - 2020-08-29  
-### Added    
+### Added  
 - Support multiline pretty output  
 - Three short form to access the instance of Logger  
    + `L.instance`  

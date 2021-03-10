@@ -1,27 +1,6 @@
-/*
- *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *                    Version 2, December 2004
- *
- * Copyright (C) 2021 Plague Fox <plugfox@gmail.com>
- *
- * Everyone is permitted to copy and distribute verbatim or modified
- * copies of this license document, and changing it is allowed as long
- * as the name is changed.
- *
- *            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
- *
- *  0. You just DO WHAT THE FUCK YOU WANT TO.
- */
+import 'package:meta/meta.dart';
 
-library l;
-
-import 'src/inner_logger.dart' show InnerLoggerImpl;
-import 'src/l.dart';
-
-export 'src/l.dart';
-export 'src/log_level.dart';
-export 'src/log_message.dart';
+import 'log_message.dart';
 
 /// [L]ogger
 ///
@@ -58,4 +37,52 @@ export 'src/log_message.dart';
 ///
 /// **!!! PLEASE, DO NOT LOG SENSITIVE INFORMATION !!!**
 ///
-final L l = InnerLoggerImpl();
+@immutable
+abstract class L extends Stream<LogMessage> {
+  L._();
+
+  /// A shout is always displayed
+  void s(Object message);
+
+  /// Regular message with verbose level 1
+  void v(Object message);
+
+  /// Regular message with verbose level 2
+  void vv(Object message);
+
+  /// Regular message with verbose level 3
+  void vvv(Object message);
+
+  /// Regular message with verbose level 4
+  void vvvv(Object message);
+
+  /// Regular message with verbose level 5
+  void vvvvv(Object message);
+
+  /// Regular message with verbose level 6
+  void vvvvvv(Object message);
+
+  /// Inform message with verbose level 3
+  void i(Object message);
+
+  /// Warning message with verbose level 2
+  void w(Object message);
+
+  /// Error message with verbose level 1
+  void e(Object message);
+
+  /// Debug message with verbose level 4
+  void d(Object message);
+
+  /// Decrement log level
+  void operator -(int v);
+
+  /// Increment log level
+  void operator +(int v);
+
+  /// Add Inform message with verbose level 3
+  void operator <(Object info);
+
+  /// Add Debug message with verbose level 4
+  void operator <<(Object debug);
+}

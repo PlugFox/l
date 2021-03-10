@@ -9,8 +9,19 @@ void main() {
 
 void mainFunctional() {
   test('shouldExists', () {
-    expect(l != null, isTrue);
-    expect(L.instance != null, isTrue);
-    expect(L.I != null, isTrue);
+    expect(l is L, isTrue);
+  });
+
+  test('shouldPrint', () async {
+    l
+      ..v('Regular 1')
+      ..e('Error')
+      ..w('Warning')
+      ..i('Info')
+      ..d('Debug')
+      ..s('Shout')
+      ..vvvvvv('Regular 6');
+    await Future<void>.delayed(const Duration(seconds: 1));
+    expect(true, true);
   });
 }
