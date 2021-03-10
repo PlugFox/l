@@ -2,7 +2,10 @@ import '../log_level.dart';
 import 'log_delegate.dart';
 
 /// {@nodoc}
-class StubLogDelegate implements LogDelegate {
+LogDelegate createEnvironmentLogDelegate() => LogDelegateWeb();
+
+/// {@nodoc}
+class LogDelegateWeb implements LogDelegate {
   @override
   void log({
     required Object message,
