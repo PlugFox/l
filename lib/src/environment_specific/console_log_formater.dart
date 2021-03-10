@@ -52,9 +52,7 @@ String _error(Object message, String prefix) => (StringBuffer('[')
       ..write(_esc)
       ..write(_ConsoleFont.bold.value) // font
       ..write(_esc)
-      ..write(_ConsoleColor.white.foregroundValue) // foreground
-      ..write(_esc)
-      ..write(_ConsoleColor.red.backgroundValue) // background
+      ..write(_ConsoleColor.red.foregroundValue) // foreground
       ..write(prefix)
       ..write(_esc)
       ..write(_reset)
