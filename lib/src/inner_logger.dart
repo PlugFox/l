@@ -10,9 +10,13 @@ import 'logger.dart';
 
 /// {@nodoc}
 abstract class InnerLogger extends Stream<LogMessage> implements L {
-  /// Add log to queue
+  /// Print a message to the console
   /// {@nodoc}
   void log({required Object message, required LogLevel logLevel});
+
+  /// Notify subscribers
+  /// {@nodoc}
+  void notifyListeners({required Object message, required LogLevel logLevel});
 }
 
 /// {@nodoc}

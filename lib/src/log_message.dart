@@ -27,4 +27,7 @@ class LogMessage {
         'message': message.toString(),
         'level': level.prefix,
       };
+
+  @override
+  String toString() => message.toString();
 }

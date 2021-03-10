@@ -22,9 +22,11 @@ mixin InnerLoggerLogMixin on InnerLogger {
   void log({
     required Object message,
     required LogLevel logLevel,
-  }) =>
-      _delegate?.log(
-        message: message,
-        logLevel: logLevel,
-      );
+  }) {
+    _delegate?.log(
+      message: message,
+      logLevel: logLevel,
+    );
+    notifyListeners(message: message, logLevel: logLevel);
+  }
 }

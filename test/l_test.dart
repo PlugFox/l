@@ -12,7 +12,7 @@ void mainFunctional() {
     expect(l is L, isTrue);
   });
 
-  test('shouldPrint', () async {
+  test('shouldPrint', () {
     l
       ..s('Shout')
       ..v('Regular 1')
@@ -25,7 +25,6 @@ void mainFunctional() {
       ..d('Debug')
       ..vvvvv('Regular 5')
       ..vvvvvv('Regular 6');
-    await Future<void>.delayed(const Duration(seconds: 1));
     expect(true, true);
   });
 }
