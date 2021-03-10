@@ -1,0 +1,15 @@
+library l.example;
+
+import 'package:l/l.dart';
+
+void main() async {
+  l
+    ..v('Regular 1')
+    ..e('Error')
+    ..w('Warning')
+    ..i('Info')
+    ..d('Debug')
+    ..s('Shout')
+    ..vvvvvv('Regular 6');
+  await Future<void>.delayed(const Duration(seconds: 1));
+}

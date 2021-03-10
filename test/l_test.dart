@@ -1,4 +1,4 @@
-library test.l;
+library l.test;
 
 import 'package:l/l.dart';
 import 'package:test/test.dart';

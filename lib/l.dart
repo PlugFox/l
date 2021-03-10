@@ -12,6 +12,7 @@
  *   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
  *
  *  0. You just DO WHAT THE FUCK YOU WANT TO.
+ *
  */
 
 library l;
@@ -59,3 +60,7 @@ export 'src/log_message.dart';
 /// **!!! PLEASE, DO NOT LOG SENSITIVE INFORMATION !!!**
 ///
 final L l = InnerLoggerImpl();
+
+/// TODO: продумать конфиг
+/// TODO: обновить описание
+/// TODO: обновить ченджлог

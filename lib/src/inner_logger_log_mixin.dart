@@ -9,14 +9,21 @@ import 'log_level.dart';
 
 /// {@nodoc}
 mixin InnerLoggerLogMixin on InnerLogger {
-  final LogDelegate _delegate = createEnvironmentLogDelegate();
+  final LogDelegate? _delegate = () {
+    // Without log delegate when release
+    if (const bool.fromEnvironment(
+      'dart.vm.product',
+      defaultValue: true,
+    )) return null;
+    return createEnvironmentLogDelegate();
+  }();
 
   @override
   void log({
     required Object message,
     required LogLevel logLevel,
   }) =>
-      _delegate.log(
+      _delegate?.log(
         message: message,
         logLevel: logLevel,
       );
