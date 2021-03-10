@@ -18,11 +18,11 @@
 library l;
 
 import 'src/inner_logger.dart' show InnerLoggerImpl;
-import 'src/l.dart';
+import 'src/logger.dart';
 
-export 'src/l.dart';
 export 'src/log_level.dart';
 export 'src/log_message.dart';
+export 'src/logger.dart';
 
 /// [L]ogger
 ///
