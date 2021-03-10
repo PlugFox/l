@@ -20,5 +20,17 @@ class LogDelegateWeb implements LogDelegate {
     required Object message,
     required LogLevel logLevel,
   }) =>
-      console.log('[${logLevel.prefix}] $message');
+      logLevel.when<void>(
+        shout: () => console.warn(message),
+        v: () => console.log(message),
+        error: () => console.error(message),
+        vv: () => console.log(message),
+        warning: () => console.warn(message),
+        vvv: () => console.log(message),
+        info: () => console.info(message),
+        vvvv: () => console.log(message),
+        debug: () => console.debug(message),
+        vvvvv: () => console.log(message),
+        vvvvvv: () => console.log(message),
+      );
 }

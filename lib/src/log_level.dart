@@ -59,7 +59,74 @@ abstract class LogLevel {
     required this.level,
   });
 
-  /// TODO: when implementation
+  /// [when] defines a conditional expression with multiple branches.
+  /// It is similar to the switch statement in C-like languages.
+  ///
+  /// [when] matches its argument against all branches sequentially
+  /// until some branch condition is satisfied.
+  ///
+  LogLevelResult when<LogLevelResult>({
+    required LogLevelResult Function() shout,
+    required LogLevelResult Function() v,
+    required LogLevelResult Function() error,
+    required LogLevelResult Function() vv,
+    required LogLevelResult Function() warning,
+    required LogLevelResult Function() vvv,
+    required LogLevelResult Function() info,
+    required LogLevelResult Function() vvvv,
+    required LogLevelResult Function() debug,
+    required LogLevelResult Function() vvvvv,
+    required LogLevelResult Function() vvvvvv,
+  });
+
+  /// The [maybeWhen] method is equivalent to [when],
+  /// but doesn't require all callbacks to be specified.
+  ///
+  /// On the other hand, it adds an extra [orElse] required parameter,
+  /// for fallback behavior.
+  ///
+  LogLevelResult maybeWhen<LogLevelResult>({
+    required LogLevelResult Function() orElse,
+    LogLevelResult Function()? shout,
+    LogLevelResult Function()? v,
+    LogLevelResult Function()? error,
+    LogLevelResult Function()? vv,
+    LogLevelResult Function()? warning,
+    LogLevelResult Function()? vvv,
+    LogLevelResult Function()? info,
+    LogLevelResult Function()? vvvv,
+    LogLevelResult Function()? debug,
+    LogLevelResult Function()? vvvvv,
+    LogLevelResult Function()? vvvvvv,
+  }) =>
+      when(
+        shout: shout ?? orElse,
+        v: v ?? orElse,
+        error: error ?? orElse,
+        vv: vv ?? orElse,
+        warning: warning ?? orElse,
+        vvv: vvv ?? orElse,
+        info: info ?? orElse,
+        vvvv: vvvv ?? orElse,
+        debug: debug ?? orElse,
+        vvvvv: vvvvv ?? orElse,
+        vvvvvv: vvvvvv ?? orElse,
+      );
+
+  /// List of available verbose levels
+  static const List<LogLevel> values = <LogLevel>[
+    LogLevel.shout(),
+    LogLevel.v(),
+    LogLevel.error(),
+    LogLevel.vv(),
+    LogLevel.warning(),
+    LogLevel.vvv(),
+    LogLevel.info(),
+    LogLevel.vvvv(),
+    LogLevel.debug(),
+    LogLevel.vvvvv(),
+    LogLevel.vvvvvv(),
+  ];
 
   @override
   String toString() => prefix;
@@ -78,6 +145,22 @@ class _LogLevelShout extends LogLevel {
           prefix: '!',
           level: 0,
         );
+
+  @override
+  LogLevelResult when<LogLevelResult>({
+    required LogLevelResult Function() shout,
+    required LogLevelResult Function() v,
+    required LogLevelResult Function() error,
+    required LogLevelResult Function() vv,
+    required LogLevelResult Function() warning,
+    required LogLevelResult Function() vvv,
+    required LogLevelResult Function() info,
+    required LogLevelResult Function() vvvv,
+    required LogLevelResult Function() debug,
+    required LogLevelResult Function() vvvvv,
+    required LogLevelResult Function() vvvvvv,
+  }) =>
+      shout();
 }
 
 class _LogLevelRegular1 extends LogLevel {
@@ -86,6 +169,22 @@ class _LogLevelRegular1 extends LogLevel {
           prefix: '1',
           level: 1,
         );
+
+  @override
+  LogLevelResult when<LogLevelResult>({
+    required LogLevelResult Function() shout,
+    required LogLevelResult Function() v,
+    required LogLevelResult Function() error,
+    required LogLevelResult Function() vv,
+    required LogLevelResult Function() warning,
+    required LogLevelResult Function() vvv,
+    required LogLevelResult Function() info,
+    required LogLevelResult Function() vvvv,
+    required LogLevelResult Function() debug,
+    required LogLevelResult Function() vvvvv,
+    required LogLevelResult Function() vvvvvv,
+  }) =>
+      v();
 }
 
 class _LogLevelError extends LogLevel {
@@ -94,6 +193,22 @@ class _LogLevelError extends LogLevel {
           prefix: 'E',
           level: 1,
         );
+
+  @override
+  LogLevelResult when<LogLevelResult>({
+    required LogLevelResult Function() shout,
+    required LogLevelResult Function() v,
+    required LogLevelResult Function() error,
+    required LogLevelResult Function() vv,
+    required LogLevelResult Function() warning,
+    required LogLevelResult Function() vvv,
+    required LogLevelResult Function() info,
+    required LogLevelResult Function() vvvv,
+    required LogLevelResult Function() debug,
+    required LogLevelResult Function() vvvvv,
+    required LogLevelResult Function() vvvvvv,
+  }) =>
+      error();
 }
 
 class _LogLevelRegular2 extends LogLevel {
@@ -102,6 +217,22 @@ class _LogLevelRegular2 extends LogLevel {
           prefix: '2',
           level: 2,
         );
+
+  @override
+  LogLevelResult when<LogLevelResult>({
+    required LogLevelResult Function() shout,
+    required LogLevelResult Function() v,
+    required LogLevelResult Function() error,
+    required LogLevelResult Function() vv,
+    required LogLevelResult Function() warning,
+    required LogLevelResult Function() vvv,
+    required LogLevelResult Function() info,
+    required LogLevelResult Function() vvvv,
+    required LogLevelResult Function() debug,
+    required LogLevelResult Function() vvvvv,
+    required LogLevelResult Function() vvvvvv,
+  }) =>
+      vv();
 }
 
 class _LogLevelWarning extends LogLevel {
@@ -110,6 +241,22 @@ class _LogLevelWarning extends LogLevel {
           prefix: 'W',
           level: 2,
         );
+
+  @override
+  LogLevelResult when<LogLevelResult>({
+    required LogLevelResult Function() shout,
+    required LogLevelResult Function() v,
+    required LogLevelResult Function() error,
+    required LogLevelResult Function() vv,
+    required LogLevelResult Function() warning,
+    required LogLevelResult Function() vvv,
+    required LogLevelResult Function() info,
+    required LogLevelResult Function() vvvv,
+    required LogLevelResult Function() debug,
+    required LogLevelResult Function() vvvvv,
+    required LogLevelResult Function() vvvvvv,
+  }) =>
+      warning();
 }
 
 class _LogLevelRegular3 extends LogLevel {
@@ -118,6 +265,22 @@ class _LogLevelRegular3 extends LogLevel {
           prefix: '3',
           level: 3,
         );
+
+  @override
+  LogLevelResult when<LogLevelResult>({
+    required LogLevelResult Function() shout,
+    required LogLevelResult Function() v,
+    required LogLevelResult Function() error,
+    required LogLevelResult Function() vv,
+    required LogLevelResult Function() warning,
+    required LogLevelResult Function() vvv,
+    required LogLevelResult Function() info,
+    required LogLevelResult Function() vvvv,
+    required LogLevelResult Function() debug,
+    required LogLevelResult Function() vvvvv,
+    required LogLevelResult Function() vvvvvv,
+  }) =>
+      vvv();
 }
 
 class _LogLevelInfo extends LogLevel {
@@ -126,6 +289,22 @@ class _LogLevelInfo extends LogLevel {
           prefix: 'I',
           level: 3,
         );
+
+  @override
+  LogLevelResult when<LogLevelResult>({
+    required LogLevelResult Function() shout,
+    required LogLevelResult Function() v,
+    required LogLevelResult Function() error,
+    required LogLevelResult Function() vv,
+    required LogLevelResult Function() warning,
+    required LogLevelResult Function() vvv,
+    required LogLevelResult Function() info,
+    required LogLevelResult Function() vvvv,
+    required LogLevelResult Function() debug,
+    required LogLevelResult Function() vvvvv,
+    required LogLevelResult Function() vvvvvv,
+  }) =>
+      info();
 }
 
 class _LogLevelRegular4 extends LogLevel {
@@ -134,6 +313,22 @@ class _LogLevelRegular4 extends LogLevel {
           prefix: '4',
           level: 4,
         );
+
+  @override
+  LogLevelResult when<LogLevelResult>({
+    required LogLevelResult Function() shout,
+    required LogLevelResult Function() v,
+    required LogLevelResult Function() error,
+    required LogLevelResult Function() vv,
+    required LogLevelResult Function() warning,
+    required LogLevelResult Function() vvv,
+    required LogLevelResult Function() info,
+    required LogLevelResult Function() vvvv,
+    required LogLevelResult Function() debug,
+    required LogLevelResult Function() vvvvv,
+    required LogLevelResult Function() vvvvvv,
+  }) =>
+      vvvv();
 }
 
 class _LogLevelDebug extends LogLevel {
@@ -142,6 +337,22 @@ class _LogLevelDebug extends LogLevel {
           prefix: 'D',
           level: 4,
         );
+
+  @override
+  LogLevelResult when<LogLevelResult>({
+    required LogLevelResult Function() shout,
+    required LogLevelResult Function() v,
+    required LogLevelResult Function() error,
+    required LogLevelResult Function() vv,
+    required LogLevelResult Function() warning,
+    required LogLevelResult Function() vvv,
+    required LogLevelResult Function() info,
+    required LogLevelResult Function() vvvv,
+    required LogLevelResult Function() debug,
+    required LogLevelResult Function() vvvvv,
+    required LogLevelResult Function() vvvvvv,
+  }) =>
+      debug();
 }
 
 class _LogLevelRegular5 extends LogLevel {
@@ -150,6 +361,22 @@ class _LogLevelRegular5 extends LogLevel {
           prefix: '5',
           level: 5,
         );
+
+  @override
+  LogLevelResult when<LogLevelResult>({
+    required LogLevelResult Function() shout,
+    required LogLevelResult Function() v,
+    required LogLevelResult Function() error,
+    required LogLevelResult Function() vv,
+    required LogLevelResult Function() warning,
+    required LogLevelResult Function() vvv,
+    required LogLevelResult Function() info,
+    required LogLevelResult Function() vvvv,
+    required LogLevelResult Function() debug,
+    required LogLevelResult Function() vvvvv,
+    required LogLevelResult Function() vvvvvv,
+  }) =>
+      vvvvv();
 }
 
 class _LogLevelRegular6 extends LogLevel {
@@ -158,4 +385,20 @@ class _LogLevelRegular6 extends LogLevel {
           prefix: '6',
           level: 6,
         );
+
+  @override
+  LogLevelResult when<LogLevelResult>({
+    required LogLevelResult Function() shout,
+    required LogLevelResult Function() v,
+    required LogLevelResult Function() error,
+    required LogLevelResult Function() vv,
+    required LogLevelResult Function() warning,
+    required LogLevelResult Function() vvv,
+    required LogLevelResult Function() info,
+    required LogLevelResult Function() vvvv,
+    required LogLevelResult Function() debug,
+    required LogLevelResult Function() vvvvv,
+    required LogLevelResult Function() vvvvvv,
+  }) =>
+      vvvvvv();
 }

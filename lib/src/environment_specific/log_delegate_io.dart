@@ -1,6 +1,7 @@
 import 'dart:io' as io show Stdout, stdout;
 
 import '../log_level.dart';
+import 'console_log_formater.dart';
 import 'log_delegate.dart';
 import 'log_delegate_stub.dart';
 
@@ -29,7 +30,11 @@ class LogDelegateIO implements LogDelegate {
     required LogLevel logLevel,
   }) =>
       console.writeln(
-          '$_esc${_fgColors['red']}[${logLevel.prefix}]$_esc$_reset $message');
+        consoleLogFormatter(
+          message: message,
+          logLevel: logLevel,
+        ),
+      );
 }
 
 /// Ansi escape
