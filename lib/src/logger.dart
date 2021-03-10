@@ -74,12 +74,6 @@ abstract class L extends Stream<LogMessage> {
   /// Debug message with verbose level 4
   void d(Object message);
 
-  /// Decrement log level
-  void operator -(int v);
-
-  /// Increment log level
-  void operator +(int v);
-
   /// Add Inform message with verbose level 3
   void operator <(Object info);
 
