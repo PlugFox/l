@@ -25,7 +25,7 @@ String _shout(Object message, String prefix) => (StringBuffer('[')
       ..write(_esc)
       ..write(_ConsoleColor.black.foregroundValue) // foreground
       ..write(_esc)
-      ..write(_ConsoleColor.white.foregroundValue) // background
+      ..write(_ConsoleColor.white.backgroundValue) // background
       ..write(prefix)
       ..write(_esc)
       ..write(_reset)
@@ -54,7 +54,7 @@ String _error(Object message, String prefix) => (StringBuffer('[')
       ..write(_esc)
       ..write(_ConsoleColor.white.foregroundValue) // foreground
       ..write(_esc)
-      ..write(_ConsoleColor.red.foregroundValue) // background
+      ..write(_ConsoleColor.red.backgroundValue) // background
       ..write(prefix)
       ..write(_esc)
       ..write(_reset)
