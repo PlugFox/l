@@ -2,7 +2,7 @@ library l.example;
 
 import 'package:l/l.dart';
 
-void main() async {
+void main() {
   l
     ..v('Regular 1')
     ..e('Error')
@@ -11,5 +11,4 @@ void main() async {
     ..d('Debug')
     ..s('Shout')
     ..vvvvvv('Regular 6');
-  await Future<void>.delayed(const Duration(seconds: 1));
 }
