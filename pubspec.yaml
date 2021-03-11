@@ -3,7 +3,7 @@ description: >
   Cross-platform html/io Logger library with simple API.
   Manipulate with native and web console.
   Support ascii colorize output.
-version: 3.0.0-nullsafety.0
+version: 3.0.0-nullsafety.1
 repository: https://github.com/plugfox/l/tree/master
 issue_tracker: https://github.com/plugfox/l/issues
 homepage: https://github.com/plugfox/l
