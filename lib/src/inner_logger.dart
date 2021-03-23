@@ -5,6 +5,7 @@ import 'inner_logger_methods_mixin.dart';
 import 'inner_logger_operators_mixin.dart';
 import 'inner_logger_shortcuts_mixin.dart';
 import 'inner_logger_subscription_mixin.dart';
+import 'inner_print_handler_mixin.dart';
 import 'log_level.dart';
 import 'log_message.dart';
 import 'logger.dart';
@@ -27,7 +28,8 @@ class InnerLoggerImpl extends InnerLogger
         InnerLoggerLogMixin,
         InnerLoggerMethodsMixin,
         InnerLoggerOperatorsMixin,
-        InnerLoggerShortcutsMixin {
+        InnerLoggerShortcutsMixin,
+        InnerPrintHandlerMixin {
   //region InnerLoggerImpl singleton factory
   /// {@nodoc}
   factory InnerLoggerImpl() => _internalSingleton;

@@ -67,7 +67,25 @@ l.v6('verbose lvl #6');
 // Broadcast stream instantly receiving logs.
 l.forEach((log) => print('* ${log.level} : ${log.message}'));
 ```  
+
+
+### Print handling  
+
+You can handle `print` and output with `l` on some function or in a whole app with this simple syntax:  
   
+```dart
+import 'package:l/l.dart';
+
+void main() => l.printHandler(someFunction);
+
+Future<void> someFunction() async {
+  print('Hello');
+  await Future<void>.delayed(const Duration(milliseconds: 150));
+  print('world');
+  await Future<void>.delayed(const Duration(milliseconds: 150));
+  print('!!!');
+}
+```  
   
 ---
   

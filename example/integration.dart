@@ -1,4 +1,4 @@
-library l.example.key_features;
+library l.example.integration;
 
 import 'package:l/l.dart';
 

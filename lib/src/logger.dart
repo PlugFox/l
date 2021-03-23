@@ -92,6 +92,11 @@ abstract class L extends Stream<LogMessage> {
   /// Debug [message] with verbose level 4
   void d(Object message);
 
+  /// The custom handler can intercept print operations and
+  /// redirect them to [l.d] output
+  @experimental
+  R printHandler<R extends Object?>(R Function() body);
+
   /// Add Inform [message] with verbose level 3
   void operator <(Object info);
 
