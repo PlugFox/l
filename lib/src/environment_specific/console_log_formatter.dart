@@ -1,6 +1,9 @@
+import 'package:meta/meta.dart';
+
 import '../log_level.dart';
 
 /// {@nodoc}
+@internal
 String consoleLogFormatter({
   required Object message,
   required LogLevel logLevel,

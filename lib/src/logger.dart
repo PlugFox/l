@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 
 import 'log_message.dart';
+import 'log_options.dart';
 
 /// [L]ogger
 ///
@@ -92,10 +93,22 @@ abstract class L extends Stream<LogMessage> {
   /// Debug [message] with verbose level 4
   void d(Object message);
 
+  /// Set logger options for this zone
   /// The custom handler can intercept print operations and
   /// redirect them to [l.d] output
+  ///
+  /// ```dart
+  ///   l.capture(
+  ///     someFunction,
+  ///     const LogOptions(
+  ///       handlePrint: false,
+  ///       messageFormatting: _messageFormatting,
+  ///     ),
+  ///   );
+  /// ```
+  ///
   @experimental
-  R printHandler<R extends Object?>(R Function() body);
+  R capture<R extends Object?>(R Function() body, [LogOptions? logOptions]);
 
   /// Add Inform [message] with verbose level 3
   void operator <(Object info);

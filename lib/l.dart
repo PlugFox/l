@@ -22,6 +22,7 @@ import 'src/logger.dart';
 
 export 'src/log_level.dart';
 export 'src/log_message.dart';
+export 'src/log_options.dart';
 export 'src/logger.dart';
 
 /// [L]ogger
@@ -64,3 +65,4 @@ final L l = InnerLoggerImpl();
 /// TODO: продумать конфиг
 /// TODO: обновить описание
 /// TODO: обновить ченджлог
+/// TODO: продумать пайплайн форматирования сообщения

@@ -1,13 +1,18 @@
 import 'dart:html' as html show window, Console;
 
+import 'package:meta/meta.dart';
+
 import '../log_level.dart';
 import 'log_delegate.dart';
+import 'message_formatting.dart';
 
 /// {@nodoc}
+@internal
 LogDelegate createEnvironmentLogDelegate() =>
     LogDelegateWeb(html.window.console);
 
 /// {@nodoc}
+@internal
 class LogDelegateWeb implements LogDelegate {
   /// {@nodoc}
   final html.Console console;
@@ -19,18 +24,23 @@ class LogDelegateWeb implements LogDelegate {
   void log({
     required Object message,
     required LogLevel logLevel,
-  }) =>
-      logLevel.when<void>(
-        shout: () => console.warn(message),
-        v: () => console.log(message),
-        error: () => console.error(message),
-        vv: () => console.log(message),
-        warning: () => console.warn(message),
-        vvv: () => console.log(message),
-        info: () => console.info(message),
-        vvvv: () => console.log(message),
-        debug: () => console.debug(message),
-        vvvvv: () => console.log(message),
-        vvvvvv: () => console.log(message),
-      );
+  }) {
+    final formattedMessage = messageLogFormatter(
+      message: message,
+      logLevel: logLevel,
+    );
+    logLevel.when<void>(
+      shout: () => console.warn(formattedMessage),
+      v: () => console.log(formattedMessage),
+      error: () => console.error(formattedMessage),
+      vv: () => console.log(formattedMessage),
+      warning: () => console.warn(formattedMessage),
+      vvv: () => console.log(formattedMessage),
+      info: () => console.info(formattedMessage),
+      vvvv: () => console.log(formattedMessage),
+      debug: () => console.debug(formattedMessage),
+      vvvvv: () => console.log(formattedMessage),
+      vvvvvv: () => console.log(formattedMessage),
+    );
+  }
 }

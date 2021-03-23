@@ -1,6 +1,8 @@
-## 3.0.0-nullsafety.2 - 2021-03-23  
+## 3.0.0-nullsafety.3 - 2021-03-24  
 ### Added  
-- printHandler feature  
+- `capture` feature  
+- `handlePrint` feature  
+- `messageFormatting` feature  
 
 ## 3.0.0-nullsafety.1 - 2021-03-11  
 ### Added  

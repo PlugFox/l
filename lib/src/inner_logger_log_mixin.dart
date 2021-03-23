@@ -27,6 +27,9 @@ mixin InnerLoggerLogMixin on InnerLogger {
       message: message,
       logLevel: logLevel,
     );
-    super.notifyListeners(message: message, logLevel: logLevel);
+    super.notifyListeners(
+      message: message,
+      logLevel: logLevel,
+    );
   }
 }
