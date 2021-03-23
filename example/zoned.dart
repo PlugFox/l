@@ -6,7 +6,7 @@ import 'package:l/l.dart';
 void main() => l.capture(
       someFunction,
       const LogOptions(
-        handlePrint: false,
+        handlePrint: true,
         messageFormatting: _messageFormatting,
       ),
     );

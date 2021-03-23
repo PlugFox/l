@@ -1,9 +1,9 @@
 import 'package:meta/meta.dart';
 
 import '../log_level.dart';
-import 'console_log_formatter.dart';
 import 'log_delegate.dart';
-import 'message_formatting.dart';
+import 'message_formatting_pipeline.dart';
+import 'message_log_formatting_mixin.dart';
 
 /// {@nodoc}
 @internal
@@ -12,6 +12,8 @@ LogDelegate createEnvironmentLogDelegate() => LogDelegateStub();
 /// {@nodoc}
 @internal
 class LogDelegateStub implements LogDelegate {
+  final MessageFormattingPipeline _formatter = MessageFormattingPipelineStub();
+
   @override
   void log({
     required Object message,
@@ -19,12 +21,14 @@ class LogDelegateStub implements LogDelegate {
   }) =>
       // ignore: avoid_print
       print(
-        consoleLogFormatter(
-          message: messageLogFormatter(
-            message: message,
-            logLevel: logLevel,
-          ),
+        _formatter.format(
+          message: message,
           logLevel: logLevel,
         ),
       );
 }
+
+/// {@nodoc}
+@internal
+class MessageFormattingPipelineStub extends MessageFormattingPipeline
+    with MessageLogFormatterMixin {}

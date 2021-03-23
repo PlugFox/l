@@ -4,7 +4,8 @@ import 'package:meta/meta.dart';
 
 import '../log_level.dart';
 import 'log_delegate.dart';
-import 'message_formatting.dart';
+import 'message_formatting_pipeline.dart';
+import 'message_log_formatting_mixin.dart';
 
 /// {@nodoc}
 @internal
@@ -14,7 +15,10 @@ LogDelegate createEnvironmentLogDelegate() =>
 /// {@nodoc}
 @internal
 class LogDelegateWeb implements LogDelegate {
+  final MessageFormattingPipeline _formatter = MessageFormattingPipelineWeb();
+
   /// {@nodoc}
+  @protected
   final html.Console console;
 
   /// {@nodoc}
@@ -25,7 +29,7 @@ class LogDelegateWeb implements LogDelegate {
     required Object message,
     required LogLevel logLevel,
   }) {
-    final formattedMessage = messageLogFormatter(
+    final formattedMessage = _formatter.format(
       message: message,
       logLevel: logLevel,
     );
@@ -44,3 +48,8 @@ class LogDelegateWeb implements LogDelegate {
     );
   }
 }
+
+/// {@nodoc}
+@internal
+class MessageFormattingPipelineWeb extends MessageFormattingPipeline
+    with MessageLogFormatterMixin {}
