@@ -1,9 +1,11 @@
 name: Logger
+
 on:
   push:
-    branches: [ master, dev ]
+    branches: [ master, dev, feature/null_safety ]
   pull_request:
-    branches: [ master, dev ]
+    branches: [ master, dev, feature/null_safety ]
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -11,23 +13,21 @@ jobs:
       image: google/dart:latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
       - name: Install Dependencies
-        run: pub get
-      - name: Format
-        run: dartfmt --dry-run --set-exit-if-changed lib example test
-      - name: Run analyzer
-        run: dartanalyzer --fatal-infos --fatal-warnings lib example test
-      - name: Run tests
-        run: pub run test test/l_test.dart --concurrency=6
+        run: dart pub get
+      - name: Check format
+        run: dart format --set-exit-if-changed -l 80 -o none .
+      - name: Check analyzer
+        run: dart analyze --fatal-infos --fatal-warnings .
       #- name: Run tests
-      #  run: pub run test_coverage
-      #- name: Check Code Coverage
-      #  uses: ChicagoFlutter/lcov-cop@v1.0.2
-      #  with:
-      #    path: coverage/lcov.info
-      #    min_coverage: 100
-      #    exclude: "**/*.g.dart"
+      #  run: dart test --coverage=coverage && dart run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --packages=.packages --report-on=lib
       #- name: Upload coverage to Codecov
       #  uses: codecov/codecov-action@v1
       #  with:
       #    token: ${{ secrets.CODECOV_TOKEN }}
+      #- name: Check Code Coverage
+      #  uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
+      #  with:
+      #    path: coverage/lcov.info

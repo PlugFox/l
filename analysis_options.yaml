@@ -17,6 +17,8 @@ analyzer:
     - 'assets/**'
     # Mocks for test
     - 'test/data/**'
+    # Coverage
+    - 'test/.test_coverage.dart'
 
   strong-mode:
     implicit-casts: false

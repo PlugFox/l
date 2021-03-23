@@ -1,4 +1,4 @@
-library test.l;
+library l.test;
 
 import 'package:l/l.dart';
 import 'package:test/test.dart';
@@ -9,8 +9,22 @@ void main() {
 
 void mainFunctional() {
   test('shouldExists', () {
-    expect(l != null, isTrue);
-    expect(L.instance != null, isTrue);
-    expect(L.I != null, isTrue);
+    expect(l is L, isTrue);
+  });
+
+  test('shouldPrint', () {
+    l
+      ..s('Shout')
+      ..v('Regular 1')
+      ..e('Error')
+      ..vv('Regular 2')
+      ..w('Warning')
+      ..vvv('Regular 3')
+      ..i('Info')
+      ..vvvv('Regular 4')
+      ..d('Debug')
+      ..vvvvv('Regular 5')
+      ..vvvvvv('Regular 6');
+    expect(true, true);
   });
 }
