@@ -65,7 +65,7 @@ l.v6('verbose lvl #6');
   
 ```dart
 // Broadcast stream instantly receiving logs.
-l.forEach((LogMessage log) => print('* ${log.level}'));
+l.forEach((log) => print('* ${log.level} : ${log.message}'));
 ```  
   
   
