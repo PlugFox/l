@@ -1,9 +1,18 @@
+## 3.0.0-nullsafety.4 - 2021-03-24  
+### Added  
+- Flutter example
+  
+### Fixed
+- `print` with root zone at io  
+  
+  
 ## 3.0.0-nullsafety.3 - 2021-03-24  
 ### Added  
 - `capture` feature  
 - `handlePrint` feature  
 - `messageFormatting` feature  
-
+  
+  
 ## 3.0.0-nullsafety.1 - 2021-03-11  
 ### Added  
 - New badges  
@@ -22,7 +31,8 @@
 ## 3.0.0-nullsafety.0 - 2021-02-19  
 ### Changed  
 - Non nullable ready  
-
+  
+  
 ## 2.0.0-dev - 2020-08-29  
 ### Added  
 - Support multiline pretty output  
