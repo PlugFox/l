@@ -119,8 +119,8 @@ l.where((msg) => msg.level.maybeWhen(
       warning: () => true,
       orElse: () => false,
     ))
-  .map((msg) => msg.message.toString())
-  .forEach(FirebaseCrashlytics.instance.log);
+  .map<String>((msg) => msg.message.toString())
+  .listen(FirebaseCrashlytics.instance.log);
 ```
   
 ### Zoned Errors
@@ -132,13 +132,14 @@ runZonedGuarded(someFunction, l.e);
 ### Handling uncaught errors  
   
 ```dart
-Isolate.current.setErrorsFatal(false);
-Isolate.current.addErrorListener(
-  RawReceivePort(
-    (List<dynamic> pair) => // ignore: avoid_types_on_closure_parameters
-        l.e(pair.first as Object),
-  ).sendPort,
-);
+Isolate.current
+       ..setErrorsFatal(false)
+       ..addErrorListener(
+         RawReceivePort(
+           (List<dynamic> pair) => // ignore: avoid_types_on_closure_parameters
+               l.e(pair.first as Object),
+         ).sendPort,
+       );
 ```    
   
   

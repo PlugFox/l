@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 library l.example.integration;
 
 import 'package:l/l.dart';
