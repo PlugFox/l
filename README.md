@@ -98,6 +98,52 @@ Object _messageFormatting(Object message, LogLevel logLevel, DateTime now) =>
 ```  
   
 ---
+
+## Handling errors  
+
+### Flutter
+
+```dart
+final sourceFlutterError = FlutterError.onError;
+FlutterError.onError = (details) {
+  l.w(details.exceptionAsString(), details.stack);
+  sourceFlutterError?.call(details);
+};
+```
+  
+### Crashlytics
+
+```dart
+l.where((msg) => msg.level.maybeWhen(
+      error: () => true,
+      warning: () => true,
+      orElse: () => false,
+    ))
+  .map<String>((msg) => msg.message.toString())
+  .listen(FirebaseCrashlytics.instance.log);
+```
+  
+### Zoned Errors
+
+```dart
+runZonedGuarded(someFunction, l.e);  
+```
+  
+### Handling uncaught errors  
+  
+```dart
+Isolate.current
+       ..setErrorsFatal(false)
+       ..addErrorListener(
+         RawReceivePort(
+           (List<dynamic> pair) => // ignore: avoid_types_on_closure_parameters
+               l.e(pair.first as Object),
+         ).sendPort,
+       );
+```    
+  
+  
+---
   
 ## Limitations  
   
