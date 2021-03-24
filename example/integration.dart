@@ -1,14 +1,13 @@
+// ignore_for_file: unused_local_variable
+
 library l.example.integration;
 
 import 'package:l/l.dart';
 
 void main() {
-  l
-    ..v('Regular 1')
-    ..e('Error')
-    ..w('Warning')
-    ..i('Info')
-    ..d('Debug')
-    ..s('Shout')
-    ..vvvvvv('Regular 6');
+  l.forEach((logMessage) {
+    final message = logMessage.message;
+    final level = logMessage.level;
+    final date = logMessage.date;
+  });
 }
