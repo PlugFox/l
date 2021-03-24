@@ -32,9 +32,14 @@ mixin InnerZonedMixin on InnerLogger {
         zoneSpecification: ZoneSpecification(
           print: (self, parent, zone, line) {
             if (logOptions?.handlePrint ?? true) {
-              log(message: line, logLevel: const LogLevel.info());
+              self.run(
+                () => log(
+                  message: line,
+                  logLevel: const LogLevel.info(),
+                ),
+              );
             } else {
-              parent.print(zone, line);
+              self.print(line);
             }
           },
         ),

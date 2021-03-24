@@ -1,13 +1,19 @@
-// ignore_for_file: public_member_api_docs
+// ignore_for_file: public_member_api_docs, avoid_print
+
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:l/l.dart';
 
-void main() {
-  l.d('runApp');
-  runApp(const App());
-  l.v('Running');
-}
+void main() => runZonedGuarded(
+      () => l.capture(() {
+        l.d('runApp');
+        print('original print');
+        runApp(const App());
+        l.v('Running');
+      }),
+      l.e,
+    );
 
 @immutable
 class App extends StatelessWidget {
@@ -24,11 +30,40 @@ class App extends StatelessWidget {
           ),
           body: SafeArea(
             child: Center(
-              child: OutlinedButton(
-                onPressed: () {
-                  l.i(' * on click');
-                },
-                child: const Text('Click me'),
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  width: 200,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      OutlinedButton(
+                        onPressed: () => l.i(' * on click'),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Text(
+                            'Click me',
+                            textScaleFactor: 2,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 25),
+                      OutlinedButton(
+                        onPressed: () => scheduleMicrotask(
+                          () => throw UnsupportedError('Some UnsupportedError'),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Text(
+                            'Throw error',
+                            textScaleFactor: 2,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),

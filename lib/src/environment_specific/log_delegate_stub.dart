@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:meta/meta.dart';
 
 import '../log_level.dart';
+import 'console_log_formatter_mixin.dart';
 import 'log_delegate.dart';
 import 'message_formatting_pipeline.dart';
 import 'message_log_formatting_mixin.dart';
@@ -20,15 +23,17 @@ class LogDelegateStub implements LogDelegate {
     required LogLevel logLevel,
   }) =>
       // ignore: avoid_print
-      print(
+      _printToConsole(
         _formatter.format(
           message: message,
           logLevel: logLevel,
         ),
       );
+
+  void _printToConsole(String line) => Zone.root.print(line);
 }
 
 /// {@nodoc}
 @internal
 class MessageFormattingPipelineStub extends MessageFormattingPipeline
-    with MessageLogFormatterMixin {}
+    with ConsoleLogFormatterMixin, MessageLogFormatterMixin {}
