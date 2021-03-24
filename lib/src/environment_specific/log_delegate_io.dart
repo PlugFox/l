@@ -5,12 +5,14 @@ import 'package:meta/meta.dart';
 import '../log_level.dart';
 import 'console_log_formatter_mixin.dart';
 import 'log_delegate.dart';
+import 'log_delegate_stub.dart';
 import 'message_formatting_pipeline.dart';
 import 'message_log_formatting_mixin.dart';
 
 /// {@nodoc}
 @internal
-LogDelegate createEnvironmentLogDelegate() => LogDelegateIO(io.stdout);
+LogDelegate createEnvironmentLogDelegate() =>
+    io.stdout.hasTerminal ? LogDelegateIO(io.stdout) : LogDelegateStub();
 
 /// {@nodoc}
 @internal

@@ -1,3 +1,8 @@
+## 3.0.0-nullsafety.5 - 2021-03-24  
+## Fixed
+- Use `print` when `stdout` is unavailable
+  
+  
 ## 3.0.0-nullsafety.4 - 2021-03-24  
 ### Added  
 - Flutter example
