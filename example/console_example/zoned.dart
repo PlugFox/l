@@ -1,23 +1,36 @@
 // ignore_for_file: avoid_print
 library l.example.zoned;
 
+import 'dart:async';
+
 import 'package:l/l.dart';
 
-void main() => l.capture(
-      someFunction,
-      const LogOptions(
-        handlePrint: true,
-        messageFormatting: _messageFormatting,
+void main() => runZonedGuarded(
+      () => l.capture(
+        someFunction,
+        const LogOptions(
+          handlePrint: true,
+          messageFormatting: _messageFormatting,
+        ),
       ),
+      l.e,
     );
 
 Future<void> someFunction() async {
-  print('Hello');
-  await Future<void>.delayed(const Duration(milliseconds: 150));
-  l.d('world');
-  await Future<void>.delayed(const Duration(milliseconds: 150));
-  l.e('!!!');
+  l
+    ..v('Regular 1')
+    ..e('Error')
+    ..w('Warning')
+    ..i('Info')
+    ..d('Debug')
+    ..s('Shout')
+    ..v6('Regular 6');
+  print('Hello from original print!');
+  throw UnsupportedError('Some error');
 }
 
 Object _messageFormatting(Object message, LogLevel logLevel, DateTime now) =>
-    '${now.hour}:${now.minute.toString().padLeft(2, '0')} $message';
+    '${_timeFormat(now)} | $message';
+
+String _timeFormat(DateTime time) =>
+    '${time.hour}:${time.minute.toString().padLeft(2, '0')}';
