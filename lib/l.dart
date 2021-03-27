@@ -61,8 +61,3 @@ export 'src/logger.dart';
 /// **!!! PLEASE, DO NOT LOG SENSITIVE INFORMATION !!!**
 ///
 final L l = InnerLoggerImpl();
-
-/// TODO: продумать конфиг
-/// TODO: обновить описание
-/// TODO: обновить ченджлог
-/// TODO: продумать пайплайн форматирования сообщения
