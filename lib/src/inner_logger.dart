@@ -8,7 +8,6 @@ import 'inner_logger_operators_mixin.dart';
 import 'inner_logger_shortcuts_mixin.dart';
 import 'inner_logger_subscription_mixin.dart';
 import 'inner_zoned_mixin.dart';
-import 'log_level.dart';
 import 'log_message.dart';
 import 'logger.dart';
 
@@ -19,21 +18,13 @@ abstract class InnerLogger extends Stream<LogMessage> implements L {
   /// {@nodoc}
   @protected
   @visibleForOverriding
-  void log({
-    required Object message,
-    required LogLevel logLevel,
-    StackTrace? stackTrace,
-  });
+  void log(LogMessage logMessage);
 
   /// Notify subscribers
   /// {@nodoc}
   @protected
   @visibleForOverriding
-  void notifyListeners({
-    required Object message,
-    required LogLevel logLevel,
-    StackTrace? stackTrace,
-  });
+  void notifyListeners(LogMessage logMessage);
 }
 
 /// {@nodoc}

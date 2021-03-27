@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 
 import 'inner_logger.dart';
 import 'log_level.dart';
+import 'log_message.dart';
 import 'log_options.dart';
 
 /// {@nodoc}
@@ -34,8 +35,10 @@ mixin InnerZonedMixin on InnerLogger {
             if (logOptions?.handlePrint ?? true) {
               self.run(
                 () => log(
-                  message: line,
-                  logLevel: const LogLevel.info(),
+                  LogMessage.create(
+                    line,
+                    const LogLevel.info(),
+                  ),
                 ),
               );
             } else {

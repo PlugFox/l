@@ -3,21 +3,30 @@ import 'package:meta/meta.dart';
 import 'log_level.dart';
 import 'log_message.dart';
 
-/// Message for logging with error or warning stack trace
+/// Message (error, exception, warning) for logging with stack trace
 @immutable
+@experimental
 class LogMessageWithStackTrace extends LogMessage {
   /// Stack trace
-  final StackTrace stackTrace;
+  /// This field cannot be transferred between isolates
+  @experimental
+  final StackTrace? stackTrace;
 
   /// Message for logging
-  const LogMessageWithStackTrace({
-    required Object message,
-    required DateTime date,
-    required this.stackTrace,
-    LogLevel? level,
-  }) : super(
+  LogMessageWithStackTrace.create(
+    Object message,
+    LogLevel level,
+    this.stackTrace,
+  ) : super(
           message: message,
-          date: date,
           level: level,
+          date: DateTime.now(),
         );
+
+  /// Message for logging to Map<String, Object?>
+  @override
+  Map<String, Object?> toJson() => <String, Object?>{
+        ...super.toJson(),
+        'stack_trace': stackTrace.toString(),
+      };
 }
