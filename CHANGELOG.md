@@ -1,3 +1,12 @@
+## 3.0.0 - 2021-03-27  
+## Changed  
+- Total refactoring  
+- Null safety support  
+- `capture` feature  
+- customization through zones  
+- Simplification  
+  
+  
 ## 3.0.0-nullsafety.5 - 2021-03-24  
 ## Fixed
 - Use `print` when `stdout` is unavailable
