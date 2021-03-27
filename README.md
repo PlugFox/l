@@ -142,6 +142,12 @@ Isolate.current
        );
 ```    
   
+---
+
+### Output example  
+  
+![](.img/sample.png)    
+  
   
 ---
   

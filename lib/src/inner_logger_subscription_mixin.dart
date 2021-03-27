@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'inner_logger.dart';
-import 'log_level.dart';
 import 'log_message.dart';
 
 /// {@nodoc}
@@ -27,13 +26,8 @@ mixin InnerLoggerSubscriptionMixin on InnerLogger {
       );
 
   @override
-  void notifyListeners({required Object message, required LogLevel logLevel}) {
+  void notifyListeners(LogMessage logMessage) {
     if (!hasListener) return;
-    final logMessage = LogMessage(
-      message: message,
-      date: DateTime.now(),
-      level: logLevel,
-    );
     _controller.add(logMessage);
   }
 }

@@ -5,7 +5,7 @@ import 'environment_specific/log_delegate_stub.dart'
     // ignore: uri_does_not_exist
     if (dart.library.io) 'environment_specific/log_delegate_io.dart';
 import 'inner_logger.dart';
-import 'log_level.dart';
+import 'log_message.dart';
 
 /// {@nodoc}
 mixin InnerLoggerLogMixin on InnerLogger {
@@ -19,17 +19,11 @@ mixin InnerLoggerLogMixin on InnerLogger {
   }();
 
   @override
-  void log({
-    required Object message,
-    required LogLevel logLevel,
-  }) {
+  void log(LogMessage logMessage) {
     _delegate?.log(
-      message: message,
-      logLevel: logLevel,
+      message: logMessage.message,
+      logLevel: logMessage.level,
     );
-    super.notifyListeners(
-      message: message,
-      logLevel: logLevel,
-    );
+    super.notifyListeners(logMessage);
   }
 }
