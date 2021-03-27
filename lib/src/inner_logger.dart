@@ -19,13 +19,21 @@ abstract class InnerLogger extends Stream<LogMessage> implements L {
   /// {@nodoc}
   @protected
   @visibleForOverriding
-  void log({required Object message, required LogLevel logLevel});
+  void log({
+    required Object message,
+    required LogLevel logLevel,
+    StackTrace? stackTrace,
+  });
 
   /// Notify subscribers
   /// {@nodoc}
   @protected
   @visibleForOverriding
-  void notifyListeners({required Object message, required LogLevel logLevel});
+  void notifyListeners({
+    required Object message,
+    required LogLevel logLevel,
+    StackTrace? stackTrace,
+  });
 }
 
 /// {@nodoc}
