@@ -22,7 +22,6 @@ mixin InnerLoggerLogMixin on InnerLogger {
   void log({
     required Object message,
     required LogLevel logLevel,
-    StackTrace? stackTrace,
   }) {
     _delegate?.log(
       message: message,
@@ -31,7 +30,6 @@ mixin InnerLoggerLogMixin on InnerLogger {
     super.notifyListeners(
       message: message,
       logLevel: logLevel,
-      stackTrace: stackTrace,
     );
   }
 }

@@ -19,7 +19,6 @@ mixin InnerLoggerMethodsMixin on InnerLogger {
   void e(Object message, [StackTrace? stackTrace]) => super.log(
         message: message,
         logLevel: const LogLevel.error(),
-        stackTrace: stackTrace,
       );
 
   @override
@@ -32,7 +31,6 @@ mixin InnerLoggerMethodsMixin on InnerLogger {
   void w(Object message, [StackTrace? stackTrace]) => super.log(
         message: message,
         logLevel: const LogLevel.warning(),
-        stackTrace: stackTrace,
       );
 
   @override
