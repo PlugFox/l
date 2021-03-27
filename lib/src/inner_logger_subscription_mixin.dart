@@ -10,7 +10,8 @@ mixin InnerLoggerSubscriptionMixin on InnerLogger {
   /// Whether there is a subscriber on the [Stream].
   bool get hasListener => _controller.hasListener;
 
-  final StreamController<LogMessage> _controller = StreamController<LogMessage>.broadcast();
+  final StreamController<LogMessage> _controller 
+	= StreamController<LogMessage>.broadcast();
 
   @override
   StreamSubscription<LogMessage> listen(
