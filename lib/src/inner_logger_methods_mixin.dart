@@ -23,11 +23,16 @@ mixin InnerLoggerMethodsMixin on InnerLogger {
 
   @override
   void e(Object message, [StackTrace? stackTrace]) => super.log(
-        LogMessageWithStackTrace.create(
-          message,
-          const LogLevel.error(),
-          stackTrace,
-        ),
+        stackTrace == null
+            ? LogMessage.create(
+                message,
+                const LogLevel.error(),
+              )
+            : LogMessageWithStackTrace.create(
+                message,
+                const LogLevel.error(),
+                stackTrace,
+              ),
       );
 
   @override
@@ -40,11 +45,16 @@ mixin InnerLoggerMethodsMixin on InnerLogger {
 
   @override
   void w(Object message, [StackTrace? stackTrace]) => super.log(
-        LogMessageWithStackTrace.create(
-          message,
-          const LogLevel.warning(),
-          stackTrace,
-        ),
+        stackTrace == null
+            ? LogMessage.create(
+                message,
+                const LogLevel.warning(),
+              )
+            : LogMessageWithStackTrace.create(
+                message,
+                const LogLevel.warning(),
+                stackTrace,
+              ),
       );
 
   @override

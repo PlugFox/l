@@ -1,3 +1,11 @@
+## 3.0.1 - 2021-03-28  
+## Added  
+- Export `LogMessageWithStackTrace`  
+  
+## Changed  
+- Creating `LogMessageWithStackTrace`  instead `LogMessage` only if `StackTrace` exist.  
+  
+  
 ## 3.0.0 - 2021-03-27  
 ## Changed  
 - Total refactoring  
@@ -8,15 +16,15 @@
   
   
 ## 3.0.0-nullsafety.5 - 2021-03-24  
-## Fixed
-- Use `print` when `stdout` is unavailable
+## Fixed  
+- Use `print` when `stdout` is unavailable  
   
   
 ## 3.0.0-nullsafety.4 - 2021-03-24  
 ### Added  
-- Flutter example
+- Flutter example  
   
-### Fixed
+### Fixed  
 - `print` with root zone at io  
   
   

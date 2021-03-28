@@ -85,10 +85,10 @@ abstract class L extends Stream<LogMessage> {
   void i(Object message);
 
   /// Warning [message] with verbose level 2
-  void w(Object message, [StackTrace stackTrace]);
+  void w(Object message, [StackTrace? stackTrace]);
 
   /// Error [message] with verbose level 1
-  void e(Object message, [StackTrace stackTrace]);
+  void e(Object message, [StackTrace? stackTrace]);
 
   /// Debug [message] with verbose level 4
   void d(Object message);

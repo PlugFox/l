@@ -10,7 +10,7 @@ class LogMessageWithStackTrace extends LogMessage {
   /// Stack trace
   /// This field cannot be transferred between isolates
   @experimental
-  final StackTrace? stackTrace;
+  final StackTrace stackTrace;
 
   /// Message for logging
   LogMessageWithStackTrace.create(
