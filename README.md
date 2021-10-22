@@ -4,8 +4,6 @@
   
 [![Actions Status](https://github.com/PlugFox/l/workflows/Logger/badge.svg)](https://github.com/PlugFox/l/actions)
 [![Pub](https://img.shields.io/pub/v/l.svg)](https://pub.dev/packages/l)
-[![Likes](https://img.shields.io/badge/dynamic/json?color=blue&label=likes&query=likes&url=http://www.pubscore.gq/likes?package=l&style=flat-square&cacheSeconds=90000)](https://pub.dev/packages/l)
-[![Health](https://img.shields.io/badge/dynamic/json?color=blue&label=health&query=pub_points&url=http://www.pubscore.gq/pub-points?package=l&style=flat-square&cacheSeconds=90000)](https://pub.dev/packages/l/score)
 [![License: WTFPL](https://img.shields.io/badge/License-WTFPL-brightgreen.svg)](https://en.wikipedia.org/wiki/WTFPL)
 [![Code size](https://img.shields.io/github/languages/code-size/plugfox/l?logo=github&logoColor=white)](https://github.com/plugfox/l)
 [![effective_dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://github.com/tenhobi/effective_dart)
