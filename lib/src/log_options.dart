@@ -13,6 +13,9 @@ abstract class LogOptions {
   /// Handle `print` function in current zone
   bool get handlePrint;
 
+  /// Output messages to the console in the release
+  bool get outputInRelease;
+
   /// Output message formatting callback
   MessageFormatting? get messageFormatting;
 
@@ -20,6 +23,7 @@ abstract class LogOptions {
   @experimental
   const factory LogOptions({
     bool handlePrint,
+    bool outputInRelease,
     MessageFormatting? messageFormatting,
   }) = _LogOptionsImpl;
 
@@ -34,10 +38,14 @@ class _LogOptionsImpl extends LogOptions {
   final bool handlePrint;
 
   @override
+  final bool outputInRelease;
+
+  @override
   final MessageFormatting? messageFormatting;
 
   const _LogOptionsImpl({
     this.handlePrint = true,
+    this.outputInRelease = false,
     this.messageFormatting,
   }) : super._();
 }

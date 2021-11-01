@@ -7,14 +7,12 @@ import 'log_level.dart';
 import 'log_message.dart';
 import 'log_options.dart';
 
-/// {@nodoc}
-@internal
-const Symbol kOptionsKey = #l.logOptions;
+const Symbol _kOptionsKey = #l.logOptions;
 
 /// {@nodoc}
 @internal
 LogOptions? getCurrentLogOptions() {
-  final Object? options = Zone.current[kOptionsKey];
+  final Object? options = Zone.current[_kOptionsKey];
   if (options is LogOptions) {
     return options;
   }
@@ -28,7 +26,7 @@ mixin InnerZonedMixin on InnerLogger {
       runZoned<R>(
         body,
         zoneValues: logOptions != null
-            ? <Symbol, LogOptions>{kOptionsKey: logOptions}
+            ? <Symbol, LogOptions>{_kOptionsKey: logOptions}
             : null,
         zoneSpecification: ZoneSpecification(
           print: (self, parent, zone, line) {
