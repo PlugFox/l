@@ -66,9 +66,12 @@ mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
         ..write(message))
       .toString();
 
-  String _vv(Object message, String prefix) =>
-      (StringBuffer('[')..write(prefix)..write(']')..write(' ')..write(message))
-          .toString();
+  String _vv(Object message, String prefix) => (StringBuffer('[')
+        ..write(prefix)
+        ..write(']')
+        ..write(' ')
+        ..write(message))
+      .toString();
 
   String _warning(Object message, String prefix) => (StringBuffer('[')
         ..write(_esc)
@@ -81,9 +84,12 @@ mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
         ..write(message))
       .toString();
 
-  String _vvv(Object message, String prefix) =>
-      (StringBuffer('[')..write(prefix)..write(']')..write(' ')..write(message))
-          .toString();
+  String _vvv(Object message, String prefix) => (StringBuffer('[')
+        ..write(prefix)
+        ..write(']')
+        ..write(' ')
+        ..write(message))
+      .toString();
 
   String _info(Object message, String prefix) => (StringBuffer('[')
         ..write(_esc)
@@ -96,9 +102,12 @@ mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
         ..write(message))
       .toString();
 
-  String _vvvv(Object message, String prefix) =>
-      (StringBuffer('[')..write(prefix)..write(']')..write(' ')..write(message))
-          .toString();
+  String _vvvv(Object message, String prefix) => (StringBuffer('[')
+        ..write(prefix)
+        ..write(']')
+        ..write(' ')
+        ..write(message))
+      .toString();
 
   String _debug(Object message, String prefix) => (StringBuffer('[')
         ..write(_esc)
@@ -111,13 +120,19 @@ mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
         ..write(message))
       .toString();
 
-  String _vvvvv(Object message, String prefix) =>
-      (StringBuffer('[')..write(prefix)..write(']')..write(' ')..write(message))
-          .toString();
+  String _vvvvv(Object message, String prefix) => (StringBuffer('[')
+        ..write(prefix)
+        ..write(']')
+        ..write(' ')
+        ..write(message))
+      .toString();
 
-  String _vvvvvv(Object message, String prefix) =>
-      (StringBuffer('[')..write(prefix)..write(']')..write(' ')..write(message))
-          .toString();
+  String _vvvvvv(Object message, String prefix) => (StringBuffer('[')
+        ..write(prefix)
+        ..write(']')
+        ..write(' ')
+        ..write(message))
+      .toString();
 }
 
 /// Ansi escape
