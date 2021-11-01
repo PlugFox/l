@@ -1,3 +1,13 @@
+## 3.0.2+1 - 2021-11-01  
+## Changed  
+- Update changelog  
+  
+  
+## 3.0.2 - 2021-11-01    
+## Added  
+- Add `outputInRelease` in LogOptions  
+  
+  
 ## 3.0.1 - 2021-03-28  
 ## Added  
 - Export `LogMessageWithStackTrace`  
