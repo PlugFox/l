@@ -13,6 +13,9 @@ abstract class LogOptions {
   /// Handle `print` function in current zone
   bool get handlePrint;
 
+  /// Print colors using ASCII escape codes
+  bool get printColors;
+
   /// Output messages to the console in the release
   bool get outputInRelease;
 
@@ -23,6 +26,7 @@ abstract class LogOptions {
   @experimental
   const factory LogOptions({
     bool handlePrint,
+    bool printColors,
     bool outputInRelease,
     MessageFormatting? messageFormatting,
   }) = _LogOptionsImpl;
@@ -38,6 +42,9 @@ class _LogOptionsImpl extends LogOptions {
   final bool handlePrint;
 
   @override
+  final bool printColors;
+
+  @override
   final bool outputInRelease;
 
   @override
@@ -45,6 +52,7 @@ class _LogOptionsImpl extends LogOptions {
 
   const _LogOptionsImpl({
     this.handlePrint = true,
+    this.printColors = true,
     this.outputInRelease = false,
     this.messageFormatting,
   }) : super._();
