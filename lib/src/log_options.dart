@@ -13,7 +13,7 @@ abstract class LogOptions {
   /// Handle `print` function in current zone
   bool get handlePrint;
 
-  /// Print colors using ASCII escape codes
+  /// Print with colors using ASCII escape codes
   bool get printColors;
 
   /// Output messages to the console in the release
