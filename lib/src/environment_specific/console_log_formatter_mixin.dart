@@ -6,11 +6,16 @@ import 'message_formatting_pipeline.dart';
 
 extension on StringBuffer {
   void writeEsc(String value) {
-    this..write(_esc)..write(value);
+    this
+      ..write(_esc)
+      ..write(value);
   }
 
-  String completeMessage(Object message) =>
-      (this..write(']')..write(' ')..write(message)).toString();
+  String completeMessage(Object message) => (this
+        ..write(']')
+        ..write(' ')
+        ..write(message))
+      .toString();
 }
 
 /// {@nodoc}
