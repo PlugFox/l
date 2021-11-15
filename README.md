@@ -69,7 +69,7 @@ l.forEach((log) => print('* ${log.level} : ${log.message}'));
 
 ### Print handling and customizing  
   
-Logger supports fine-tuning.
+Logger supports fine-tuning with second argument `LogOptions` in `l.capture` method.
 Also, you can handle `print` and output with `l` on some function or in a whole app with this simple syntax:  
   
 ```dart
@@ -79,6 +79,8 @@ void main() => l.capture(
       someFunction,
       const LogOptions(
         handlePrint: true,
+        printColors: true,
+        outputInRelease: false,
         messageFormatting: _messageFormatting,
       ),
     );

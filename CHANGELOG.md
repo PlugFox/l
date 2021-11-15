@@ -1,3 +1,8 @@
+## 3.1.0 - 2021-11-15  
+## Added  
+- Add `printColors` in LogOptions  
+  
+  
 ## 3.0.2+1 - 2021-11-01  
 ## Changed  
 - Update changelog  

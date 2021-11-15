@@ -40,7 +40,7 @@ class InnerLoggerImpl extends InnerLogger
   //region InnerLoggerImpl singleton factory
   /// {@nodoc}
   factory InnerLoggerImpl() => _internalSingleton;
-  static final InnerLoggerImpl _internalSingleton = InnerLoggerImpl._internal();
   InnerLoggerImpl._internal();
+  static final InnerLoggerImpl _internalSingleton = InnerLoggerImpl._internal();
   //endregion
 }

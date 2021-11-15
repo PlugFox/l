@@ -8,6 +8,7 @@ import 'inner_logger.dart';
 import 'inner_zoned_mixin.dart';
 import 'log_message.dart';
 
+// ignore: do_not_use_environment
 const bool _kIsDebug = !bool.fromEnvironment(
   'dart.vm.product',
   defaultValue: true,
@@ -15,13 +16,13 @@ const bool _kIsDebug = !bool.fromEnvironment(
 
 /// {@nodoc}
 mixin InnerLoggerLogMixin on InnerLogger {
-  final LogDelegate? _delegate = createEnvironmentLogDelegate();
+  final LogDelegate _delegate = createEnvironmentLogDelegate();
 
   @override
   void log(LogMessage logMessage) {
     // Without log delegate when release
     if (_kIsDebug || (getCurrentLogOptions()?.outputInRelease ?? false)) {
-      _delegate?.log(
+      _delegate.log(
         message: logMessage.message,
         logLevel: logMessage.level,
       );

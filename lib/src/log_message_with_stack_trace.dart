@@ -7,11 +7,6 @@ import 'log_message.dart';
 @immutable
 @experimental
 class LogMessageWithStackTrace extends LogMessage {
-  /// Stack trace
-  /// This field cannot be transferred between isolates
-  @experimental
-  final StackTrace stackTrace;
-
   /// Message for logging
   LogMessageWithStackTrace.create(
     Object message,
@@ -22,6 +17,11 @@ class LogMessageWithStackTrace extends LogMessage {
           level: level,
           date: DateTime.now(),
         );
+
+  /// Stack trace
+  /// This field cannot be transferred between isolates
+  @experimental
+  final StackTrace stackTrace;
 
   /// Message for logging to Map<String, Object?>
   @override

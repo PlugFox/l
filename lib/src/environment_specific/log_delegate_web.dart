@@ -15,14 +15,14 @@ LogDelegate createEnvironmentLogDelegate() =>
 /// {@nodoc}
 @internal
 class LogDelegateWeb implements LogDelegate {
+  /// {@nodoc}
+  LogDelegateWeb(this.console);
+
   final MessageFormattingPipeline _formatter = MessageFormattingPipelineWeb();
 
   /// {@nodoc}
   @protected
   final html.Console console;
-
-  /// {@nodoc}
-  LogDelegateWeb(this.console);
 
   @override
   void log({

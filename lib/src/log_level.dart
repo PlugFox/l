@@ -3,12 +3,6 @@ import 'package:meta/meta.dart';
 /// Verbose levels
 @immutable
 abstract class LogLevel {
-  /// As prefix
-  final String prefix;
-
-  /// Integer level representation
-  final int level;
-
   /// A shout is always displayed
   @literal
   const factory LogLevel.shout() = _LogLevelShout;
@@ -58,6 +52,12 @@ abstract class LogLevel {
     required this.prefix,
     required this.level,
   });
+
+  /// As prefix
+  final String prefix;
+
+  /// Integer level representation
+  final int level;
 
   /// [when] defines a conditional expression with multiple branches.
   /// It is similar to the switch statement in C-like languages.

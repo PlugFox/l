@@ -17,14 +17,14 @@ LogDelegate createEnvironmentLogDelegate() =>
 /// {@nodoc}
 @internal
 class LogDelegateIO implements LogDelegate {
+  /// {@nodoc}
+  LogDelegateIO(this.console);
+
   final MessageFormattingPipeline _formatter = MessageFormattingPipelineIO();
 
   /// {@nodoc}
   @protected
   final io.Stdout console;
-
-  /// {@nodoc}
-  LogDelegateIO(this.console);
 
   @override
   void log({

@@ -5,18 +5,6 @@ import 'log_level.dart';
 /// Message for logging
 @immutable
 class LogMessage {
-  /// Log date
-  @nonVirtual
-  final DateTime date;
-
-  /// Message data
-  @nonVirtual
-  final Object message;
-
-  /// Verbose level
-  @nonVirtual
-  final LogLevel level;
-
   /// Message for logging
   const LogMessage({
     required this.message,
@@ -30,6 +18,18 @@ class LogMessage {
         level: level,
         date: DateTime.now(),
       );
+
+  /// Log date
+  @nonVirtual
+  final DateTime date;
+
+  /// Message data
+  @nonVirtual
+  final Object message;
+
+  /// Verbose level
+  @nonVirtual
+  final LogLevel level;
 
   /// Message for logging to Map<String, Object?>
   Map<String, Object?> toJson() => <String, Object>{

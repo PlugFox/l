@@ -21,6 +21,10 @@ analyze: get format
 	@echo "Analyze the code"
 	@dart analyze --fatal-infos --fatal-warnings
 
+check: analyze
+	@dart pub global activate pana
+	@pana --json --warning --line-length 80 > log.pana.json
+
 deploy:
 	@echo "Publish"
 	@dart pub publish
