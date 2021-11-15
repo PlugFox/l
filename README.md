@@ -6,8 +6,8 @@
 [![Pub](https://img.shields.io/pub/v/l.svg)](https://pub.dev/packages/l)
 [![License: WTFPL](https://img.shields.io/badge/License-WTFPL-brightgreen.svg)](https://en.wikipedia.org/wiki/WTFPL)
 [![Code size](https://img.shields.io/github/languages/code-size/plugfox/l?logo=github&logoColor=white)](https://github.com/plugfox/l)
-[![effective_dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://github.com/tenhobi/effective_dart)
-[![GitHub stars](https://img.shields.io/github/stars/PlugFox/l?style=social)](https://github.com/PlugFox/l/)
+[![effective_dart](https://img.shields.io/badge/style-linter-40c4ff.svg)](https://pub.dev/packages/linter)
+[![GitHub stars](https://img.shields.io/github/stars/PlugFox/l)](https://github.com/PlugFox/l)
   
   
 ## About  
