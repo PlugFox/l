@@ -1,138 +1,115 @@
 import 'package:meta/meta.dart';
 
+import '../inner_zoned_mixin.dart';
 import '../log_level.dart';
 import 'message_formatting_pipeline.dart';
+
+extension on StringBuffer {
+  void writeEsc(String value) {
+    this..write(_esc)..write(value);
+  }
+
+  String completeMessage(Object message) =>
+      (this..write(']')..write(' ')..write(message)).toString();
+}
 
 /// {@nodoc}
 @internal
 mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
   @override
   String format({required Object message, required LogLevel logLevel}) {
-    final formattedMessage = logLevel.when<String>(
-      shout: () => _shout(message, logLevel.prefix),
-      v: () => _v(message, logLevel.prefix),
-      error: () => _error(message, logLevel.prefix),
-      vv: () => _vv(message, logLevel.prefix),
-      warning: () => _warning(message, logLevel.prefix),
-      vvv: () => _vvv(message, logLevel.prefix),
-      info: () => _info(message, logLevel.prefix),
-      vvvv: () => _vvvv(message, logLevel.prefix),
-      debug: () => _debug(message, logLevel.prefix),
-      vvvvv: () => _vvvvv(message, logLevel.prefix),
-      vvvvvv: () => _vvvvvv(message, logLevel.prefix),
-    );
+    final prefix = logLevel.prefix;
+    final printColors = getCurrentLogOptions()?.printColors ?? true;
+    final formattedMessage = printColors
+        ? logLevel.when<String>(
+            shout: () => _shout(message, prefix),
+            v: () => _v(message, prefix),
+            error: () => _error(message, prefix),
+            vv: () => _vv(message, prefix),
+            warning: () => _warning(message, prefix),
+            vvv: () => _vvv(message, prefix),
+            info: () => _info(message, prefix),
+            vvvv: () => _vvvv(message, prefix),
+            debug: () => _debug(message, prefix),
+            vvvvv: () => _vvvvv(message, prefix),
+            vvvvvv: () => _vvvvvv(message, prefix),
+          )
+        : _formatPlain(message, prefix);
+
     return super.format(message: formattedMessage, logLevel: logLevel);
   }
 
-  String _shout(Object message, String prefix) => (StringBuffer('[')
-        ..write(_esc)
-        ..write(_ConsoleFont.underline.value) // font
-        ..write(_esc)
-        ..write(_ConsoleColor.black.foregroundValue) // foreground
-        ..write(_esc)
-        ..write(_ConsoleColor.white.backgroundValue) // background
-        ..write(prefix)
-        ..write(_esc)
-        ..write(_reset)
-        ..write(']')
-        ..write(' ')
-        ..write(message))
-      .toString();
+  static String _formatPlain(Object message, String prefix) =>
+      (StringBuffer('[')..write(prefix)).completeMessage(message);
 
-  String _v(Object message, String prefix) => (StringBuffer('[')
-        ..write(_esc)
-        ..write(_ConsoleFont.bold.value) // font
-        ..write(_esc)
-        ..write(_ConsoleColor.magenta.foregroundValue) // foreground
-        ..write('') // background
-        ..write(prefix)
-        ..write(_esc)
-        ..write(_reset)
-        ..write(']')
-        ..write(' ')
-        ..write(message))
-      .toString();
+  static String _formatStyled(
+    Object message,
+    String prefix, {
+    String? font,
+    String? foreground,
+    String? background,
+  }) {
+    final buffer = StringBuffer('[');
+    for (final value in [font, foreground, background]) {
+      if (value != null) buffer.writeEsc(value);
+    }
+    buffer
+      ..write(prefix)
+      ..writeEsc(_reset);
 
-  String _error(Object message, String prefix) => (StringBuffer('[')
-        ..write(_esc)
-        ..write(_ConsoleFont.bold.value) // font
-        ..write(_esc)
-        ..write(_ConsoleColor.red.foregroundValue) // foreground
-        ..write(prefix)
-        ..write(_esc)
-        ..write(_reset)
-        ..write(']')
-        ..write(' ')
-        ..write(message))
-      .toString();
+    return buffer.completeMessage(message);
+  }
 
-  String _vv(Object message, String prefix) => (StringBuffer('[')
-        ..write(prefix)
-        ..write(']')
-        ..write(' ')
-        ..write(message))
-      .toString();
+  String _shout(Object message, String prefix) => _formatStyled(
+        message,
+        prefix,
+        font: _ConsoleFont.underline.value,
+        foreground: _ConsoleColor.black.foregroundValue,
+        background: _ConsoleColor.white.backgroundValue,
+      );
 
-  String _warning(Object message, String prefix) => (StringBuffer('[')
-        ..write(_esc)
-        ..write(_ConsoleColor.yellow.foregroundValue) // foreground
-        ..write(prefix)
-        ..write(_esc)
-        ..write(_reset)
-        ..write(']')
-        ..write(' ')
-        ..write(message))
-      .toString();
+  String _v(Object message, String prefix) => _formatStyled(
+        message,
+        prefix,
+        font: _ConsoleFont.bold.value,
+        foreground: _ConsoleColor.magenta.foregroundValue,
+      );
 
-  String _vvv(Object message, String prefix) => (StringBuffer('[')
-        ..write(prefix)
-        ..write(']')
-        ..write(' ')
-        ..write(message))
-      .toString();
+  String _error(Object message, String prefix) => _formatStyled(
+        message,
+        prefix,
+        font: _ConsoleFont.bold.value,
+        foreground: _ConsoleColor.red.foregroundValue,
+      );
 
-  String _info(Object message, String prefix) => (StringBuffer('[')
-        ..write(_esc)
-        ..write(_ConsoleColor.green.foregroundValue) // foreground
-        ..write(prefix)
-        ..write(_esc)
-        ..write(_reset)
-        ..write(']')
-        ..write(' ')
-        ..write(message))
-      .toString();
+  String _vv(Object message, String prefix) => _formatPlain(message, prefix);
 
-  String _vvvv(Object message, String prefix) => (StringBuffer('[')
-        ..write(prefix)
-        ..write(']')
-        ..write(' ')
-        ..write(message))
-      .toString();
+  String _warning(Object message, String prefix) => _formatStyled(
+        message,
+        prefix,
+        foreground: _ConsoleColor.yellow.foregroundValue,
+      );
 
-  String _debug(Object message, String prefix) => (StringBuffer('[')
-        ..write(_esc)
-        ..write(_ConsoleColor.cyan.foregroundValue) // foreground
-        ..write(prefix)
-        ..write(_esc)
-        ..write(_reset)
-        ..write(']')
-        ..write(' ')
-        ..write(message))
-      .toString();
+  String _vvv(Object message, String prefix) => _formatPlain(message, prefix);
 
-  String _vvvvv(Object message, String prefix) => (StringBuffer('[')
-        ..write(prefix)
-        ..write(']')
-        ..write(' ')
-        ..write(message))
-      .toString();
+  String _info(Object message, String prefix) => _formatStyled(
+        message,
+        prefix,
+        foreground: _ConsoleColor.green.foregroundValue,
+      );
 
-  String _vvvvvv(Object message, String prefix) => (StringBuffer('[')
-        ..write(prefix)
-        ..write(']')
-        ..write(' ')
-        ..write(message))
-      .toString();
+  String _vvvv(Object message, String prefix) => _formatPlain(message, prefix);
+
+  String _debug(Object message, String prefix) => _formatStyled(
+        message,
+        prefix,
+        foreground: _ConsoleColor.cyan.foregroundValue,
+      );
+
+  String _vvvvv(Object message, String prefix) => _formatPlain(message, prefix);
+
+  String _vvvvvv(Object message, String prefix) =>
+      _formatPlain(message, prefix);
 }
 
 /// Ansi escape
