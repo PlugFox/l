@@ -31,7 +31,7 @@ mixin InnerZonedMixin on InnerLogger {
         zoneSpecification: ZoneSpecification(
           print: (self, parent, zone, line) {
             if (logOptions?.handlePrint ?? true) {
-              self.run(
+              self.run<void>(
                 () => log(
                   LogMessage.create(
                     line,
@@ -40,7 +40,10 @@ mixin InnerZonedMixin on InnerLogger {
                 ),
               );
             } else {
-              self.print(line);
+              // Replace [self] with [parent] zone
+              // https://github.com/PlugFox/l/issues/20
+              //self.print(line);
+              parent.print(zone, line);
             }
           },
         ),
