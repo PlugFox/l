@@ -24,7 +24,7 @@ on:
       - 'lib/**.dart'
 
 jobs:
-  build:
+  check:
     runs-on: ubuntu-latest
     container:
       image: google/dart:latest
