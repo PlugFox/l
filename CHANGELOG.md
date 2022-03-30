@@ -1,4 +1,7 @@
 ## 3.2.0 - 2022-03-30  
+### Added  
+- 100% coverage  
+  
 ### Fixed  
 - [Minor bug](https://github.com/PlugFox/l/issues/20) with Stack Overflow exception in multiple zones without print handler  
   
