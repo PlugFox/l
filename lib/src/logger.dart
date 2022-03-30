@@ -39,7 +39,7 @@ import 'log_options.dart';
 /// **!!! PLEASE, DO NOT LOG SENSITIVE INFORMATION !!!**
 ///
 @immutable
-@internal
+@sealed
 abstract class L extends Stream<LogMessage> {
   //L._();
 
