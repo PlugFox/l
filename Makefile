@@ -23,7 +23,7 @@ analyze: get format
 
 check: analyze
 	@dart pub global activate pana
-	@pana --json --warning --line-length 80 > log.pana.json
+	@pana --json --no-warning --line-length 80 > log.pana.json
 
 deploy:
 	@echo "Publish"
