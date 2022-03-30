@@ -1,13 +1,30 @@
 name: Logger
 
 on:
+  workflow_dispatch:
   push:
-    branches: [ master, dev, feature/null_safety ]
+    branches:
+      - 'master'
+      - 'dev'
+      - 'feature/**'
+      - 'bugfix/**'
+      - 'hotfix/**'
+      - 'support/**'
+    paths:
+      - 'lib/**.dart'
   pull_request:
-    branches: [ master, dev, feature/null_safety ]
+    branches:
+      - 'master'
+      - 'dev'
+      - 'feature/**'
+      - 'bugfix/**'
+      - 'hotfix/**'
+      - 'support/**'
+    paths:
+      - 'lib/**.dart'
 
 jobs:
-  build:
+  check:
     runs-on: ubuntu-latest
     container:
       image: google/dart:latest
@@ -21,13 +38,19 @@ jobs:
         run: dart format --set-exit-if-changed -l 80 -o none .
       - name: Check analyzer
         run: dart analyze --fatal-infos --fatal-warnings lib
-      #- name: Run tests
-      #  run: dart test --coverage=coverage && dart run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --packages=.packages --report-on=lib
-      #- name: Upload coverage to Codecov
-      #  uses: codecov/codecov-action@v1
-      #  with:
-      #    token: ${{ secrets.CODECOV_TOKEN }}
-      #- name: Check Code Coverage
-      #  uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
-      #  with:
-      #    path: coverage/lcov.info
+      #- name: Check with pana
+      #  run: dart pub global activate pana && pana --json --no-warning --line-length 80
+      - name: Run tests
+        run: |
+          dart test --concurrency=6 --platform vm --coverage=coverage test/
+          dart run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --packages=.packages --report-on=lib
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2.1.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+      - name: Check Code Coverage
+        uses: VeryGoodOpenSource/very_good_coverage@v1.2.1
+        with:
+          path: coverage/lcov.info
+          min_coverage: 90
+          #exclude: '**.g.dart **.freezed.dart'

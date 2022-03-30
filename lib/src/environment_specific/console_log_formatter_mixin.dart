@@ -154,8 +154,8 @@ extension _ConsoleColorX on _ConsoleColor {
         return '35m';
       case _ConsoleColor.cyan:
         return '36m';
-      case _ConsoleColor.white:
-        return '37m';
+      //case _ConsoleColor.white:
+      // return '37m';
       case _ConsoleColor.byDefault:
       default:
         return '';
@@ -192,7 +192,7 @@ extension _ConsoleColorX on _ConsoleColor {
 enum _ConsoleFont {
   bold,
   underline,
-  reversed,
+  //reversed,
   byDefault,
 }
 
@@ -204,8 +204,8 @@ extension _ConsoleFontX on _ConsoleFont {
         return '1m';
       case _ConsoleFont.underline:
         return '4m';
-      case _ConsoleFont.reversed:
-        return '7m';
+      //case _ConsoleFont.reversed:
+      // return '7m';
       case _ConsoleFont.byDefault:
       default:
         return '';

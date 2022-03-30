@@ -1,28 +1,36 @@
+## 3.2.0 - 2022-03-30  
+### Added  
+- 100% coverage  
+  
+### Fixed  
+- [Minor bug](https://github.com/PlugFox/l/issues/20) with Stack Overflow exception in multiple zones without print handler  
+  
+  
 ## 3.1.0 - 2021-11-15  
-## Added  
+### Added  
 - Add `printColors` in LogOptions  
   
   
 ## 3.0.2+1 - 2021-11-01  
-## Changed  
+### Changed  
 - Update changelog  
   
   
 ## 3.0.2 - 2021-11-01    
-## Added  
+### Added  
 - Add `outputInRelease` in LogOptions  
   
   
 ## 3.0.1 - 2021-03-28  
-## Added  
+### Added  
 - Export `LogMessageWithStackTrace`  
   
-## Changed  
+### Changed  
 - Creating `LogMessageWithStackTrace`  instead `LogMessage` only if `StackTrace` exist.  
   
   
 ## 3.0.0 - 2021-03-27  
-## Changed  
+### Changed  
 - Total refactoring  
 - Null safety support  
 - `capture` feature  
@@ -31,7 +39,7 @@
   
   
 ## 3.0.0-nullsafety.5 - 2021-03-24  
-## Fixed  
+### Fixed  
 - Use `print` when `stdout` is unavailable  
   
   

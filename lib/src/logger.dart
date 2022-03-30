@@ -39,8 +39,9 @@ import 'log_options.dart';
 /// **!!! PLEASE, DO NOT LOG SENSITIVE INFORMATION !!!**
 ///
 @immutable
+@sealed
 abstract class L extends Stream<LogMessage> {
-  L._();
+  //L._();
 
   /// A shout [message] is always displayed
   void s(Object message);
