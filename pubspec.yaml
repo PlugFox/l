@@ -7,7 +7,7 @@ version: 3.2.0
 repository: https://github.com/plugfox/l/tree/master
 issue_tracker: https://github.com/plugfox/l/issues
 homepage: https://github.com/plugfox/l
-publish_to: https://pub.dev/
+#publish_to: https://pub.dev
 #documentation: https://pub.dev/documentation/l/latest/
 #authors:
 #  - Plague Fox <plugfox@gmail.com>
