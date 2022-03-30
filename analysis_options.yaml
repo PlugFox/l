@@ -5,7 +5,7 @@ analyzer:
     # Build
     - 'build/**'
     # Test
-    - 'test/**'
+    #- 'test/**'
     # Assets
     - 'assets/**'
 

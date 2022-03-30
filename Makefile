@@ -1,4 +1,4 @@
-.PHONY: format get upgrade outdated analyze deploy
+.PHONY: format get upgrade outdated analyze deploy coverage
 
 format:
 	@echo "Formatting the code"
@@ -28,3 +28,12 @@ check: analyze
 deploy:
 	@echo "Publish"
 	@dart pub publish
+
+coverage:
+	@dart test --concurrency=6 --platform vm --coverage=coverage test/
+	@dart run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --packages=.packages --report-on=lib
+	#@mv coverage/lcov.info coverage/lcov.base.info
+	#@lcov -r coverage/lcov.base.info -o coverage/lcov.base.info "lib/**.freezed.dart" "lib/**.g.dart"
+	#@mv coverage/lcov.base.info coverage/lcov.info
+	@lcov --list coverage/lcov.info
+	@genhtml -o coverage coverage/lcov.info

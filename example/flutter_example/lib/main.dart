@@ -11,6 +11,7 @@ void main() => runZonedGuarded(
         print('original print');
         runApp(const App());
         l.v('Running');
+        return null;
       }),
       l.e,
     );
