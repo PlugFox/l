@@ -1,6 +1,6 @@
 // ignore_for_file: unnecessary_statements, avoid_print, cascade_invocations
 // ignore_for_file: non_const_call_to_literal_constructor, unnecessary_lambdas
-// ignore_for_file: prefer_const_declarations
+// ignore_for_file: prefer_const_declarations, prefer_const_constructors
 library l.test;
 
 import 'dart:async';
@@ -34,6 +34,16 @@ void mainFunctional() {
     print('12. Handle print');
   }
 
+  void printVerbose() {
+    l
+      ..v('v')
+      ..vv('vv')
+      ..vvv('vvv')
+      ..vvvv('vvvv')
+      ..vvvvv('vvvvv')
+      ..vvvvvv('vvvvvv');
+  }
+
   test(
     'shouldExists',
     () {
@@ -47,14 +57,14 @@ void mainFunctional() {
     () {
       l.capture(
         () => l.i('Without color'),
-        const LogOptions(
+        LogOptions(
           outputInRelease: true,
           printColors: false,
         ),
       );
       l.capture(
         () => l.i('With color'),
-        const LogOptions(
+        LogOptions(
           outputInRelease: true,
           printColors: true,
         ),
@@ -86,6 +96,13 @@ void mainFunctional() {
       await Future<void>.delayed(Duration.zero);
       await sub.cancel();
       expect(count, 12);
+    },
+  );
+
+  test(
+    'print verbose',
+    () {
+      printVerbose();
     },
   );
 
@@ -137,7 +154,7 @@ void runZonedOutput() {
           print('sample');
         },
       ),
-      const LogOptions(
+      LogOptions(
         outputInRelease: true,
         handlePrint: false,
       ),
@@ -151,7 +168,7 @@ void runZonedOutput() {
         },
         (e, s) => print(e),
       ),
-      const LogOptions(
+      LogOptions(
         outputInRelease: true,
         handlePrint: false,
       ),
