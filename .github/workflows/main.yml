@@ -45,12 +45,12 @@ jobs:
           dart test --concurrency=6 --platform vm --coverage=coverage test/
           dart run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --packages=.packages --report-on=lib
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v2.1.0
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
       - name: Check Code Coverage
-        uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
+        uses: VeryGoodOpenSource/very_good_coverage@v1.2.1
         with:
           path: coverage/lcov.info
           min_coverage: 95
-          #exclude: '**.g.dart'
+          #exclude: '**.g.dart **.freezed.dart'

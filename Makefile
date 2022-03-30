@@ -29,7 +29,7 @@ deploy:
 	@echo "Publish"
 	@dart pub publish
 
-coverage:
+coverage: get
 	@dart test --concurrency=6 --platform vm --coverage=coverage test/
 	@dart run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --packages=.packages --report-on=lib
 	#@mv coverage/lcov.info coverage/lcov.base.info

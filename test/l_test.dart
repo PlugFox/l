@@ -6,6 +6,8 @@ library l.test;
 import 'dart:async';
 
 import 'package:l/l.dart';
+import 'package:l/src/environment_specific/log_delegate_io.dart'
+    as log_delegate_io;
 import 'package:l/src/environment_specific/log_delegate_stub.dart'
     as log_delegate_stub;
 import 'package:test/test.dart';
@@ -111,7 +113,7 @@ void mainFunctional() {
     () async {
       l.capture(
         printAllVariants,
-        const LogOptions(
+        LogOptions(
           outputInRelease: true,
           handlePrint: false,
           printColors: true,
@@ -129,7 +131,7 @@ void mainFunctional() {
           l < 'info with arrow';
           l << 'debug with arrow';
         },
-        const LogOptions(
+        LogOptions(
           outputInRelease: true,
         ),
       );
@@ -245,6 +247,24 @@ void logLevel() {
   );
 
   test(
+    'create all log levels',
+    () {
+      expect(() => LogLevel.info(), returnsNormally);
+      expect(() => LogLevel.warning(), returnsNormally);
+      expect(() => LogLevel.debug(), returnsNormally);
+      expect(() => LogLevel.shout(), returnsNormally);
+      expect(() => LogLevel.info(), returnsNormally);
+      expect(() => LogLevel.error(), returnsNormally);
+      expect(() => LogLevel.v(), returnsNormally);
+      expect(() => LogLevel.vv(), returnsNormally);
+      expect(() => LogLevel.vvv(), returnsNormally);
+      expect(() => LogLevel.vvvv(), returnsNormally);
+      expect(() => LogLevel.vvvvv(), returnsNormally);
+      expect(() => LogLevel.vvvvvv(), returnsNormally);
+    },
+  );
+
+  test(
     'with stack trace',
     () {
       const obj = 'message';
@@ -269,9 +289,29 @@ void environmentSpecific() {
   test(
     'LogDelegateStub',
     () {
+      expect(
+        () => log_delegate_stub.createEnvironmentLogDelegate(),
+        returnsNormally,
+      );
       final delegate = log_delegate_stub.createEnvironmentLogDelegate();
       delegate.log(
         message: 'Message with LogDelegateStub',
+        logLevel: const LogLevel.debug(),
+      );
+      expect(() => delegate.toString(), returnsNormally);
+    },
+  );
+
+  test(
+    'LogDelegateIO',
+    () {
+      expect(
+        () => log_delegate_io.createEnvironmentLogDelegate(),
+        returnsNormally,
+      );
+      final delegate = log_delegate_io.createEnvironmentLogDelegate();
+      delegate.log(
+        message: 'Message with LogDelegateIO',
         logLevel: const LogLevel.debug(),
       );
       expect(() => delegate.toString(), returnsNormally);
