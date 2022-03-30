@@ -234,7 +234,7 @@ void logLevel() {
   );
 
   test(
-    'levels',
+    'levels static getter',
     () {
       final levels = LogLevel.values;
       for (final level in levels) {
@@ -242,12 +242,12 @@ void logLevel() {
         expect(() => level.hashCode, returnsNormally);
         expect(LogLevel.values, contains(level));
       }
-      expect(LogLevel.info(), LogLevel.info());
+      expect(levels.first, isA<LogLevel>());
     },
   );
 
   test(
-    'create all log levels',
+    'log levels',
     () {
       expect(() => LogLevel.info(), returnsNormally);
       expect(() => LogLevel.warning(), returnsNormally);
@@ -261,6 +261,8 @@ void logLevel() {
       expect(() => LogLevel.vvvv(), returnsNormally);
       expect(() => LogLevel.vvvvv(), returnsNormally);
       expect(() => LogLevel.vvvvvv(), returnsNormally);
+      expect(LogLevel.info(), isA<LogLevel>());
+      expect(LogLevel.info(), LogLevel.info());
     },
   );
 
@@ -278,6 +280,8 @@ void logLevel() {
       expect(msg.message, obj);
       expect(msg.level, level);
       expect(msg.stackTrace, st);
+      expect(msg, isA<LogMessage>());
+      expect(msg, isA<LogMessageWithStackTrace>());
       expect(() => msg.toString(), returnsNormally);
       expect(() => msg.toJson(), returnsNormally);
       expect(msg.toJson(), isA<Map<String, Object?>>());
