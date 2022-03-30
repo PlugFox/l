@@ -38,8 +38,8 @@ jobs:
         run: dart format --set-exit-if-changed -l 80 -o none .
       - name: Check analyzer
         run: dart analyze --fatal-infos --fatal-warnings lib
-      - name: Check with pana
-        run: dart pub global activate pana && pana -l 80
+      #- name: Check with pana
+      #  run: dart pub global activate pana && pana -l 80
       - name: Run tests
         run: |
           dart test --concurrency=6 --platform vm --coverage=coverage test/
