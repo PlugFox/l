@@ -24,7 +24,7 @@ void mainFunctional() {
     l
       ..s('01. Shout')
       ..v1('02. Regular 1')
-      ..e('03. Error')
+      ..e('03. Error', StackTrace.current)
       ..v2('04. Regular 2')
       ..w('05. Warning')
       ..v3('06. Regular 3')
@@ -93,6 +93,8 @@ void mainFunctional() {
           ) =>
               '${date.hour}:${date.minute.toString().padLeft(2, '0')} '
               '| $message',
+          stackTraceFormatting: (StackTrace stackTrace) =>
+              '\nStack Trace:\n$stackTrace',
         ),
       );
       await Future<void>.delayed(Duration.zero);
@@ -297,6 +299,7 @@ void environmentSpecific() {
       delegate.log(
         message: 'Message with LogDelegateStub',
         logLevel: const LogLevel.debug(),
+        stackTrace: null,
       );
       expect(() => delegate.toString(), returnsNormally);
     },
@@ -313,6 +316,7 @@ void environmentSpecific() {
       delegate.log(
         message: 'Message with LogDelegateIO',
         logLevel: const LogLevel.debug(),
+        stackTrace: null,
       );
       expect(() => delegate.toString(), returnsNormally);
     },

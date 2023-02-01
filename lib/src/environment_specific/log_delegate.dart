@@ -10,5 +10,6 @@ abstract class LogDelegate {
   void log({
     required Object message,
     required LogLevel logLevel,
+    required StackTrace? stackTrace,
   });
 }

@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 import '../log_level.dart';
 import 'log_delegate.dart';
 import 'message_formatting_pipeline.dart';
-import 'message_log_formatting_mixin.dart';
+import 'message_log_formatter_mixin.dart';
 
 /// {@nodoc}
 @internal
@@ -28,10 +28,12 @@ class LogDelegateWeb implements LogDelegate {
   void log({
     required Object message,
     required LogLevel logLevel,
+    required StackTrace? stackTrace,
   }) {
     final formattedMessage = _formatter.format(
       message: message,
       logLevel: logLevel,
+      stackTrace: stackTrace,
     );
     logLevel.when<void>(
       shout: () => console.warn(formattedMessage),

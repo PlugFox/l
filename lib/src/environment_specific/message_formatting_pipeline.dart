@@ -10,6 +10,7 @@ abstract class MessageFormattingPipeline {
   String format({
     required Object message,
     required LogLevel logLevel,
+    required Object? stackTrace,
   }) =>
       message.toString();
 }
