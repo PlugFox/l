@@ -12,4 +12,4 @@ environment:
 
 dependencies:
   l:
-    path: ../../
+    path: ../

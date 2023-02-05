@@ -1,23 +1,31 @@
 // ignore_for_file: avoid_print
-library l.example.zoned;
+library l.example;
 
 import 'dart:async';
 
 import 'package:l/l.dart';
 
+final List<LogMessage> $logs = <LogMessage>[];
 void main() => l.capture<void>(
       () => runZonedGuarded<void>(
-        someFunction,
+        () {
+          l.forEach($logs.add);
+          runApp();
+        },
         l.e,
       ),
       const LogOptions(
         handlePrint: true,
         useEmoji: true,
+        outputInRelease: true,
+        printColors: false,
+        printStackTrace: true,
         messageFormatting: _messageFormatting,
+        stackTraceFormatting: null,
       ),
     );
 
-Future<void> someFunction() async {
+Future<void> runApp() async {
   l
     ..v('Regular 1')
     ..e('Error', StackTrace.current)
