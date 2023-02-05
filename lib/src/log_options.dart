@@ -30,7 +30,6 @@ typedef StackTraceFormatting = Object? Function(
 @immutable
 abstract class LogOptions {
   /// Logger options
-  @experimental
   const factory LogOptions({
     bool handlePrint,
     bool printColors,

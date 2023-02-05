@@ -1,9 +1,10 @@
-## 3.3.0-dev - 2023-02-05
+## 3.3.1-dev - 2023-02-05
 
 ### Added
 
 - Bump dependencies
 - Add `printStackTrace` & `stackTraceFormatting` in LogOptions
+- Add `useEmoji` in LogOptions
 
 ## 3.2.0 - 2022-03-30
 

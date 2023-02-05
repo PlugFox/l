@@ -31,6 +31,9 @@ class LogMessage {
   @nonVirtual
   final LogLevel level;
 
+  /// Stack trace
+  StackTrace? get stackTrace => null;
+
   /// Message for logging to Map<String, Object?>
   Map<String, Object?> toJson() => <String, Object>{
         'date': date.millisecondsSinceEpoch ~/ 1000,

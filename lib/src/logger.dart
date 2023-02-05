@@ -99,16 +99,26 @@ abstract class L extends Stream<LogMessage> {
   /// redirect them to [l.d] output
   ///
   /// ```dart
-  ///   l.capture(
-  ///     someFunction,
+  /// void main() => l.capture<void>(
+  ///     () => runZonedGuarded<void>(
+  ///       () {
+  ///         l.forEach($logs.add);
+  ///         runApp();
+  ///       },
+  ///       l.e,
+  ///     ),
   ///     const LogOptions(
-  ///       handlePrint: false,
+  ///       handlePrint: true,
+  ///       useEmoji: true,
+  ///       outputInRelease: true,
+  ///       printColors: false,
+  ///       printStackTrace: true,
   ///       messageFormatting: _messageFormatting,
+  ///       stackTraceFormatting: null,
   ///     ),
   ///   );
   /// ```
   ///
-  @experimental
   R capture<R extends Object?>(R Function() body, [LogOptions? logOptions]);
 
   /// Add Inform [message] with verbose level 3
