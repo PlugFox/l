@@ -29,7 +29,7 @@ Future<void> someFunction() async {
   throw UnsupportedError('Some error');
 }
 
-Object _messageFormatting(Object message, LogLevel logLevel, DateTime now) =>
+String _messageFormatting(Object message, LogLevel logLevel, DateTime now) =>
     '${_timeFormat(now)} | $message';
 
 String _timeFormat(DateTime time) =>

@@ -1,22 +1,34 @@
+@internal
+
 import 'package:meta/meta.dart';
 
 import '../inner_zoned_mixin.dart';
 import '../log_level.dart';
 import 'message_formatting_pipeline.dart';
 
+/// {@nodoc}
 extension on StringBuffer {
+  /// {@nodoc}
   void writeEsc(String value) {
     this
-      ..write(_esc)
+      ..write(_$esc)
+      ..write('[')
       ..write(value);
   }
 
-  String completeMessage(Object message, [Object? stackTrace]) => (this
-        ..write(']')
-        ..write(' ')
-        ..write(message)
-        ..write(stackTrace ?? ''))
-      .toString();
+  /// {@nodoc}
+  String completeMessage(Object message, [Object? stackTrace]) {
+    this
+      ..write(']')
+      ..write(' ')
+      ..write(message);
+    if (stackTrace != null) {
+      this
+        ..writeln()
+        ..write(stackTrace);
+    }
+    return toString();
+  }
 }
 
 /// {@nodoc}
@@ -28,8 +40,10 @@ mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
     required LogLevel logLevel,
     required Object? stackTrace,
   }) {
-    final prefix = logLevel.prefix;
-    final printColors = getCurrentLogOptions()?.printColors ?? true;
+    final options = getCurrentLogOptions();
+    final useEmoji = options?.useEmoji ?? false;
+    final prefix = useEmoji ? logLevel.emoji : logLevel.prefix;
+    final printColors = !useEmoji && (options?.printColors ?? true);
     final formattedMessage = printColors
         ? logLevel.when<String>(
             shout: () => _shout(message, prefix),
@@ -78,7 +92,7 @@ mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
     }
     buffer
       ..write(prefix)
-      ..writeEsc(_reset);
+      ..writeEsc(_$reset);
 
     return buffer.completeMessage(message, stackTrace);
   }
@@ -140,10 +154,12 @@ mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
 }
 
 /// Ansi escape
-const String _esc = '\x1B[';
+/// {@nodoc}
+const String _$esc = '\x1B';
 
 /// Ansi reset
-const String _reset = '0m';
+/// {@nodoc}
+const String _$reset = '0m';
 
 /// Available console colors
 enum _ConsoleColor {

@@ -1,4 +1,7 @@
+@internal
 import 'dart:async';
+
+import 'package:meta/meta.dart';
 
 import 'inner_logger.dart';
 import 'log_message.dart';
@@ -26,6 +29,7 @@ mixin InnerLoggerSubscriptionMixin on InnerLogger {
       );
 
   @override
+  @internal
   void notifyListeners(LogMessage logMessage) {
     if (!hasListener) return;
     _controller.add(logMessage);

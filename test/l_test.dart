@@ -14,10 +14,11 @@ import 'package:l/src/environment_specific/log_delegate_stub.dart'
 import 'package:test/test.dart';
 
 void main() {
-  group('l.mainFunctional', mainFunctional);
-  group('l.runZonedOutput', runZonedOutput);
-  group('l.logLevel', logLevel);
-  group('l.environmentSpecific', environmentSpecific);
+  group('mainFunctional', mainFunctional);
+  group('runZonedOutput', runZonedOutput);
+  group('logLevel', logLevel);
+  group('environmentSpecific', environmentSpecific);
+  group('logEmoji', logEmoji);
 }
 
 void mainFunctional() {
@@ -87,6 +88,7 @@ void mainFunctional() {
           outputInRelease: true,
           handlePrint: true,
           printColors: false,
+          printStackTrace: true,
           messageFormatting: (
             Object message,
             LogLevel logLevel,
@@ -95,7 +97,7 @@ void mainFunctional() {
               '${date.hour}:${date.minute.toString().padLeft(2, '0')} '
               '| $message',
           stackTraceFormatting: (StackTrace stackTrace) =>
-              '\nStack Trace:\n$stackTrace',
+              'Stack Trace:\n$stackTrace',
         ),
       );
       await Future<void>.delayed(Duration.zero);
@@ -144,8 +146,31 @@ void mainFunctional() {
   test(
     'logWithStackTrace',
     () {
-      l.w('warning with stackTrace', StackTrace.empty);
-      l.e('error with stackTrace', StackTrace.current);
+      l.capture(
+        () {
+          l.w('warning with stackTrace', StackTrace.empty);
+          l.e('error with stackTrace', StackTrace.current);
+        },
+        LogOptions(
+          outputInRelease: true,
+        ),
+      );
+    },
+  );
+
+  test(
+    'doNotPrintStackTrace',
+    () {
+      l.capture(
+        () {
+          l.w('warning with stackTrace', StackTrace.empty);
+          l.e('error with stackTrace', StackTrace.current);
+        },
+        LogOptions(
+          outputInRelease: true,
+          printStackTrace: false,
+        ),
+      );
     },
   );
 }
@@ -324,6 +349,33 @@ void environmentSpecific() {
         stackTrace: null,
       );
       expect(() => delegate.toString(), returnsNormally);
+    },
+  );
+}
+
+void logEmoji() {
+  test(
+    'log levels',
+    () {
+      l.capture(
+        () => l
+          ..s('01. Shout')
+          ..v1('02. Regular 1')
+          ..e('03. Error', StackTrace.current)
+          ..v2('04. Regular 2')
+          ..w('05. Warning', StackTrace.empty)
+          ..v3('06. Regular 3')
+          ..i('07. Info')
+          ..v4('08. Regular 4')
+          ..d('09. Debug')
+          ..v5('10. Regular 5')
+          ..v6('11. Regular 6'),
+        LogOptions(
+          outputInRelease: true,
+          printStackTrace: true,
+          useEmoji: true,
+        ),
+      );
     },
   );
 }

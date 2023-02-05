@@ -1,3 +1,5 @@
+@internal
+
 import 'dart:io' as io show Stdout, stdout;
 
 import 'package:meta/meta.dart';

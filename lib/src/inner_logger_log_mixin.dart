@@ -1,3 +1,7 @@
+@internal
+
+import 'package:meta/meta.dart';
+
 import 'environment_specific/log_delegate.dart';
 import 'environment_specific/log_delegate_stub.dart'
     // ignore: uri_does_not_exist

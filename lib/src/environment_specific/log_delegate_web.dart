@@ -1,3 +1,5 @@
+@internal
+
 import 'dart:html' as html show window, Console;
 
 import 'package:meta/meta.dart';

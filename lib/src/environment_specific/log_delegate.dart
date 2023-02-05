@@ -1,3 +1,5 @@
+@internal
+
 import 'package:meta/meta.dart';
 
 import '../log_level.dart';

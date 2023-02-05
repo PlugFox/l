@@ -1,3 +1,7 @@
+@internal
+
+import 'package:meta/meta.dart';
+
 import 'inner_logger.dart';
 
 /// {@nodoc}

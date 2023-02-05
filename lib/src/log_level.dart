@@ -50,11 +50,15 @@ abstract class LogLevel {
   /// {@nodoc}
   const LogLevel._({
     required this.prefix,
+    required this.emoji,
     required this.level,
   });
 
   /// As prefix
   final String prefix;
+
+  /// As emoji prefix
+  final String emoji;
 
   /// Integer level representation
   final int level;
@@ -143,6 +147,7 @@ class _LogLevelShout extends LogLevel {
   const _LogLevelShout()
       : super._(
           prefix: '!',
+          emoji: '📣',
           level: 0,
         );
 
@@ -167,6 +172,7 @@ class _LogLevelRegular1 extends LogLevel {
   const _LogLevelRegular1()
       : super._(
           prefix: '1',
+          emoji: '1️⃣',
           level: 1,
         );
 
@@ -191,6 +197,7 @@ class _LogLevelError extends LogLevel {
   const _LogLevelError()
       : super._(
           prefix: 'E',
+          emoji: '🔥',
           level: 1,
         );
 
@@ -215,6 +222,7 @@ class _LogLevelRegular2 extends LogLevel {
   const _LogLevelRegular2()
       : super._(
           prefix: '2',
+          emoji: '2️⃣',
           level: 2,
         );
 
@@ -239,6 +247,7 @@ class _LogLevelWarning extends LogLevel {
   const _LogLevelWarning()
       : super._(
           prefix: 'W',
+          emoji: '⚠️',
           level: 2,
         );
 
@@ -263,6 +272,7 @@ class _LogLevelRegular3 extends LogLevel {
   const _LogLevelRegular3()
       : super._(
           prefix: '3',
+          emoji: '3️⃣',
           level: 3,
         );
 
@@ -287,6 +297,7 @@ class _LogLevelInfo extends LogLevel {
   const _LogLevelInfo()
       : super._(
           prefix: 'I',
+          emoji: '👻',
           level: 3,
         );
 
@@ -311,6 +322,7 @@ class _LogLevelRegular4 extends LogLevel {
   const _LogLevelRegular4()
       : super._(
           prefix: '4',
+          emoji: '4️⃣',
           level: 4,
         );
 
@@ -335,6 +347,7 @@ class _LogLevelDebug extends LogLevel {
   const _LogLevelDebug()
       : super._(
           prefix: 'D',
+          emoji: '🐛',
           level: 4,
         );
 
@@ -359,6 +372,7 @@ class _LogLevelRegular5 extends LogLevel {
   const _LogLevelRegular5()
       : super._(
           prefix: '5',
+          emoji: '5️⃣',
           level: 5,
         );
 
@@ -383,6 +397,7 @@ class _LogLevelRegular6 extends LogLevel {
   const _LogLevelRegular6()
       : super._(
           prefix: '6',
+          emoji: '6️⃣',
           level: 6,
         );
 
