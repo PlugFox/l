@@ -42,8 +42,8 @@ jobs:
       #  run: dart pub global activate pana && pana --json --no-warning --line-length 80
       - name: Run tests
         run: |
-          dart test --concurrency=6 --platform vm --coverage=coverage test/
-          dart run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --packages=.packages --report-on=lib
+          dart run coverage:test_with_coverage -fb -o coverage -- \
+            --concurrency=6 --coverage=./coverage --reporter=expanded test/l_test.dart
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2.1.0
         with:

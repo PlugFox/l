@@ -30,10 +30,12 @@ deploy:
 	@dart pub publish
 
 coverage: get
-	@dart test --concurrency=6 --platform vm --coverage=coverage test/
-	@dart run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --packages=.packages --report-on=lib
-	#@mv coverage/lcov.info coverage/lcov.base.info
-	#@lcov -r coverage/lcov.base.info -o coverage/lcov.base.info "lib/**.freezed.dart" "lib/**.g.dart"
-	#@mv coverage/lcov.base.info coverage/lcov.info
+	@dart run coverage:test_with_coverage -fb -o coverage -- \
+		--concurrency=6 --coverage=./coverage --reporter=expanded test/l_test.dart
+#	@dart test --concurrency=6 --platform vm --coverage=coverage test/
+#	@dart run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --report-on=lib
+#	@mv coverage/lcov.info coverage/lcov.base.info
+#	@lcov -r coverage/lcov.base.info -o coverage/lcov.base.info "lib/**.freezed.dart" "lib/**.g.dart"
+#	@mv coverage/lcov.base.info coverage/lcov.info
 	@lcov --list coverage/lcov.info
 	@genhtml -o coverage coverage/lcov.info
