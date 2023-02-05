@@ -7,7 +7,7 @@ import 'console_log_formatter_mixin.dart';
 import 'log_delegate.dart';
 import 'log_delegate_stub.dart';
 import 'message_formatting_pipeline.dart';
-import 'message_log_formatting_mixin.dart';
+import 'message_log_formatter_mixin.dart';
 
 /// {@nodoc}
 @internal
@@ -30,11 +30,13 @@ class LogDelegateIO implements LogDelegate {
   void log({
     required Object message,
     required LogLevel logLevel,
+    required StackTrace? stackTrace,
   }) =>
       console.writeln(
         _formatter.format(
           message: message,
           logLevel: logLevel,
+          stackTrace: stackTrace,
         ),
       );
 }

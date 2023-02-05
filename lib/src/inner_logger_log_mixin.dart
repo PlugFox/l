@@ -1,3 +1,4 @@
+import '../l.dart';
 import 'environment_specific/log_delegate.dart';
 import 'environment_specific/log_delegate_stub.dart'
     // ignore: uri_does_not_exist
@@ -25,6 +26,9 @@ mixin InnerLoggerLogMixin on InnerLogger {
       _delegate.log(
         message: logMessage.message,
         logLevel: logMessage.level,
+        stackTrace: (logMessage is LogMessageWithStackTrace)
+            ? logMessage.stackTrace
+            : null,
       );
     }
     super.notifyListeners(logMessage);

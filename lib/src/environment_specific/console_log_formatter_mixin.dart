@@ -11,10 +11,11 @@ extension on StringBuffer {
       ..write(value);
   }
 
-  String completeMessage(Object message) => (this
+  String completeMessage(Object message, [Object? stackTrace]) => (this
         ..write(']')
         ..write(' ')
-        ..write(message))
+        ..write(message)
+        ..write(stackTrace ?? ''))
       .toString();
 }
 
@@ -22,16 +23,20 @@ extension on StringBuffer {
 @internal
 mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
   @override
-  String format({required Object message, required LogLevel logLevel}) {
+  String format({
+    required Object message,
+    required LogLevel logLevel,
+    required Object? stackTrace,
+  }) {
     final prefix = logLevel.prefix;
     final printColors = getCurrentLogOptions()?.printColors ?? true;
     final formattedMessage = printColors
         ? logLevel.when<String>(
             shout: () => _shout(message, prefix),
             v: () => _v(message, prefix),
-            error: () => _error(message, prefix),
+            error: () => _error(message, prefix, stackTrace),
             vv: () => _vv(message, prefix),
-            warning: () => _warning(message, prefix),
+            warning: () => _warning(message, prefix, stackTrace),
             vvv: () => _vvv(message, prefix),
             info: () => _info(message, prefix),
             vvvv: () => _vvvv(message, prefix),
@@ -39,13 +44,25 @@ mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
             vvvvv: () => _vvvvv(message, prefix),
             vvvvvv: () => _vvvvvv(message, prefix),
           )
-        : _formatPlain(message, prefix);
+        : _formatPlain(
+            message,
+            prefix,
+            stackTrace: stackTrace,
+          );
 
-    return super.format(message: formattedMessage, logLevel: logLevel);
+    return super.format(
+      message: formattedMessage,
+      logLevel: logLevel,
+      stackTrace: stackTrace,
+    );
   }
 
-  static String _formatPlain(Object message, String prefix) =>
-      (StringBuffer('[')..write(prefix)).completeMessage(message);
+  static String _formatPlain(
+    Object message,
+    String prefix, {
+    Object? stackTrace,
+  }) =>
+      (StringBuffer('[')..write(prefix)).completeMessage(message, stackTrace);
 
   static String _formatStyled(
     Object message,
@@ -53,6 +70,7 @@ mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
     String? font,
     String? foreground,
     String? background,
+    Object? stackTrace,
   }) {
     final buffer = StringBuffer('[');
     for (final value in [font, foreground, background]) {
@@ -62,7 +80,7 @@ mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
       ..write(prefix)
       ..writeEsc(_reset);
 
-    return buffer.completeMessage(message);
+    return buffer.completeMessage(message, stackTrace);
   }
 
   String _shout(Object message, String prefix) => _formatStyled(
@@ -80,19 +98,23 @@ mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
         foreground: _ConsoleColor.magenta.foregroundValue,
       );
 
-  String _error(Object message, String prefix) => _formatStyled(
+  String _error(Object message, String prefix, Object? stackTrace) =>
+      _formatStyled(
         message,
         prefix,
         font: _ConsoleFont.bold.value,
         foreground: _ConsoleColor.red.foregroundValue,
+        stackTrace: stackTrace,
       );
 
   String _vv(Object message, String prefix) => _formatPlain(message, prefix);
 
-  String _warning(Object message, String prefix) => _formatStyled(
+  String _warning(Object message, String prefix, Object? stackTrace) =>
+      _formatStyled(
         message,
         prefix,
         foreground: _ConsoleColor.yellow.foregroundValue,
+        stackTrace: stackTrace,
       );
 
   String _vvv(Object message, String prefix) => _formatPlain(message, prefix);

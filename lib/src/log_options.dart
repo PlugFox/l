@@ -9,6 +9,11 @@ typedef MessageFormatting = Object Function(
   DateTime dateTime,
 );
 
+/// Output StackTrace formatting
+typedef StackTraceFormatting = Object Function(
+  StackTrace stackTrace,
+);
+
 /// Logger options
 @experimental
 @immutable
@@ -20,6 +25,7 @@ abstract class LogOptions {
     bool printColors,
     bool outputInRelease,
     MessageFormatting? messageFormatting,
+    StackTraceFormatting? stackTraceFormatting,
   }) = _LogOptionsImpl;
 
   const LogOptions._();
@@ -36,6 +42,9 @@ abstract class LogOptions {
   /// Output message formatting callback
   MessageFormatting? get messageFormatting;
 
+  /// Output StackTrace formatting callback
+  StackTraceFormatting? get stackTraceFormatting;
+
   /// Default Logger options
   static const defaultOptions = _LogOptionsImpl();
 }
@@ -46,6 +55,7 @@ class _LogOptionsImpl extends LogOptions {
     this.printColors = true,
     this.outputInRelease = false,
     this.messageFormatting,
+    this.stackTraceFormatting,
   }) : super._();
 
   @override
@@ -59,4 +69,7 @@ class _LogOptionsImpl extends LogOptions {
 
   @override
   final MessageFormatting? messageFormatting;
+
+  @override
+  final StackTraceFormatting? stackTraceFormatting;
 }

@@ -8,13 +8,27 @@ import 'message_formatting_pipeline.dart';
 @internal
 mixin MessageLogFormatterMixin on MessageFormattingPipeline {
   @override
-  String format({required Object message, required LogLevel logLevel}) {
+  String format({
+    required Object message,
+    required LogLevel logLevel,
+    required Object? stackTrace,
+  }) {
     final formattedMessage = getCurrentLogOptions()?.messageFormatting?.call(
               message,
               logLevel,
               DateTime.now(),
             ) ??
         message;
-    return super.format(message: formattedMessage, logLevel: logLevel);
+
+    final formattedStackTrace = stackTrace != null
+        ? getCurrentLogOptions()
+            ?.stackTraceFormatting
+            ?.call(stackTrace as StackTrace)
+        : null;
+    return super.format(
+      message: formattedMessage,
+      logLevel: logLevel,
+      stackTrace: formattedStackTrace,
+    );
   }
 }
