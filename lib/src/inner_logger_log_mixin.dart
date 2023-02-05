@@ -1,4 +1,3 @@
-import '../l.dart';
 import 'environment_specific/log_delegate.dart';
 import 'environment_specific/log_delegate_stub.dart'
     // ignore: uri_does_not_exist
@@ -8,6 +7,7 @@ import 'environment_specific/log_delegate_stub.dart'
 import 'inner_logger.dart';
 import 'inner_zoned_mixin.dart';
 import 'log_message.dart';
+import 'log_message_with_stack_trace.dart';
 
 // ignore: do_not_use_environment
 const bool _kIsDebug = !bool.fromEnvironment(
