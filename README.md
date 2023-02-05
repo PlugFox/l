@@ -2,6 +2,7 @@
   
 ![](https://github.com/PlugFox/l/raw/master/.img/l.png)  
   
+[![Pub](https://img.shields.io/pub/v/l.svg)](https://pub.dev/packages/l)
 [![Logger](https://github.com/PlugFox/l/actions/workflows/main.yml/badge.svg)](https://github.com/PlugFox/l/actions/workflows/main.yml)
 [![Coverage](https://codecov.io/gh/PlugFox/l/branch/master/graph/badge.svg)](https://codecov.io/gh/PlugFox/l)
 [![License: WTFPL](https://img.shields.io/badge/License-WTFPL-brightgreen.svg)](https://en.wikipedia.org/wiki/WTFPL)
