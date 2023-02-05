@@ -29,7 +29,7 @@ jobs:
     container:
       image: dart:latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 2
       - name: Install Dependencies
@@ -45,11 +45,11 @@ jobs:
           dart run coverage:test_with_coverage -fb -o coverage -- \
             --concurrency=6 --coverage=./coverage --reporter=expanded test/l_test.dart
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2.1.0
+        uses: codecov/codecov-action@v3.1.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
       - name: Check Code Coverage
-        uses: VeryGoodOpenSource/very_good_coverage@v1.2.1
+        uses: VeryGoodOpenSource/very_good_coverage@v2.1.0
         with:
           path: coverage/lcov.info
           min_coverage: 90
