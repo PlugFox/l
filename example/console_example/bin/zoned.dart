@@ -5,21 +5,22 @@ import 'dart:async';
 
 import 'package:l/l.dart';
 
-void main() => runZonedGuarded(
-      () => l.capture(
+void main() => l.capture<void>(
+      () => runZonedGuarded<void>(
         someFunction,
-        const LogOptions(
-          handlePrint: true,
-          messageFormatting: _messageFormatting,
-        ),
+        l.e,
       ),
-      l.e,
+      const LogOptions(
+        handlePrint: true,
+        useEmoji: true,
+        messageFormatting: _messageFormatting,
+      ),
     );
 
 Future<void> someFunction() async {
   l
     ..v('Regular 1')
-    ..e('Error')
+    ..e('Error', StackTrace.current)
     ..w('Warning')
     ..i('Info')
     ..d('Debug')

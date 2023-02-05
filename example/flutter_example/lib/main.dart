@@ -5,15 +5,20 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:l/l.dart';
 
-void main() => runZonedGuarded(
-      () => l.capture(() {
-        l.d('runApp');
-        print('original print');
-        runApp(const App());
-        l.v('Running');
-        return null;
-      }),
-      l.e,
+void main() => l.capture<void>(
+      () => runZonedGuarded<void>(
+        () async {
+          l.d('runApp');
+          print('original print');
+          runApp(const App());
+          l.v('Running');
+        },
+        l.e,
+      ),
+      const LogOptions(
+        handlePrint: true,
+        useEmoji: true,
+      ),
     );
 
 @immutable

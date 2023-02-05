@@ -1,0 +1,15 @@
+name: l_console_example
+description: >
+  Cross-platform html/io Logger library with simple API.
+  Manipulate with native and web console.
+  Support ascii colorize output.
+version: 1.0.0
+
+publish_to: none
+
+environment:
+  sdk: '>=2.18.0 <4.0.0'
+
+dependencies:
+  l:
+    path: ../../
