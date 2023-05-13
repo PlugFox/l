@@ -4,9 +4,9 @@ description: >
   Manipulate with native and web console.
   Support ascii colorize output.
 version: 4.0.0
-repository: https://github.com/plugfox/l/tree/master
-issue_tracker: https://github.com/plugfox/l/issues
-homepage: https://github.com/plugfox/l
+repository: https://github.com/PlugFox/l/tree/master
+issue_tracker: https://github.com/PlugFox/l/issues
+homepage: https://github.com/PlugFox/l
 #publish_to: https://pub.dev
 #documentation: https://pub.dev/documentation/l/latest/
 #authors:
