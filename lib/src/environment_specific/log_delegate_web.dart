@@ -10,13 +10,13 @@ import 'message_log_formatting_mixin.dart';
 /// {@nodoc}
 @internal
 LogDelegate createEnvironmentLogDelegate() =>
-    LogDelegateWeb(html.window.console);
+    LogDelegate$Web(html.window.console);
 
 /// {@nodoc}
 @internal
-class LogDelegateWeb implements LogDelegate {
+final class LogDelegate$Web implements LogDelegate {
   /// {@nodoc}
-  LogDelegateWeb(this.console);
+  LogDelegate$Web(this.console);
 
   final MessageFormattingPipeline _formatter = MessageFormattingPipelineWeb();
 
@@ -51,5 +51,5 @@ class LogDelegateWeb implements LogDelegate {
 
 /// {@nodoc}
 @internal
-class MessageFormattingPipelineWeb extends MessageFormattingPipeline
-    with MessageLogFormatterMixin {}
+final class MessageFormattingPipelineWeb = MessageFormattingPipeline
+    with MessageLogFormatterMixin;

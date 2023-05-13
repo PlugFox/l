@@ -2,7 +2,7 @@ import 'package:meta/meta.dart';
 
 /// Verbose levels
 @immutable
-abstract class LogLevel {
+sealed class LogLevel {
   /// A shout is always displayed
   @literal
   const factory LogLevel.shout() = _LogLevelShout;
@@ -139,7 +139,7 @@ abstract class LogLevel {
   int get hashCode => level;
 }
 
-class _LogLevelShout extends LogLevel {
+final class _LogLevelShout extends LogLevel {
   const _LogLevelShout()
       : super._(
           prefix: '!',
@@ -163,7 +163,7 @@ class _LogLevelShout extends LogLevel {
       shout();
 }
 
-class _LogLevelRegular1 extends LogLevel {
+final class _LogLevelRegular1 extends LogLevel {
   const _LogLevelRegular1()
       : super._(
           prefix: '1',
@@ -187,7 +187,7 @@ class _LogLevelRegular1 extends LogLevel {
       v();
 }
 
-class _LogLevelError extends LogLevel {
+final class _LogLevelError extends LogLevel {
   const _LogLevelError()
       : super._(
           prefix: 'E',
@@ -211,7 +211,7 @@ class _LogLevelError extends LogLevel {
       error();
 }
 
-class _LogLevelRegular2 extends LogLevel {
+final class _LogLevelRegular2 extends LogLevel {
   const _LogLevelRegular2()
       : super._(
           prefix: '2',
@@ -235,7 +235,7 @@ class _LogLevelRegular2 extends LogLevel {
       vv();
 }
 
-class _LogLevelWarning extends LogLevel {
+final class _LogLevelWarning extends LogLevel {
   const _LogLevelWarning()
       : super._(
           prefix: 'W',
@@ -259,7 +259,7 @@ class _LogLevelWarning extends LogLevel {
       warning();
 }
 
-class _LogLevelRegular3 extends LogLevel {
+final class _LogLevelRegular3 extends LogLevel {
   const _LogLevelRegular3()
       : super._(
           prefix: '3',
@@ -283,7 +283,7 @@ class _LogLevelRegular3 extends LogLevel {
       vvv();
 }
 
-class _LogLevelInfo extends LogLevel {
+final class _LogLevelInfo extends LogLevel {
   const _LogLevelInfo()
       : super._(
           prefix: 'I',
@@ -307,7 +307,7 @@ class _LogLevelInfo extends LogLevel {
       info();
 }
 
-class _LogLevelRegular4 extends LogLevel {
+final class _LogLevelRegular4 extends LogLevel {
   const _LogLevelRegular4()
       : super._(
           prefix: '4',
@@ -331,7 +331,7 @@ class _LogLevelRegular4 extends LogLevel {
       vvvv();
 }
 
-class _LogLevelDebug extends LogLevel {
+final class _LogLevelDebug extends LogLevel {
   const _LogLevelDebug()
       : super._(
           prefix: 'D',
@@ -355,7 +355,7 @@ class _LogLevelDebug extends LogLevel {
       debug();
 }
 
-class _LogLevelRegular5 extends LogLevel {
+final class _LogLevelRegular5 extends LogLevel {
   const _LogLevelRegular5()
       : super._(
           prefix: '5',
@@ -379,7 +379,7 @@ class _LogLevelRegular5 extends LogLevel {
       vvvvv();
 }
 
-class _LogLevelRegular6 extends LogLevel {
+final class _LogLevelRegular6 extends LogLevel {
   const _LogLevelRegular6()
       : super._(
           prefix: '6',

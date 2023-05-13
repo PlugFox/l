@@ -70,3 +70,8 @@ app.*.map.json
 
 # Pana
 log.pana.json
+
+# Test
+.coverage/
+/test/**/*.json
+/test/.test_coverage.dart

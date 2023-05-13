@@ -12,13 +12,13 @@ import 'message_log_formatting_mixin.dart';
 /// {@nodoc}
 @internal
 LogDelegate createEnvironmentLogDelegate() =>
-    io.stdout.hasTerminal ? LogDelegateIO(io.stdout) : LogDelegateStub();
+    io.stdout.hasTerminal ? LogDelegate$IO(io.stdout) : LogDelegate$Stub();
 
 /// {@nodoc}
 @internal
-class LogDelegateIO implements LogDelegate {
+final class LogDelegate$IO implements LogDelegate {
   /// {@nodoc}
-  LogDelegateIO(this.console);
+  LogDelegate$IO(this.console);
 
   final MessageFormattingPipeline _formatter = MessageFormattingPipelineIO();
 
@@ -41,5 +41,5 @@ class LogDelegateIO implements LogDelegate {
 
 /// {@nodoc}
 @internal
-class MessageFormattingPipelineIO extends MessageFormattingPipeline
-    with ConsoleLogFormatterMixin, MessageLogFormatterMixin {}
+final class MessageFormattingPipelineIO = MessageFormattingPipeline
+    with ConsoleLogFormatterMixin, MessageLogFormatterMixin;

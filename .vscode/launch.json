@@ -1,0 +1,57 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    // https://pub.dev/packages/test
+    // dart test test/ws_test.dart --color --platform=vm
+    {
+      "name": "Test (VM)",
+      "request": "launch",
+      "type": "dart",
+      "program": "test/l_test.dart",
+      "env": {
+        "ENVIRONMENT": "test"
+      },
+      "console": "debugConsole",
+      "runTestsOnDevice": false,
+      "templateFor": "test",
+      "toolArgs": [
+        "--color",
+        "--debug",
+        "--coverage=.coverage",
+        "--reporter=expanded",
+        "--platform=vm", // chrome
+        "--file-reporter=json:.coverage/tests.json",
+        "--timeout=30s",
+        "--concurrency=12"
+      ],
+      "args": []
+    },
+    // dart test test/ws_test.dart --color --platform=chrome
+    {
+      "name": "Test (Browser)",
+      "request": "launch",
+      "type": "dart",
+      "program": "test/l_test.dart",
+      "env": {
+        "ENVIRONMENT": "test"
+      },
+      "console": "debugConsole",
+      "runTestsOnDevice": false,
+      "templateFor": "test",
+      "toolArgs": [
+        "--color",
+        "--debug",
+        "--coverage=.coverage",
+        "--reporter=expanded",
+        "--platform=chrome",
+        "--file-reporter=json:.coverage/tests.json",
+        "--timeout=30s",
+        "--concurrency=12"
+      ],
+      "args": []
+    }
+  ]
+}

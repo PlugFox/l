@@ -10,11 +10,9 @@ typedef MessageFormatting = Object Function(
 );
 
 /// Logger options
-@experimental
 @immutable
-abstract class LogOptions {
+abstract base class LogOptions {
   /// Logger options
-  @experimental
   const factory LogOptions({
     bool handlePrint,
     bool printColors,
@@ -40,7 +38,7 @@ abstract class LogOptions {
   static const defaultOptions = _LogOptionsImpl();
 }
 
-class _LogOptionsImpl extends LogOptions {
+final class _LogOptionsImpl extends LogOptions {
   const _LogOptionsImpl({
     this.handlePrint = true,
     this.printColors = true,

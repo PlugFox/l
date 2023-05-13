@@ -15,7 +15,7 @@ const bool _kIsDebug = !bool.fromEnvironment(
 );
 
 /// {@nodoc}
-mixin InnerLoggerLogMixin on InnerLogger {
+base mixin InnerLoggerLogMixin on InnerLogger {
   final LogDelegate _delegate = createEnvironmentLogDelegate();
 
   @override

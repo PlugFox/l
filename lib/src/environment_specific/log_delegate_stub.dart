@@ -10,11 +10,14 @@ import 'message_log_formatting_mixin.dart';
 
 /// {@nodoc}
 @internal
-LogDelegate createEnvironmentLogDelegate() => LogDelegateStub();
+LogDelegate createEnvironmentLogDelegate() => LogDelegate$Stub();
 
 /// {@nodoc}
 @internal
-class LogDelegateStub implements LogDelegate {
+final class LogDelegate$Stub implements LogDelegate {
+  /// {@nodoc}
+  LogDelegate$Stub();
+
   final MessageFormattingPipeline _formatter = MessageFormattingPipelineStub();
 
   @override
@@ -35,5 +38,5 @@ class LogDelegateStub implements LogDelegate {
 
 /// {@nodoc}
 @internal
-class MessageFormattingPipelineStub extends MessageFormattingPipeline
-    with ConsoleLogFormatterMixin, MessageLogFormatterMixin {}
+final class MessageFormattingPipelineStub = MessageFormattingPipeline
+    with ConsoleLogFormatterMixin, MessageLogFormatterMixin;
