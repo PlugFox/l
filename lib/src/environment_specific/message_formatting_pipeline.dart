@@ -4,7 +4,7 @@ import '../log_level.dart';
 
 /// {@nodoc}
 @internal
-abstract class MessageFormattingPipeline {
+abstract base class MessageFormattingPipeline {
   /// {@nodoc}
   @internal
   String format({

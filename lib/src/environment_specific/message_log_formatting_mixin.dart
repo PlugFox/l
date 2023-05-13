@@ -6,7 +6,7 @@ import 'message_formatting_pipeline.dart';
 
 /// {@nodoc}
 @internal
-mixin MessageLogFormatterMixin on MessageFormattingPipeline {
+base mixin MessageLogFormatterMixin on MessageFormattingPipeline {
   @override
   String format({required Object message, required LogLevel logLevel}) {
     final formattedMessage = getCurrentLogOptions()?.messageFormatting?.call(

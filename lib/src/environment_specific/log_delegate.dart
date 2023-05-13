@@ -5,7 +5,7 @@ import '../log_level.dart';
 /// {@nodoc}
 @internal
 // ignore: one_member_abstracts
-abstract class LogDelegate {
+abstract interface class LogDelegate {
   /// {@nodoc}
   void log({
     required Object message,

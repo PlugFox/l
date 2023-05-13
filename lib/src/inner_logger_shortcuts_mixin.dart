@@ -1,7 +1,7 @@
 import 'inner_logger.dart';
 
 /// {@nodoc}
-mixin InnerLoggerShortcutsMixin on InnerLogger {
+base mixin InnerLoggerShortcutsMixin on InnerLogger {
   @override
   void v1(Object message) => super.v(message);
 

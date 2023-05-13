@@ -1,0 +1,15 @@
+name: l_example
+description: Logger example
+version: 1.0.0+1
+repository: https://github.com/PlugFox/l/tree/master
+issue_tracker: https://github.com/PlugFox/l/issues
+homepage: https://github.com/PlugFox/l
+
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0'
+
+dependencies:
+  l:
+    path: '../'

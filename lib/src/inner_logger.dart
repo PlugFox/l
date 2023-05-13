@@ -13,7 +13,7 @@ import 'logger.dart';
 
 /// {@nodoc}
 @internal
-abstract class InnerLogger extends Stream<LogMessage> implements L {
+abstract base class InnerLogger extends Stream<LogMessage> implements L {
   /// Print a message to the console
   /// {@nodoc}
   @protected
@@ -29,7 +29,7 @@ abstract class InnerLogger extends Stream<LogMessage> implements L {
 
 /// {@nodoc}
 @internal
-class InnerLoggerImpl extends InnerLogger
+final class InnerLoggerImpl extends InnerLogger
     with
         InnerLoggerSubscriptionMixin,
         InnerLoggerLogMixin,

@@ -40,7 +40,7 @@ import 'log_options.dart';
 ///
 @immutable
 @sealed
-abstract class L extends Stream<LogMessage> {
+abstract interface class L implements Stream<LogMessage> {
   //L._();
 
   /// A shout [message] is always displayed

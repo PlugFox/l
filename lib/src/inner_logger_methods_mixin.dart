@@ -1,10 +1,9 @@
 import 'inner_logger.dart';
 import 'log_level.dart';
 import 'log_message.dart';
-import 'log_message_with_stack_trace.dart';
 
 /// {@nodoc}
-mixin InnerLoggerMethodsMixin on InnerLogger {
+base mixin InnerLoggerMethodsMixin on InnerLogger {
   @override
   void s(Object message) => super.log(
         LogMessage.create(

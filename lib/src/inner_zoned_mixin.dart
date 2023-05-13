@@ -20,7 +20,7 @@ LogOptions? getCurrentLogOptions() {
 }
 
 /// {@nodoc}
-mixin InnerZonedMixin on InnerLogger {
+base mixin InnerZonedMixin on InnerLogger {
   @override
   R capture<R extends Object?>(R Function() body, [LogOptions? logOptions]) =>
       runZoned<R>(

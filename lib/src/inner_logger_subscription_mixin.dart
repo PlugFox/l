@@ -4,7 +4,7 @@ import 'inner_logger.dart';
 import 'log_message.dart';
 
 /// {@nodoc}
-mixin InnerLoggerSubscriptionMixin on InnerLogger {
+base mixin InnerLoggerSubscriptionMixin on InnerLogger {
   /// Whether there is a subscriber on the [Stream].
   bool get hasListener => _controller.hasListener;
 

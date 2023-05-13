@@ -20,7 +20,7 @@ extension on StringBuffer {
 
 /// {@nodoc}
 @internal
-mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
+base mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
   @override
   String format({required Object message, required LogLevel logLevel}) {
     final prefix = logLevel.prefix;

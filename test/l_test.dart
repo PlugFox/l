@@ -316,5 +316,8 @@ void environmentSpecific() {
       );
       expect(() => delegate.toString(), returnsNormally);
     },
+    onPlatform: {
+      'browser': Skip('Not supported on Browser'),
+    },
   );
 }

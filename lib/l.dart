@@ -22,7 +22,6 @@ import 'src/logger.dart';
 
 export 'src/log_level.dart';
 export 'src/log_message.dart';
-export 'src/log_message_with_stack_trace.dart';
 export 'src/log_options.dart';
 export 'src/logger.dart';
 
