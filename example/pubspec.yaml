@@ -1,5 +1,5 @@
-name: l_flutter_example
-description: Flutter Logger example
+name: l_example
+description: Logger example
 version: 1.0.0+1
 repository: https://github.com/PlugFox/l/tree/master
 issue_tracker: https://github.com/PlugFox/l/issues
@@ -9,13 +9,7 @@ publish_to: 'none'
 
 environment:
   sdk: '>=3.0.0'
-  flutter: '>=3.0.0'
 
 dependencies:
-  flutter:
-    sdk: flutter
   l:
     path: '../'
-
-flutter:
-  uses-material-design: true

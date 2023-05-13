@@ -50,11 +50,11 @@ jobs:
       - name: 🚃 Cache pub modules
         uses: actions/cache@v2
         env:
-          cache-name: cache-ws-package
+          cache-name: cache-pub-package
         with:
           path: |
             $PWD/.pub_cache/
-          key: ${{ runner.os }}-ws-${{ env.cache-name }}-${{ hashFiles('**/pubspec.yaml') }}
+          key: ${{ runner.os }}-pub-${{ env.cache-name }}-${{ hashFiles('**/pubspec.yaml') }}
 
       - name: 🗄️ Export pub cache directory
         run: export PUB_CACHE=$PWD/.pub_cache/
@@ -62,7 +62,7 @@ jobs:
       - name: 👷 Install Dependencies
         timeout-minutes: 1
         run: |
-          dart pub get
+          dart pub get -C .
 
       - name: 🔎 Check format
         timeout-minutes: 1
