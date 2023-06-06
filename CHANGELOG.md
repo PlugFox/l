@@ -1,3 +1,10 @@
+## 4.0.1 - 2023-06-06
+
+### Added
+
+- Restore `LogMessage` and `LogMessageWithStackTrace` classes from JSON
+- **BREAKING:** Date format in JSON is now serialized microseconds since epoch instead of seconds since epoch
+
 ## 4.0.0 - 2023-05-13
 
 ### Changed

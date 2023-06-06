@@ -13,11 +13,46 @@ final class LogMessage {
   });
 
   /// Create new loggin message
-  factory LogMessage.create(Object message, LogLevel level) => LogMessage(
+  LogMessage.create(this.message, this.level) : date = DateTime.now();
+
+  /// Message for logging with [StackTrace]
+  factory LogMessage.stackTrace({
+    required Object message,
+    required LogLevel level,
+    required StackTrace stackTrace,
+    DateTime? date,
+  }) =>
+      LogMessageWithStackTrace(
         message: message,
         level: level,
-        date: DateTime.now(),
+        date: date ?? DateTime.now(),
+        stackTrace: stackTrace,
       );
+
+  /// Restore [LogMessage] from Map<String, Object?>
+  factory LogMessage.fromJson(Map<String, Object?> json) {
+    final <String, Object?>{
+      'date': jsonDate,
+      'message': jsonMessage,
+      'level': jsonLevel,
+    } = json;
+    final jsonStackTrace = json['stack_trace'];
+    final date = jsonDate is int
+        ? DateTime.fromMicrosecondsSinceEpoch(jsonDate)
+        : DateTime.now();
+    return jsonStackTrace == null
+        ? LogMessage(
+            message: jsonMessage.toString(),
+            level: LogLevel.fromValue(jsonLevel),
+            date: date,
+          )
+        : LogMessageWithStackTrace(
+            message: jsonMessage.toString(),
+            level: LogLevel.fromValue(jsonLevel),
+            date: date,
+            stackTrace: StackTrace.fromString(jsonStackTrace.toString()),
+          );
+  }
 
   /// Log date
   @nonVirtual
@@ -32,10 +67,16 @@ final class LogMessage {
   final LogLevel level;
 
   /// Message for logging to Map<String, Object?>
+  /// [date] is converted to [int] `date` microseconds since epoch
+  /// [message] is converted to [String] `message`
+  /// [level] is converted to [String] `level` prefix (e.g. `e`)
+  /// [stackTrace] is converted to [String] `stack_trace`
   Map<String, Object?> toJson() => <String, Object>{
-        'date': date.millisecondsSinceEpoch ~/ 1000,
+        'date': date.microsecondsSinceEpoch,
         'message': message.toString(),
         'level': level.prefix,
+        if (this case LogMessageWithStackTrace(:final StackTrace stackTrace))
+          'stack_trace': stackTrace.toString(),
       };
 
   @override
@@ -43,28 +84,23 @@ final class LogMessage {
 }
 
 /// Message (error, exception, warning) for logging with stack trace
-@immutable
 final class LogMessageWithStackTrace extends LogMessage {
   /// Message for logging
+  const LogMessageWithStackTrace({
+    required super.message,
+    required super.level,
+    required super.date,
+    required this.stackTrace,
+  });
+
+  /// Message for logging
   LogMessageWithStackTrace.create(
-    Object message,
-    LogLevel level,
+    super.message,
+    super.level,
     this.stackTrace,
-  ) : super(
-          message: message,
-          level: level,
-          date: DateTime.now(),
-        );
+  ) : super.create();
 
   /// Stack trace
   /// This field cannot be transferred between isolates
-  @experimental
   final StackTrace stackTrace;
-
-  /// Message for logging to Map<String, Object?>
-  @override
-  Map<String, Object?> toJson() => <String, Object?>{
-        ...super.toJson(),
-        'stack_trace': stackTrace.toString(),
-      };
 }

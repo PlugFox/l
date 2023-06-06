@@ -53,6 +53,19 @@ sealed class LogLevel {
     required this.level,
   });
 
+  /// Restore log level from [value].
+  /// If [value] is not found, then [LogLevel.info] is returned.
+  factory LogLevel.fromValue(Object? value) =>
+      _table[value] ?? const LogLevel.info();
+
+  /// {@nodoc}
+  static final Map<Object, LogLevel> _table = Map<Object, LogLevel>.fromEntries(
+    values.expand<MapEntry<Object, LogLevel>>((e) sync* {
+      yield MapEntry<Object, LogLevel>(e.level, e);
+      yield MapEntry<Object, LogLevel>(e.prefix, e);
+    }),
+  );
+
   /// As prefix
   final String prefix;
 

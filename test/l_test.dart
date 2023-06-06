@@ -17,6 +17,7 @@ void main() {
   group('l.runZonedOutput', runZonedOutput);
   group('l.logLevel', logLevel);
   group('l.environmentSpecific', environmentSpecific);
+  group('l.jsonSerialization', jsonSerialization);
 }
 
 void mainFunctional() {
@@ -320,4 +321,81 @@ void environmentSpecific() {
       'browser': Skip('Not supported on Browser'),
     },
   );
+}
+
+void jsonSerialization() {
+  final date = DateTime.now();
+  final message = 'Test message';
+  final level = LogLevel.info();
+  final stackTrace = StackTrace.current;
+
+  test('should correctly serialize to JSON', () {
+    final logMessage = LogMessage(
+      message: message,
+      level: level,
+      date: date,
+    );
+    expect(
+      logMessage.toJson(),
+      equals({
+        'date': date.microsecondsSinceEpoch,
+        'message': message,
+        'level': level.prefix,
+      }),
+    );
+  });
+
+  test('should correctly deserialize from JSON', () {
+    final json = {
+      'date': date.microsecondsSinceEpoch,
+      'message': message,
+      'level': level.prefix,
+    };
+    final logMessage = LogMessage.fromJson(json);
+
+    expect(logMessage, isA<LogMessage>());
+    expect(logMessage.date, equals(date));
+    expect(logMessage.message, equals(message));
+    expect(logMessage.level, equals(level));
+  });
+
+  test('should correctly serialize to JSON with StackTrace', () {
+    final logMessage = LogMessage.stackTrace(
+      message: message,
+      level: level,
+      date: date,
+      stackTrace: stackTrace,
+    );
+    expect(
+      logMessage.toJson(),
+      equals({
+        'date': date.microsecondsSinceEpoch,
+        'message': message,
+        'level': level.prefix,
+        'stack_trace': stackTrace.toString(),
+      }),
+    );
+  });
+
+  test('should correctly deserialize from JSON with StackTrace', () {
+    final json = {
+      'date': date.microsecondsSinceEpoch,
+      'message': message,
+      'level': level.prefix,
+      'stack_trace': stackTrace.toString(),
+    };
+    final logMessage = LogMessage.fromJson(json);
+
+    expect(
+      logMessage,
+      isA<LogMessageWithStackTrace>().having(
+        (l) => l.stackTrace.toString(),
+        'stackTrace',
+        equals(stackTrace.toString()),
+      ),
+    );
+    expect(logMessage.date, equals(date));
+    expect(logMessage.message, equals(message));
+    expect(logMessage.level, equals(level));
+  });
 }
