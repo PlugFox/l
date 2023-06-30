@@ -24,18 +24,18 @@ Work with native console.
 
 ### Key features
 
-| Method | Description |
-| -- | |
-| [s] | A shout is always displayed |
-| [v1], [v] | Regular message with verbose level 1 |
-| [e] | Error message with verbose level 1 |
-| [v2], [vv] | Regular message with verbose level 2 |
-| [w] | Warning message with verbose level 2 |
-| [v3], [vvv] | Regular message with verbose level 3 |
-| [i], [<] | Inform message with verbose level 3 |
-| [v4], [vvvv] | Regular message with verbose level 4 |
-| [d], [<<] | Debug message with verbose level 4 |
-| [v5], [vvvvv] | Regular message with verbose level 5 |
+| Method         | Description                          |
+| -------------- | ------------------------------------ |
+| [s]            | A shout is always displayed          |
+| [v1], [v]      | Regular message with verbose level 1 |
+| [e]            | Error message with verbose level 1   |
+| [v2], [vv]     | Regular message with verbose level 2 |
+| [w]            | Warning message with verbose level 2 |
+| [v3], [vvv]    | Regular message with verbose level 3 |
+| [i], [<]       | Inform message with verbose level 3  |
+| [v4], [vvvv]   | Regular message with verbose level 4 |
+| [d], [<<]      | Debug message with verbose level 4   |
+| [v5], [vvvvv]  | Regular message with verbose level 5 |
 | [v6], [vvvvvv] | Regular message with verbose level 6 |
 
 ```dart
