@@ -18,10 +18,10 @@ funding:
   - https://boosty.to/plugfox
 
 topics:
-  - logger
-  - log
   - cross-platform
   - logging
+  - logger
+  - logs
   - log
 
 platforms:
