@@ -5,7 +5,6 @@
   "version": "0.2.0",
   "configurations": [
     // https://pub.dev/packages/test
-    // dart test test/ws_test.dart --color --platform=vm
     {
       "name": "Test (VM)",
       "request": "launch",
@@ -29,7 +28,6 @@
       ],
       "args": []
     },
-    // dart test test/ws_test.dart --color --platform=chrome
     {
       "name": "Test (Browser)",
       "request": "launch",

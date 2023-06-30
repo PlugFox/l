@@ -12,6 +12,30 @@ homepage: https://github.com/PlugFox/l
 #authors:
 #  - Plague Fox <plugfox@gmail.com>
 
+funding:
+  - https://www.buymeacoffee.com/plugfox
+  - https://www.patreon.com/plugfox
+  - https://boosty.to/plugfox
+
+topics:
+  - logger
+  - log
+  - cross-platform
+  - logging
+  - log
+
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
+
+screenshots:
+  - description: 'Example of using the library to display a message in the console.'
+    path: example.png
+
 environment:
   sdk: '>=3.0.0 <4.0.0'
 

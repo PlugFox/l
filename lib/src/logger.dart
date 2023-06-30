@@ -39,7 +39,6 @@ import 'log_options.dart';
 /// **!!! PLEASE, DO NOT LOG SENSITIVE INFORMATION !!!**
 ///
 @immutable
-@sealed
 abstract interface class L implements Stream<LogMessage> {
   //L._();
 

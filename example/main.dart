@@ -5,8 +5,8 @@ import 'dart:async';
 
 import 'package:l/l.dart';
 
-void main() => runZonedGuarded<void>(
-      () => l.capture<void>(
+void main() => l.capture<void>(
+      () => runZonedGuarded<void>(
         () {
           l
             ..v('Regular 1')
@@ -20,14 +20,14 @@ void main() => runZonedGuarded<void>(
           l.v('Running');
           throw Exception('Exception');
         },
-        const LogOptions(
-          handlePrint: true,
-          messageFormatting: _messageFormatting,
-          outputInRelease: false,
-          printColors: true,
-        ),
+        l.e,
       ),
-      l.e,
+      const LogOptions(
+        handlePrint: true,
+        messageFormatting: _messageFormatting,
+        outputInRelease: false,
+        printColors: true,
+      ),
     );
 
 Object _messageFormatting(Object message, LogLevel logLevel, DateTime now) =>
