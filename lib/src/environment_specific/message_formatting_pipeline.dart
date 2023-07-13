@@ -7,9 +7,10 @@ import '../log_level.dart';
 abstract base class MessageFormattingPipeline {
   /// {@nodoc}
   @internal
-  String format({
+  String? format({
     required Object message,
     required LogLevel logLevel,
+    required DateTime date,
   }) =>
       message.toString();
 }

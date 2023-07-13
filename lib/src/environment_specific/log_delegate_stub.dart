@@ -24,14 +24,16 @@ final class LogDelegate$Stub implements LogDelegate {
   void log({
     required Object message,
     required LogLevel logLevel,
-  }) =>
-      // ignore: avoid_print
-      _printToConsole(
-        _formatter.format(
-          message: message,
-          logLevel: logLevel,
-        ),
-      );
+    required DateTime date,
+  }) {
+    final output = _formatter.format(
+      message: message,
+      logLevel: logLevel,
+      date: date,
+    );
+    if (output == null) return;
+    _printToConsole(output);
+  }
 
   void _printToConsole(String line) => Zone.root.print(line);
 }

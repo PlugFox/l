@@ -22,7 +22,11 @@ extension on StringBuffer {
 @internal
 base mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
   @override
-  String format({required Object message, required LogLevel logLevel}) {
+  String? format({
+    required Object message,
+    required LogLevel logLevel,
+    required DateTime date,
+  }) {
     final prefix = logLevel.prefix;
     final printColors = getCurrentLogOptions()?.printColors ?? true;
     final formattedMessage = printColors
@@ -41,7 +45,11 @@ base mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
           )
         : _formatPlain(message, prefix);
 
-    return super.format(message: formattedMessage, logLevel: logLevel);
+    return super.format(
+      message: formattedMessage,
+      logLevel: logLevel,
+      date: date,
+    );
   }
 
   static String _formatPlain(Object message, String prefix) =>

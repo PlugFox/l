@@ -12,13 +12,13 @@ import 'message_log_formatting_mixin.dart';
 /// {@nodoc}
 @internal
 LogDelegate createEnvironmentLogDelegate() =>
-    io.stdout.hasTerminal ? LogDelegate$IO(io.stdout) : LogDelegate$Stub();
+    io.stdout.hasTerminal ? LogDelegate$VM(io.stdout) : LogDelegate$Stub();
 
 /// {@nodoc}
 @internal
-final class LogDelegate$IO implements LogDelegate {
+final class LogDelegate$VM implements LogDelegate {
   /// {@nodoc}
-  LogDelegate$IO(this.console);
+  LogDelegate$VM(this.console);
 
   final MessageFormattingPipeline _formatter = MessageFormattingPipelineIO();
 
@@ -30,13 +30,16 @@ final class LogDelegate$IO implements LogDelegate {
   void log({
     required Object message,
     required LogLevel logLevel,
-  }) =>
-      console.writeln(
-        _formatter.format(
-          message: message,
-          logLevel: logLevel,
-        ),
-      );
+    required DateTime date,
+  }) {
+    final output = _formatter.format(
+      message: message,
+      logLevel: logLevel,
+      date: date,
+    );
+    if (output == null) return;
+    console.writeln(output);
+  }
 }
 
 /// {@nodoc}

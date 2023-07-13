@@ -1,11 +1,17 @@
 // ignore_for_file: public_member_api_docs, avoid_print
+// ignore_for_file: use_named_constants, do_not_use_environment
+
 library l.example;
 
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:l/l.dart';
 
-void main() => l.capture<void>(
+/// Whether to override the output of the logger.
+const bool kReleaseMode = false;
+
+void main([List<String>? args]) => l.capture<void>(
       () => runZonedGuarded<void>(
         () {
           l
@@ -15,23 +21,36 @@ void main() => l.capture<void>(
             ..i('Info')
             ..d('Debug')
             ..s('Shout')
+            ..vv('Regular 2')
             ..v6('Regular 6');
           print('Hello from original print!');
           l.v('Running');
           throw Exception('Exception');
         },
-        l.e,
+        l.e, // Log uncaught errors received by the zone.
       ),
+      // Logger options passed to the underlying logger zone.
       const LogOptions(
         handlePrint: true,
-        messageFormatting: _messageFormatting,
+        messageFormatting: _customFormatter,
+        overrideOutput: kReleaseMode ? _customPrinter : null,
         outputInRelease: false,
         printColors: true,
       ),
     );
 
-Object _messageFormatting(Object message, LogLevel logLevel, DateTime now) =>
-    '${_timeFormat(now)} | $message';
+/// Format messages and truncate them to 25 characters long.
+Object _customFormatter(Object message, LogLevel logLevel, DateTime now) =>
+    switch (message.toString()) {
+      final String msg when msg.length > 25 =>
+        '${msg.substring(0, 25 - 4)} ...',
+      final String msg => msg,
+    };
 
-String _timeFormat(DateTime time) =>
-    '${time.hour}:${time.minute.toString().padLeft(2, '0')}';
+/// Also, we can output messages to a file, or to a database, or to a server.
+String? _customPrinter(Object message, LogLevel logLevel, DateTime now) =>
+    jsonEncode(<String, Object?>{
+      'timestamp': now.toUtc().toIso8601String(),
+      'level': logLevel.toString(),
+      'message': message.toString(),
+    });
