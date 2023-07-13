@@ -9,7 +9,7 @@ import 'dart:convert';
 import 'package:l/l.dart';
 
 /// Whether to override the output of the logger.
-const bool kReleaseMode = false;
+const bool overrideOutput = true;
 
 void main([List<String>? args]) => l.capture<void>(
       () => runZonedGuarded<void>(
@@ -31,11 +31,11 @@ void main([List<String>? args]) => l.capture<void>(
       ),
       // Logger options passed to the underlying logger zone.
       const LogOptions(
-        handlePrint: true,
+        handlePrint: true, // Whether to handle `print()` calls.
         messageFormatting: _customFormatter,
-        overrideOutput: kReleaseMode ? _customPrinter : null,
-        outputInRelease: false,
-        printColors: true,
+        overrideOutput: overrideOutput ? _customPrinter : null,
+        outputInRelease: false, // Whether to output in release mode.
+        printColors: true, // Whether to print colors in the console.
       ),
     );
 
