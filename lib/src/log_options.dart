@@ -47,6 +47,12 @@ abstract base class LogOptions {
   /// If returns `null` then the message
   /// will not be output by the default logger.
   /// E.g. useful for JSON output, or output to a file/database/server.
+  ///
+  /// **DO NOT USE `print(msg)` INSIDE THIS FUNCTION!**
+  /// **IT WILL CAUSE AN INFINITE LOOP!**
+  /// Just return a formatted string for standard output,
+  /// or use `stdout.write(msg)` / `stderr.write(err)`
+  /// or your own output logic.
   OverrideLoggerOutput? get overrideOutput;
 
   /// Default Logger options
