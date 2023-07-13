@@ -10,13 +10,13 @@ import 'message_log_formatting_mixin.dart';
 /// {@nodoc}
 @internal
 LogDelegate createEnvironmentLogDelegate() =>
-    LogDelegate$Web(html.window.console);
+    LogDelegate$JS(html.window.console);
 
 /// {@nodoc}
 @internal
-final class LogDelegate$Web implements LogDelegate {
+final class LogDelegate$JS implements LogDelegate {
   /// {@nodoc}
-  LogDelegate$Web(this.console);
+  LogDelegate$JS(this.console);
 
   final MessageFormattingPipeline _formatter = MessageFormattingPipelineWeb();
 
@@ -28,23 +28,26 @@ final class LogDelegate$Web implements LogDelegate {
   void log({
     required Object message,
     required LogLevel logLevel,
+    required DateTime date,
   }) {
-    final formattedMessage = _formatter.format(
+    final output = _formatter.format(
       message: message,
       logLevel: logLevel,
+      date: date,
     );
+    if (output == null) return;
     logLevel.when<void>(
-      shout: () => console.warn(formattedMessage),
-      v: () => console.log(formattedMessage),
-      error: () => console.error(formattedMessage),
-      vv: () => console.log(formattedMessage),
-      warning: () => console.warn(formattedMessage),
-      vvv: () => console.log(formattedMessage),
-      info: () => console.info(formattedMessage),
-      vvvv: () => console.log(formattedMessage),
-      debug: () => console.debug(formattedMessage),
-      vvvvv: () => console.log(formattedMessage),
-      vvvvvv: () => console.log(formattedMessage),
+      shout: () => console.warn(output),
+      v: () => console.log(output),
+      error: () => console.error(output),
+      vv: () => console.log(output),
+      warning: () => console.warn(output),
+      vvv: () => console.log(output),
+      info: () => console.info(output),
+      vvvv: () => console.log(output),
+      debug: () => console.debug(output),
+      vvvvv: () => console.log(output),
+      vvvvvv: () => console.log(output),
     );
   }
 }

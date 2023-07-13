@@ -6,10 +6,10 @@ library l.test;
 import 'dart:async';
 
 import 'package:l/l.dart';
-import 'package:l/src/environment_specific/log_delegate_io.dart'
-    as log_delegate_io;
 import 'package:l/src/environment_specific/log_delegate_stub.dart'
     as log_delegate_stub;
+import 'package:l/src/environment_specific/log_delegate_vm.dart'
+    as log_delegate_io;
 import 'package:test/test.dart';
 
 void main() {
@@ -298,6 +298,7 @@ void environmentSpecific() {
       delegate.log(
         message: 'Message with LogDelegateStub',
         logLevel: const LogLevel.debug(),
+        date: DateTime.now(),
       );
       expect(() => delegate.toString(), returnsNormally);
     },
@@ -314,6 +315,7 @@ void environmentSpecific() {
       delegate.log(
         message: 'Message with LogDelegateIO',
         logLevel: const LogLevel.debug(),
+        date: DateTime.now(),
       );
       expect(() => delegate.toString(), returnsNormally);
     },

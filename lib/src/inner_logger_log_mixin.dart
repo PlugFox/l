@@ -1,9 +1,9 @@
 import 'environment_specific/log_delegate.dart';
 import 'environment_specific/log_delegate_stub.dart'
     // ignore: uri_does_not_exist
-    if (dart.library.html) 'environment_specific/log_delegate_web.dart'
+    if (dart.library.html) 'environment_specific/log_delegate_js.dart'
     // ignore: uri_does_not_exist
-    if (dart.library.io) 'environment_specific/log_delegate_io.dart';
+    if (dart.library.io) 'environment_specific/log_delegate_vm.dart';
 import 'inner_logger.dart';
 import 'inner_zoned_mixin.dart';
 import 'log_message.dart';
@@ -25,6 +25,7 @@ base mixin InnerLoggerLogMixin on InnerLogger {
       _delegate.log(
         message: logMessage.message,
         logLevel: logMessage.level,
+        date: logMessage.date,
       );
     }
     super.notifyListeners(logMessage);

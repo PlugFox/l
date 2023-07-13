@@ -11,13 +11,10 @@ const Symbol _kOptionsKey = #l.logOptions;
 
 /// {@nodoc}
 @internal
-LogOptions? getCurrentLogOptions() {
-  final Object? options = Zone.current[_kOptionsKey];
-  if (options is LogOptions) {
-    return options;
-  }
-  return null;
-}
+LogOptions? getCurrentLogOptions() => switch (Zone.current[_kOptionsKey]) {
+      final LogOptions options => options,
+      _ => null,
+    };
 
 /// {@nodoc}
 base mixin InnerZonedMixin on InnerLogger {

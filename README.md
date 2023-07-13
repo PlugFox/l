@@ -1,6 +1,6 @@
 # [L]ogger
 
-![](https://github.com/PlugFox/l/raw/master/.img/l.png)
+<!-- ![](https://github.com/PlugFox/l/raw/master/.img/l.png) -->
 
 [![Pub](https://img.shields.io/pub/v/l.svg)](https://pub.dev/packages/l)
 [![Actions Status](https://github.com/PlugFox/l/actions/workflows/checkout.yml/badge.svg)](https://github.com/PlugFox/l/actions)

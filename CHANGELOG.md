@@ -1,3 +1,11 @@
+## 4.1.0-pre.1 - 2023-07-13
+
+### Changed
+
+- Add `overrideOutput` to options - allow to use custom message formatting and print handler.
+  If returns `null` then the message will not be output to the console by default logger.
+  You can use it to print to a file or to a database or for raw JSON output.
+
 ## 4.0.2 - 2023-06-30
 
 ### Changed
