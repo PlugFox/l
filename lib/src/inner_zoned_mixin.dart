@@ -9,14 +9,15 @@ import 'log_options.dart';
 
 const Symbol _kOptionsKey = #l.logOptions;
 
-/// {@nodoc}
+/// Receive [LogOptions] from [Zone]
 @internal
 LogOptions? getCurrentLogOptions() => switch (Zone.current[_kOptionsKey]) {
       final LogOptions options => options,
       _ => null,
     };
 
-/// {@nodoc}
+/// Internal mixin for [InnerLogger] to run in [Zone]
+@internal
 base mixin InnerZonedMixin on InnerLogger {
   @override
   R capture<R extends Object?>(R Function() body, [LogOptions? logOptions]) =>

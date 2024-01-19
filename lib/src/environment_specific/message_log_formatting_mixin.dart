@@ -5,7 +5,6 @@ import '../log_message.dart';
 import '../log_options.dart';
 import 'message_formatting_pipeline.dart';
 
-/// {@nodoc}
 @internal
 base mixin MessageLogFormatterMixin on MessageFormattingPipeline {
   @override

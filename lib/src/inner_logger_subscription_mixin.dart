@@ -1,9 +1,12 @@
 import 'dart:async';
 
+import 'package:meta/meta.dart';
+
 import 'inner_logger.dart';
 import 'log_message.dart';
 
-/// {@nodoc}
+/// Subscription for logging
+@internal
 base mixin InnerLoggerSubscriptionMixin on InnerLogger {
   /// Whether there is a subscriber on the [Stream].
   bool get hasListener => _controller.hasListener;

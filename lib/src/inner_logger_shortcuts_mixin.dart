@@ -1,7 +1,10 @@
+import 'package:meta/meta.dart';
+
 import 'inner_logger.dart';
 import 'logger.dart';
 
-/// {@nodoc}
+/// Shortcuts for logging
+@internal
 base mixin InnerLoggerShortcutsMixin on InnerLogger {
   @override
   void v1(Object message, [LogMessageContext? context]) =>

@@ -18,7 +18,6 @@ extension on StringBuffer {
       .toString();
 }
 
-/// {@nodoc}
 @internal
 base mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
   @override

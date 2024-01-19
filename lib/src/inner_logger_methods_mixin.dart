@@ -1,9 +1,12 @@
+import 'package:meta/meta.dart';
+
 import 'inner_logger.dart';
 import 'log_level.dart';
 import 'log_message.dart';
 import 'logger.dart';
 
-/// {@nodoc}
+/// Methods for logging
+@internal
 base mixin InnerLoggerMethodsMixin on InnerLogger {
   @override
   void s(

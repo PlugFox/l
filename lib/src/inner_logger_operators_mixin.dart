@@ -1,6 +1,9 @@
+import 'package:meta/meta.dart';
+
 import 'inner_logger.dart';
 
-/// {@nodoc}
+/// Operators for logging
+@internal
 base mixin InnerLoggerOperatorsMixin on InnerLogger {
   @override
   void operator <(Object info) => super.i(info);

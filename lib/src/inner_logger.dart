@@ -11,17 +11,14 @@ import 'inner_zoned_mixin.dart';
 import 'log_message.dart';
 import 'logger.dart';
 
-/// {@nodoc}
 @internal
 abstract base class InnerLogger extends Stream<LogMessage> implements L {
   /// Notify subscribers
-  /// {@nodoc}
   @protected
   @visibleForOverriding
   void notifyListeners(LogMessage event);
 }
 
-/// {@nodoc}
 @internal
 final class InnerLoggerImpl extends InnerLogger
     with
@@ -32,7 +29,6 @@ final class InnerLoggerImpl extends InnerLogger
         InnerLoggerShortcutsMixin,
         InnerZonedMixin {
   //region InnerLoggerImpl singleton factory
-  /// {@nodoc}
   factory InnerLoggerImpl() => _internalSingleton;
   InnerLoggerImpl._internal();
   static final InnerLoggerImpl _internalSingleton = InnerLoggerImpl._internal();

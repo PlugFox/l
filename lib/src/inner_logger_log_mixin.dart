@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 import 'environment_specific/log_delegate.dart';
 import 'environment_specific/log_delegate_stub.dart'
     // ignore: uri_does_not_exist
@@ -14,7 +16,8 @@ const bool _kIsDebug = !bool.fromEnvironment(
   defaultValue: true,
 );
 
-/// {@nodoc}
+/// Log mixin for [InnerLogger]
+@internal
 base mixin InnerLoggerLogMixin on InnerLogger {
   final LogDelegate _delegate = createEnvironmentLogDelegate();
 

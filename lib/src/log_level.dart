@@ -47,7 +47,6 @@ sealed class LogLevel {
   @literal
   const factory LogLevel.vvvvvv() = _LogLevelRegular6;
 
-  /// {@nodoc}
   const LogLevel._({
     required this.prefix,
     required this.level,
@@ -58,7 +57,6 @@ sealed class LogLevel {
   factory LogLevel.fromValue(Object? value) =>
       _table[value] ?? const LogLevel.info();
 
-  /// {@nodoc}
   static final Map<Object, LogLevel> _table = <Object, LogLevel>{
     for (final e in values) e.level: e,
     for (final e in values) e.prefix: e,

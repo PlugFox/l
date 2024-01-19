@@ -7,20 +7,17 @@ import 'log_delegate.dart';
 import 'message_formatting_pipeline.dart';
 import 'message_log_formatting_mixin.dart';
 
-/// {@nodoc}
+/// Environment-specific implementation of [LogDelegate]
 @internal
 LogDelegate createEnvironmentLogDelegate() =>
     LogDelegate$JS(html.window.console);
 
-/// {@nodoc}
 @internal
 final class LogDelegate$JS implements LogDelegate {
-  /// {@nodoc}
   LogDelegate$JS(this.console);
 
   final MessageFormattingPipeline _formatter = MessageFormattingPipelineWeb();
 
-  /// {@nodoc}
   @protected
   final html.Console console;
 
@@ -44,7 +41,7 @@ final class LogDelegate$JS implements LogDelegate {
   }
 }
 
-/// {@nodoc}
+/// Environment-specific implementation of [MessageFormattingPipeline]
 @internal
 final class MessageFormattingPipelineWeb = MessageFormattingPipeline
     with MessageLogFormatterMixin;
