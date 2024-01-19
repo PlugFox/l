@@ -1,22 +1,29 @@
 import 'inner_logger.dart';
+import 'logger.dart';
 
 /// {@nodoc}
 base mixin InnerLoggerShortcutsMixin on InnerLogger {
   @override
-  void v1(Object message) => super.v(message);
+  void v1(Object message, [LogMessageContext? context]) =>
+      super.v(message, context);
 
   @override
-  void v2(Object message) => super.vv(message);
+  void v2(Object message, [LogMessageContext? context]) =>
+      super.vv(message, context);
 
   @override
-  void v3(Object message) => super.vvv(message);
+  void v3(Object message, [LogMessageContext? context]) =>
+      super.vvv(message, context);
 
   @override
-  void v4(Object message) => super.vvvv(message);
+  void v4(Object message, [LogMessageContext? context]) =>
+      super.vvvv(message, context);
 
   @override
-  void v5(Object message) => super.vvvvv(message);
+  void v5(Object message, [LogMessageContext? context]) =>
+      super.vvvvv(message, context);
 
   @override
-  void v6(Object message) => super.vvvvvv(message);
+  void v6(Object message, [LogMessageContext? context]) =>
+      super.vvvvvv(message, context);
 }

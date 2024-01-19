@@ -18,7 +18,7 @@ abstract base class InnerLogger extends Stream<LogMessage> implements L {
   /// {@nodoc}
   @protected
   @visibleForOverriding
-  void notifyListeners(LogMessage logMessage);
+  void notifyListeners(LogMessage event);
 }
 
 /// {@nodoc}

@@ -1,20 +1,12 @@
 import 'package:meta/meta.dart';
 
-import 'log_level.dart';
+import '../l.dart';
 
 /// Output message formatting
-typedef MessageFormatting = Object Function(
-  Object message,
-  LogLevel level,
-  DateTime timestamp,
-);
+typedef MessageFormatting = Object Function(LogMessage event);
 
 /// Override output message formatting
-typedef OverrideLoggerOutput = String? Function(
-  Object message,
-  LogLevel level,
-  DateTime timestamp,
-);
+typedef OverrideLoggerOutput = String? Function(LogMessage event);
 
 /// Logger options
 @immutable

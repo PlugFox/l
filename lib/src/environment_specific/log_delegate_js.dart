@@ -2,7 +2,7 @@ import 'dart:html' as html show window, Console;
 
 import 'package:meta/meta.dart';
 
-import '../log_level.dart';
+import '../log_message.dart';
 import 'log_delegate.dart';
 import 'message_formatting_pipeline.dart';
 import 'message_log_formatting_mixin.dart';
@@ -25,18 +25,10 @@ final class LogDelegate$JS implements LogDelegate {
   final html.Console console;
 
   @override
-  void log({
-    required Object message,
-    required LogLevel logLevel,
-    required DateTime timestamp,
-  }) {
-    final output = _formatter.format(
-      message: message,
-      logLevel: logLevel,
-      timestamp: timestamp,
-    );
+  void log(LogMessage event) {
+    final output = _formatter.format(event);
     if (output == null) return;
-    logLevel.when<void>(
+    event.level.when<void>(
       shout: () => console.warn(output),
       v: () => console.log(output),
       error: () => console.error(output),

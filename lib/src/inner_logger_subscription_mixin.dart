@@ -26,8 +26,8 @@ base mixin InnerLoggerSubscriptionMixin on InnerLogger {
       );
 
   @override
-  void notifyListeners(LogMessage logMessage) {
+  void notifyListeners(LogMessage event) {
     if (!hasListener) return;
-    _controller.add(logMessage);
+    _controller.add(event);
   }
 }

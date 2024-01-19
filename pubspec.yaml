@@ -3,7 +3,7 @@ description: >
   Cross-platform html/io Logger library with simple API.
   Manipulate with native and web console.
   Support ascii colorize output.
-version: 5.0.0-pre.1
+version: 5.0.0-pre.2
 repository: https://github.com/PlugFox/l/tree/master
 issue_tracker: https://github.com/PlugFox/l/issues
 homepage: https://github.com/PlugFox/l

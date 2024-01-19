@@ -2,7 +2,7 @@ import 'dart:io' as io show Stdout, stdout;
 
 import 'package:meta/meta.dart';
 
-import '../log_level.dart';
+import '../../l.dart';
 import 'console_log_formatter_mixin.dart';
 import 'log_delegate.dart';
 import 'log_delegate_stub.dart';
@@ -27,16 +27,8 @@ final class LogDelegate$VM implements LogDelegate {
   final io.Stdout console;
 
   @override
-  void log({
-    required Object message,
-    required LogLevel logLevel,
-    required DateTime timestamp,
-  }) {
-    final output = _formatter.format(
-      message: message,
-      logLevel: logLevel,
-      timestamp: timestamp,
-    );
+  void log(LogMessage event) {
+    final output = _formatter.format(event);
     if (output == null) return;
     console.writeln(output);
   }

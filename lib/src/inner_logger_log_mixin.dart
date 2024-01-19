@@ -19,15 +19,11 @@ base mixin InnerLoggerLogMixin on InnerLogger {
   final LogDelegate _delegate = createEnvironmentLogDelegate();
 
   @override
-  void log(LogMessage logMessage) {
+  void log(LogMessage event) {
     // Without log delegate when release
     if (_kIsDebug || (getCurrentLogOptions()?.outputInRelease ?? false)) {
-      _delegate.log(
-        message: logMessage.message,
-        logLevel: logMessage.level,
-        timestamp: logMessage.timestamp,
-      );
+      _delegate.log(event);
     }
-    super.notifyListeners(logMessage);
+    super.notifyListeners(event);
   }
 }

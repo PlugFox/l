@@ -1,16 +1,11 @@
 import 'package:meta/meta.dart';
 
-import '../log_level.dart';
+import '../log_message.dart';
 
 /// {@nodoc}
 @internal
 abstract base class MessageFormattingPipeline {
   /// {@nodoc}
   @internal
-  String? format({
-    required Object message,
-    required LogLevel logLevel,
-    required DateTime timestamp,
-  }) =>
-      message.toString();
+  String? format(LogMessage event) => event.message.toString();
 }

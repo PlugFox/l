@@ -3,6 +3,9 @@ import 'package:meta/meta.dart';
 import 'log_message.dart';
 import 'log_options.dart';
 
+/// Additional information for logging
+typedef LogMessageContext = Map<String, Object?>;
+
 /// [L]ogger
 ///
 /// Cross-platform html/io Logger with simple API.
@@ -43,60 +46,60 @@ abstract interface class L implements Stream<LogMessage> {
   //L._();
 
   /// A shout [message] is always displayed
-  void s(Object message);
+  void s(Object message, [LogMessageContext? context]);
 
   /// Regular [message] with verbose level 1
-  void v(Object message);
+  void v(Object message, [LogMessageContext? context]);
 
   /// Regular [message] with verbose level 1
-  void v1(Object message);
+  void v1(Object message, [LogMessageContext? context]);
 
   /// Regular [message] with verbose level 2
-  void vv(Object message);
+  void vv(Object message, [LogMessageContext? context]);
 
   /// Regular [message] with verbose level 2
-  void v2(Object message);
+  void v2(Object message, [LogMessageContext? context]);
 
   /// Regular [message] with verbose level 3
-  void vvv(Object message);
+  void vvv(Object message, [LogMessageContext? context]);
 
   /// Regular [message] with verbose level 3
-  void v3(Object message);
+  void v3(Object message, [LogMessageContext? context]);
 
   /// Regular [message] with verbose level 4
-  void vvvv(Object message);
+  void vvvv(Object message, [LogMessageContext? context]);
 
   /// Regular [message] with verbose level 4
-  void v4(Object message);
+  void v4(Object message, [LogMessageContext? context]);
 
   /// Regular [message] with verbose level 5
-  void vvvvv(Object message);
+  void vvvvv(Object message, [LogMessageContext? context]);
 
   /// Regular [message] with verbose level 5
-  void v5(Object message);
+  void v5(Object message, [LogMessageContext? context]);
 
   /// Regular [message] with verbose level 6
-  void vvvvvv(Object message);
+  void vvvvvv(Object message, [LogMessageContext? context]);
 
   /// Regular [message] with verbose level 6
-  void v6(Object message);
+  void v6(Object message, [LogMessageContext? context]);
 
   /// Inform [message] with verbose level 3
-  void i(Object message);
+  void i(Object message, [LogMessageContext? context]);
 
   /// Warning [message] with verbose level 2
-  void w(Object message, [StackTrace? stackTrace]);
+  void w(Object message, [StackTrace? stackTrace, LogMessageContext? context]);
 
   /// Error [message] with verbose level 1
-  void e(Object message, [StackTrace? stackTrace]);
+  void e(Object message, [StackTrace? stackTrace, LogMessageContext? context]);
 
   /// Debug [message] with verbose level 4
-  void d(Object message);
+  void d(Object message, [LogMessageContext? context]);
 
   /// Print a message to the console
   ///
   /// Add [LogMessage] or [LogMessageError] to the logger
-  void log(LogMessage message);
+  void log(LogMessage event);
 
   /// Set logger options for this zone
   /// The custom handler can intercept print operations and

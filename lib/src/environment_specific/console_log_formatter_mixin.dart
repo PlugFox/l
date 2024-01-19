@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 
 import '../inner_zoned_mixin.dart';
-import '../log_level.dart';
+import '../log_message.dart';
 import 'message_formatting_pipeline.dart';
 
 extension on StringBuffer {
@@ -22,15 +22,12 @@ extension on StringBuffer {
 @internal
 base mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
   @override
-  String? format({
-    required Object message,
-    required LogLevel logLevel,
-    required DateTime timestamp,
-  }) {
-    final prefix = logLevel.prefix;
+  String? format(LogMessage event) {
+    final prefix = event.level.prefix;
     final printColors = getCurrentLogOptions()?.printColors ?? true;
+    final message = event.message;
     final formattedMessage = printColors
-        ? logLevel.when<String>(
+        ? event.level.when<String>(
             shout: () => _shout(message, prefix),
             v: () => _v(message, prefix),
             error: () => _error(message, prefix),
@@ -44,12 +41,7 @@ base mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
             vvvvvv: () => _vvvvvv(message, prefix),
           )
         : _formatPlain(message, prefix);
-
-    return super.format(
-      message: formattedMessage,
-      logLevel: logLevel,
-      timestamp: timestamp,
-    );
+    return super.format(event.copyWith(message: formattedMessage));
   }
 
   static String _formatPlain(Object message, String prefix) =>

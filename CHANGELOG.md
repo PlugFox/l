@@ -1,12 +1,13 @@
-## 5.0.0-pre.1 - 2024-01-20
+## 5.0.0-pre.2 - 2024-01-20
 
 ### Changed
 
-- **BREAKING:** Refactoring `LogMessage` and `LogMessageWithStackTrace` classes
+- **BREAKING:** Refactoring `LogMessage` and `LogMessageWithStackTrace` events
 
 ### Added
 
 - Add `l.log` method
+- Add `LogContext` for each log event
 
 ## 4.1.0-pre.1 - 2023-07-13
 

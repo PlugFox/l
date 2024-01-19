@@ -40,17 +40,15 @@ void main([List<String>? args]) => l.capture<void>(
     );
 
 /// Format messages and truncate them to 25 characters long.
-Object _customFormatter(Object message, LogLevel logLevel, DateTime now) =>
-    switch (message.toString()) {
+Object _customFormatter(LogMessage event) => switch (event.message.toString()) {
       final String msg when msg.length > 25 =>
         '${msg.substring(0, 25 - 4)} ...',
       final String msg => msg,
     };
 
 /// Also, we can output messages to a file, or to a database, or to a server.
-String? _customPrinter(Object message, LogLevel logLevel, DateTime now) =>
-    jsonEncode(<String, Object?>{
-      'timestamp': now.toUtc().toIso8601String(),
-      'level': logLevel.toString(),
-      'message': message.toString(),
+String? _customPrinter(LogMessage event) => jsonEncode(<String, Object?>{
+      'timestamp': event.timestamp.toUtc().toIso8601String(),
+      'level': event.level.toString(),
+      'message': event.message.toString(),
     });

@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 
 import '../inner_zoned_mixin.dart';
-import '../log_level.dart';
+import '../log_message.dart';
 import '../log_options.dart';
 import 'message_formatting_pipeline.dart';
 
@@ -9,27 +9,21 @@ import 'message_formatting_pipeline.dart';
 @internal
 base mixin MessageLogFormatterMixin on MessageFormattingPipeline {
   @override
-  String? format({
-    required Object message,
-    required LogLevel logLevel,
-    required DateTime timestamp,
-  }) {
+  String? format(LogMessage event) {
     final currentLogOptions = getCurrentLogOptions();
-    Object? output;
+    var output = event;
     if (currentLogOptions != null) {
       final LogOptions(:messageFormatting, :overrideOutput) = currentLogOptions;
       // Format the source message
-      output = messageFormatting?.call(message, logLevel, timestamp);
+      if (messageFormatting != null) {
+        output = output.copyWith(message: messageFormatting(output));
+      }
+      // Override the message and output it only if it is not null
       if (overrideOutput != null) {
-        // Override the message and output it only if it is not null
-        return overrideOutput(output ?? message, logLevel, timestamp);
+        return overrideOutput(output);
       }
     }
     // Standard formatting and output
-    return super.format(
-      message: output ?? message,
-      logLevel: logLevel,
-      timestamp: timestamp,
-    );
+    return super.format(output);
   }
 }

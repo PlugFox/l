@@ -87,13 +87,9 @@ void mainFunctional() {
           outputInRelease: true,
           handlePrint: true,
           printColors: false,
-          messageFormatting: (
-            Object message,
-            LogLevel logLevel,
-            DateTime timestamp,
-          ) =>
-              '${timestamp.hour}:${timestamp.minute.toString().padLeft(2, '0')} '
-              '| $message',
+          messageFormatting: (event) => '${event.timestamp.hour}:'
+              '${event.timestamp.minute.toString().padLeft(2, '0')} '
+              '| ${event.message}',
         ),
       );
       await Future<void>.delayed(Duration.zero);
@@ -297,9 +293,11 @@ void environmentSpecific() {
       );
       final delegate = log_delegate_stub.createEnvironmentLogDelegate();
       delegate.log(
-        message: 'Message with LogDelegateStub',
-        logLevel: const LogLevel.debug(),
-        timestamp: DateTime.now(),
+        LogMessage.verbose(
+          message: 'Message with LogDelegateStub',
+          level: const LogLevel.debug(),
+          timestamp: DateTime.now(),
+        ),
       );
       expect(() => delegate.toString(), returnsNormally);
     },
@@ -314,9 +312,11 @@ void environmentSpecific() {
       );
       final delegate = log_delegate_io.createEnvironmentLogDelegate();
       delegate.log(
-        message: 'Message with LogDelegateIO',
-        logLevel: const LogLevel.debug(),
-        timestamp: DateTime.now(),
+        LogMessage.verbose(
+          message: 'Message with LogDelegateIO',
+          level: const LogLevel.debug(),
+          timestamp: DateTime.now(),
+        ),
       );
       expect(() => delegate.toString(), returnsNormally);
     },
