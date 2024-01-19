@@ -59,12 +59,10 @@ sealed class LogLevel {
       _table[value] ?? const LogLevel.info();
 
   /// {@nodoc}
-  static final Map<Object, LogLevel> _table = Map<Object, LogLevel>.fromEntries(
-    values.expand<MapEntry<Object, LogLevel>>((e) sync* {
-      yield MapEntry<Object, LogLevel>(e.level, e);
-      yield MapEntry<Object, LogLevel>(e.prefix, e);
-    }),
-  );
+  static final Map<Object, LogLevel> _table = <Object, LogLevel>{
+    for (final e in values) e.level: e,
+    for (final e in values) e.prefix: e,
+  };
 
   /// As prefix
   final String prefix;

@@ -1,3 +1,13 @@
+## 5.0.0-pre.1 - 2024-01-20
+
+### Changed
+
+- **BREAKING:** Refactoring `LogMessage` and `LogMessageWithStackTrace` classes
+
+### Added
+
+- Add `l.log` method
+
 ## 4.1.0-pre.1 - 2023-07-13
 
 ### Changed

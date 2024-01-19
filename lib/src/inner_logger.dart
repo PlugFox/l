@@ -14,12 +14,6 @@ import 'logger.dart';
 /// {@nodoc}
 @internal
 abstract base class InnerLogger extends Stream<LogMessage> implements L {
-  /// Print a message to the console
-  /// {@nodoc}
-  @protected
-  @visibleForOverriding
-  void log(LogMessage logMessage);
-
   /// Notify subscribers
   /// {@nodoc}
   @protected

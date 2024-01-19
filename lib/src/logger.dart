@@ -93,6 +93,11 @@ abstract interface class L implements Stream<LogMessage> {
   /// Debug [message] with verbose level 4
   void d(Object message);
 
+  /// Print a message to the console
+  ///
+  /// Add [LogMessage] or [LogMessageError] to the logger
+  void log(LogMessage message);
+
   /// Set logger options for this zone
   /// The custom handler can intercept print operations and
   /// redirect them to [l.d] output

@@ -25,7 +25,7 @@ base mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
   String? format({
     required Object message,
     required LogLevel logLevel,
-    required DateTime date,
+    required DateTime timestamp,
   }) {
     final prefix = logLevel.prefix;
     final printColors = getCurrentLogOptions()?.printColors ?? true;
@@ -48,7 +48,7 @@ base mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
     return super.format(
       message: formattedMessage,
       logLevel: logLevel,
-      date: date,
+      timestamp: timestamp,
     );
   }
 

@@ -2,61 +2,89 @@ import 'package:meta/meta.dart';
 
 import 'log_level.dart';
 
+/// {@template log_message}
 /// Message for logging
+/// {@endtemplate}
 @immutable
-final class LogMessage {
-  /// Message for logging
+sealed class LogMessage {
+  /// {@macro log_message}
   const LogMessage({
     required this.message,
     required this.level,
-    required this.date,
+    required this.timestamp,
   });
 
-  /// Create new loggin message
-  LogMessage.create(this.message, this.level) : date = DateTime.now();
-
-  /// Message for logging with [StackTrace]
-  factory LogMessage.stackTrace({
+  /// Normal message
+  ///
+  /// {@macro log_message}
+  const factory LogMessage.verbose({
     required Object message,
     required LogLevel level,
-    required StackTrace stackTrace,
-    DateTime? date,
+    required DateTime timestamp,
+  }) = LogMessageVerbose;
+
+  /// Error message
+  ///
+  /// {@macro log_message}
+  const factory LogMessage.error({
+    required Object message,
+    required LogLevel level,
+    required DateTime timestamp,
+    required StackTrace? stackTrace,
+  }) = LogMessageError;
+
+  /// Create new loggin message
+  ///
+  /// {@macro log_message}
+  factory LogMessage.create(
+    Object message,
+    LogLevel level, {
+    StackTrace? stackTrace,
   }) =>
-      LogMessageWithStackTrace(
-        message: message,
-        level: level,
-        date: date ?? DateTime.now(),
-        stackTrace: stackTrace,
-      );
+      stackTrace == null
+          ? LogMessageVerbose(
+              message: message,
+              level: level,
+              timestamp: DateTime.now(),
+            )
+          : LogMessageError(
+              message: message,
+              level: level,
+              timestamp: DateTime.now(),
+              stackTrace: stackTrace,
+            );
 
   /// Restore [LogMessage] from Map<String, Object?>
+  ///
+  /// {@macro log_message}
   factory LogMessage.fromJson(Map<String, Object?> json) {
-    final <String, Object?>{
-      'date': jsonDate,
-      'message': jsonMessage,
-      'level': jsonLevel,
-    } = json;
-    final jsonStackTrace = json['stack_trace'];
-    final date = jsonDate is int
-        ? DateTime.fromMicrosecondsSinceEpoch(jsonDate)
-        : DateTime.now();
-    return jsonStackTrace == null
-        ? LogMessage(
-            message: jsonMessage.toString(),
-            level: LogLevel.fromValue(jsonLevel),
-            date: date,
+    final message = json['message'] ?? '';
+    final level = LogLevel.fromValue(json['level']);
+    final timestamp = switch (json['timestamp']) {
+          DateTime dt => dt,
+          int n => DateTime.fromMicrosecondsSinceEpoch(n),
+          String s => DateTime.tryParse(s),
+          _ => null,
+        } ??
+        DateTime.now();
+    final stackTrace = switch (json['stacktrace']) {
+      String s => StackTrace.fromString(s),
+      StackTrace st => st,
+      _ => null,
+    };
+    return stackTrace == null
+        ? LogMessageVerbose(
+            message: message,
+            level: level,
+            timestamp: timestamp,
           )
-        : LogMessageWithStackTrace(
-            message: jsonMessage.toString(),
-            level: LogLevel.fromValue(jsonLevel),
-            date: date,
-            stackTrace: StackTrace.fromString(jsonStackTrace.toString()),
+        : LogMessageError(
+            message: message,
+            level: level,
+            timestamp: timestamp,
+            stackTrace: stackTrace,
           );
   }
-
-  /// Log date
-  @nonVirtual
-  final DateTime date;
 
   /// Message data
   @nonVirtual
@@ -66,41 +94,61 @@ final class LogMessage {
   @nonVirtual
   final LogLevel level;
 
+  /// Log date
+  @nonVirtual
+  final DateTime timestamp;
+
   /// Message for logging to Map<String, Object?>
-  /// [date] is converted to [int] `date` microseconds since epoch
+  ///
   /// [message] is converted to [String] `message`
   /// [level] is converted to [String] `level` prefix (e.g. `e`)
-  /// [stackTrace] is converted to [String] `stack_trace`
-  Map<String, Object?> toJson() => <String, Object>{
-        'date': date.microsecondsSinceEpoch,
-        'message': message.toString(),
-        'level': level.prefix,
-        if (this case LogMessageWithStackTrace(:final StackTrace stackTrace))
-          'stack_trace': stackTrace.toString(),
-      };
+  /// [timestamp] is converted to [int] `date` microseconds since epoch
+  /// [stackTrace] is converted to [String] `stacktrace`
+  Map<String, Object?> toJson();
 
   @override
   String toString() => message.toString();
 }
 
-/// Message (error, exception, warning) for logging with stack trace
-final class LogMessageWithStackTrace extends LogMessage {
-  /// Message for logging
-  const LogMessageWithStackTrace({
+/// Verbose message for logging (without stack trace)
+///
+/// {@macro log_message}
+final class LogMessageVerbose extends LogMessage {
+  /// {@macro log_message}
+  const LogMessageVerbose({
     required super.message,
     required super.level,
-    required super.date,
-    required this.stackTrace,
+    required super.timestamp,
   });
 
-  /// Message for logging
-  LogMessageWithStackTrace.create(
-    super.message,
-    super.level,
-    this.stackTrace,
-  ) : super.create();
+  @override
+  Map<String, Object?> toJson() => <String, Object>{
+        'message': message.toString(),
+        'level': level.prefix,
+        'timestamp': timestamp.microsecondsSinceEpoch,
+      };
+}
+
+/// Message (error, exception, warning) for logging with stack trace
+///
+/// {@macro log_message}
+final class LogMessageError extends LogMessage {
+  /// {@macro log_message}
+  const LogMessageError({
+    required super.message,
+    required super.level,
+    required super.timestamp,
+    required StackTrace? stackTrace,
+  }) : stackTrace = stackTrace ?? StackTrace.empty;
 
   /// Stack trace
-  /// This field cannot be transferred between isolates
   final StackTrace stackTrace;
+
+  @override
+  Map<String, Object?> toJson() => <String, Object>{
+        'message': message.toString(),
+        'level': level.prefix,
+        'timestamp': timestamp.microsecondsSinceEpoch,
+        'stacktrace': stackTrace.toString(),
+      };
 }

@@ -10,6 +10,6 @@ abstract interface class LogDelegate {
   void log({
     required Object message,
     required LogLevel logLevel,
-    required DateTime date,
+    required DateTime timestamp,
   });
 }

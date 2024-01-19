@@ -12,24 +12,24 @@ base mixin MessageLogFormatterMixin on MessageFormattingPipeline {
   String? format({
     required Object message,
     required LogLevel logLevel,
-    required DateTime date,
+    required DateTime timestamp,
   }) {
     final currentLogOptions = getCurrentLogOptions();
     Object? output;
     if (currentLogOptions != null) {
       final LogOptions(:messageFormatting, :overrideOutput) = currentLogOptions;
       // Format the source message
-      output = messageFormatting?.call(message, logLevel, date);
+      output = messageFormatting?.call(message, logLevel, timestamp);
       if (overrideOutput != null) {
         // Override the message and output it only if it is not null
-        return overrideOutput(output ?? message, logLevel, date);
+        return overrideOutput(output ?? message, logLevel, timestamp);
       }
     }
     // Standard formatting and output
     return super.format(
       message: output ?? message,
       logLevel: logLevel,
-      date: date,
+      timestamp: timestamp,
     );
   }
 }

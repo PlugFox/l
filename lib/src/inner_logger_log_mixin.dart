@@ -25,7 +25,7 @@ base mixin InnerLoggerLogMixin on InnerLogger {
       _delegate.log(
         message: logMessage.message,
         logLevel: logMessage.level,
-        date: logMessage.date,
+        timestamp: logMessage.timestamp,
       );
     }
     super.notifyListeners(logMessage);

@@ -90,9 +90,9 @@ void mainFunctional() {
           messageFormatting: (
             Object message,
             LogLevel logLevel,
-            DateTime date,
+            DateTime timestamp,
           ) =>
-              '${date.hour}:${date.minute.toString().padLeft(2, '0')} '
+              '${timestamp.hour}:${timestamp.minute.toString().padLeft(2, '0')} '
               '| $message',
         ),
       );
@@ -271,10 +271,11 @@ void logLevel() {
       const obj = 'message';
       final st = StackTrace.current;
       const level = LogLevel.debug();
-      final msg = LogMessageWithStackTrace.create(
-        obj,
-        level,
-        st,
+      final msg = LogMessageError(
+        message: obj,
+        level: level,
+        stackTrace: st,
+        timestamp: DateTime.now(),
       );
       expect(msg.message, obj);
       expect(msg.level, level);
@@ -298,7 +299,7 @@ void environmentSpecific() {
       delegate.log(
         message: 'Message with LogDelegateStub',
         logLevel: const LogLevel.debug(),
-        date: DateTime.now(),
+        timestamp: DateTime.now(),
       );
       expect(() => delegate.toString(), returnsNormally);
     },
@@ -315,7 +316,7 @@ void environmentSpecific() {
       delegate.log(
         message: 'Message with LogDelegateIO',
         logLevel: const LogLevel.debug(),
-        date: DateTime.now(),
+        timestamp: DateTime.now(),
       );
       expect(() => delegate.toString(), returnsNormally);
     },
@@ -326,21 +327,21 @@ void environmentSpecific() {
 }
 
 void jsonSerialization() {
-  final date = DateTime.now();
+  final timestamp = DateTime.now();
   final message = 'Test message';
   final level = LogLevel.info();
   final stackTrace = StackTrace.current;
 
   test('should correctly serialize to JSON', () {
-    final logMessage = LogMessage(
+    final logMessage = LogMessage.verbose(
       message: message,
       level: level,
-      date: date,
+      timestamp: timestamp,
     );
     expect(
       logMessage.toJson(),
       equals({
-        'date': date.microsecondsSinceEpoch,
+        'timestamp': timestamp.microsecondsSinceEpoch,
         'message': message,
         'level': level.prefix,
       }),
@@ -349,54 +350,54 @@ void jsonSerialization() {
 
   test('should correctly deserialize from JSON', () {
     final json = {
-      'date': date.microsecondsSinceEpoch,
+      'timestamp': timestamp.microsecondsSinceEpoch,
       'message': message,
       'level': level.prefix,
     };
     final logMessage = LogMessage.fromJson(json);
 
     expect(logMessage, isA<LogMessage>());
-    expect(logMessage.date, equals(date));
+    expect(logMessage.timestamp, equals(timestamp));
     expect(logMessage.message, equals(message));
     expect(logMessage.level, equals(level));
   });
 
   test('should correctly serialize to JSON with StackTrace', () {
-    final logMessage = LogMessage.stackTrace(
+    final logMessage = LogMessageError(
       message: message,
       level: level,
-      date: date,
+      timestamp: timestamp,
       stackTrace: stackTrace,
     );
     expect(
       logMessage.toJson(),
       equals({
-        'date': date.microsecondsSinceEpoch,
+        'timestamp': timestamp.microsecondsSinceEpoch,
         'message': message,
         'level': level.prefix,
-        'stack_trace': stackTrace.toString(),
+        'stacktrace': stackTrace.toString(),
       }),
     );
   });
 
   test('should correctly deserialize from JSON with StackTrace', () {
     final json = {
-      'date': date.microsecondsSinceEpoch,
+      'timestamp': timestamp.microsecondsSinceEpoch,
       'message': message,
       'level': level.prefix,
-      'stack_trace': stackTrace.toString(),
+      'stacktrace': stackTrace.toString(),
     };
     final logMessage = LogMessage.fromJson(json);
 
     expect(
       logMessage,
-      isA<LogMessageWithStackTrace>().having(
+      isA<LogMessageError>().having(
         (l) => l.stackTrace.toString(),
         'stackTrace',
         equals(stackTrace.toString()),
       ),
     );
-    expect(logMessage.date, equals(date));
+    expect(logMessage.timestamp, equals(timestamp));
     expect(logMessage.message, equals(message));
     expect(logMessage.level, equals(level));
   });

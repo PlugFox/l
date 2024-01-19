@@ -28,12 +28,12 @@ final class LogDelegate$JS implements LogDelegate {
   void log({
     required Object message,
     required LogLevel logLevel,
-    required DateTime date,
+    required DateTime timestamp,
   }) {
     final output = _formatter.format(
       message: message,
       logLevel: logLevel,
-      date: date,
+      timestamp: timestamp,
     );
     if (output == null) return;
     logLevel.when<void>(

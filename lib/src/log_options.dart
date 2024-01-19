@@ -5,15 +5,15 @@ import 'log_level.dart';
 /// Output message formatting
 typedef MessageFormatting = Object Function(
   Object message,
-  LogLevel logLevel,
-  DateTime dateTime,
+  LogLevel level,
+  DateTime timestamp,
 );
 
 /// Override output message formatting
 typedef OverrideLoggerOutput = String? Function(
   Object message,
-  LogLevel logLevel,
-  DateTime dateTime,
+  LogLevel level,
+  DateTime timestamp,
 );
 
 /// Logger options

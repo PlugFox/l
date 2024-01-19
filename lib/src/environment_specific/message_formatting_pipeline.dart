@@ -10,7 +10,7 @@ abstract base class MessageFormattingPipeline {
   String? format({
     required Object message,
     required LogLevel logLevel,
-    required DateTime date,
+    required DateTime timestamp,
   }) =>
       message.toString();
 }

@@ -30,12 +30,12 @@ final class LogDelegate$VM implements LogDelegate {
   void log({
     required Object message,
     required LogLevel logLevel,
-    required DateTime date,
+    required DateTime timestamp,
   }) {
     final output = _formatter.format(
       message: message,
       logLevel: logLevel,
-      date: date,
+      timestamp: timestamp,
     );
     if (output == null) return;
     console.writeln(output);

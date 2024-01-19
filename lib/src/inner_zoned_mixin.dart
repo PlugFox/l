@@ -29,12 +29,7 @@ base mixin InnerZonedMixin on InnerLogger {
           print: (self, parent, zone, line) {
             if (logOptions?.handlePrint ?? true) {
               self.run<void>(
-                () => log(
-                  LogMessage.create(
-                    line,
-                    const LogLevel.info(),
-                  ),
-                ),
+                () => log(LogMessage.create(line, const LogLevel.info())),
               );
             } else {
               // Replace [self] with [parent] zone
