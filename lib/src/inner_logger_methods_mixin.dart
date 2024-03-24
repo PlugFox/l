@@ -43,7 +43,7 @@ base mixin InnerLoggerMethodsMixin on InnerLogger {
       super.log(
         LogMessage.create(
           message,
-          const LogLevel.warning(),
+          const LogLevel.error(),
           stackTrace: stackTrace,
           context: context,
         ),
