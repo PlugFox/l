@@ -19,7 +19,7 @@ base mixin MessageLogFormatterMixin on MessageFormattingPipeline {
       }
       // Override the message and output it only if it is not null
       if (overrideOutput != null) {
-        return overrideOutput(output);
+        return overrideOutput(output, super.format(output));
       }
     }
     // Standard formatting and output
