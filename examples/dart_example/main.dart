@@ -47,7 +47,8 @@ Object _customFormatter(LogMessage event) => switch (event.message.toString()) {
     };
 
 /// Also, we can output messages to a file, or to a database, or to a server.
-String? _customPrinter(LogMessage event) => jsonEncode(<String, Object?>{
+String? _customPrinter(LogMessage event, String? _) =>
+    jsonEncode(<String, Object?>{
       'timestamp': event.timestamp.toUtc().toIso8601String(),
       'level': event.level.toString(),
       'message': event.message.toString(),
