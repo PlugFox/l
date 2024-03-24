@@ -6,7 +6,10 @@ import '../l.dart';
 typedef MessageFormatting = Object Function(LogMessage event);
 
 /// Override output message formatting
-typedef OverrideLoggerOutput = String? Function(LogMessage event);
+typedef OverrideLoggerOutput = String? Function(
+  LogMessage event,
+  String? consoleMessage,
+);
 
 /// Logger options
 @immutable
