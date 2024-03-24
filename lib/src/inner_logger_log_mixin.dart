@@ -19,7 +19,8 @@ const bool _kIsDebug = !bool.fromEnvironment(
 /// Log mixin for [InnerLogger]
 @internal
 base mixin InnerLoggerLogMixin on InnerLogger {
-  final LogDelegate _delegate = createEnvironmentLogDelegate();
+  late final LogDelegate _delegate =
+      createEnvironmentLogDelegate(getCurrentLogOptions());
 
   @override
   void log(LogMessage event) {

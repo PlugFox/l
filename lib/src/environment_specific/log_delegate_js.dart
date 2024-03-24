@@ -3,14 +3,20 @@ import 'dart:html' as html show window, Console;
 import 'package:meta/meta.dart';
 
 import '../log_message.dart';
+import '../log_options.dart';
 import 'log_delegate.dart';
+import 'log_delegate_stub.dart';
 import 'message_formatting_pipeline.dart';
 import 'message_log_formatting_mixin.dart';
 
 /// Environment-specific implementation of [LogDelegate]
 @internal
-LogDelegate createEnvironmentLogDelegate() =>
-    LogDelegate$JS(html.window.console);
+LogDelegate createEnvironmentLogDelegate([LogOptions? options]) {
+  if (options?.useHtmlConsoleInWeb ?? true) {
+    return LogDelegate$JS(html.window.console);
+  }
+  return LogDelegate$Stub();
+}
 
 @internal
 final class LogDelegate$JS implements LogDelegate {

@@ -10,7 +10,8 @@ import 'message_log_formatting_mixin.dart';
 
 /// Environment-specific implementation of [LogDelegate]
 @internal
-LogDelegate createEnvironmentLogDelegate() => LogDelegate$Stub();
+LogDelegate createEnvironmentLogDelegate([LogOptions? options]) =>
+    LogDelegate$Stub();
 
 @internal
 final class LogDelegate$Stub implements LogDelegate {
