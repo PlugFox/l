@@ -16,6 +16,7 @@ abstract base class LogOptions {
     bool handlePrint,
     bool printColors,
     bool outputInRelease,
+    bool useHtmlConsoleInWeb,
     MessageFormatting? messageFormatting,
     OverrideLoggerOutput? overrideOutput,
   }) = _LogOptionsImpl;
@@ -30,6 +31,9 @@ abstract base class LogOptions {
 
   /// Output messages to the console in the release
   bool get outputInRelease;
+
+  /// Use `dart:html.console` in the web
+  bool get useHtmlConsoleInWeb;
 
   /// Output message formatting callback
   MessageFormatting? get messageFormatting;
@@ -56,6 +60,7 @@ final class _LogOptionsImpl extends LogOptions {
     this.handlePrint = true,
     this.printColors = true,
     this.outputInRelease = false,
+    this.useHtmlConsoleInWeb = true,
     this.messageFormatting,
     this.overrideOutput,
   }) : super._();
@@ -68,6 +73,9 @@ final class _LogOptionsImpl extends LogOptions {
 
   @override
   final bool outputInRelease;
+
+  @override
+  final bool useHtmlConsoleInWeb;
 
   @override
   final MessageFormatting? messageFormatting;
