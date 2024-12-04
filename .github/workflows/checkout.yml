@@ -83,20 +83,22 @@ jobs:
       #  run: dart pub global activate pana && pana --json --no-warning --line-length 80
 
       - name: 🧪 Run tests
+        timeout-minutes: 5
         run: |
           dart pub global activate coverage
           dart pub global run coverage:test_with_coverage -fb -o coverage -- \
-            --platform vm --compiler=kernel --coverage=coverage \
+            --platform=chrome,vm --compiler=kernel --coverage=coverage \
             --reporter=github --file-reporter=json:reports/tests.json \
             --timeout=10m --concurrency=12 --color \
               test/l_test.dart
 
       - name: 🎁 Setup LCOV
+        timeout-minutes: 1
         uses: hrishikesh-kadam/setup-lcov@v1
 
       - name: 🔍 Check coverage
         id: check-coverage
-        timeout-minutes: 2
+        timeout-minutes: 1
         run: |
           lcov --list coverage/lcov.info
           THRESHOLD=${{ env.threshold }}
