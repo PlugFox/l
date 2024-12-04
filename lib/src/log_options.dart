@@ -16,6 +16,7 @@ abstract base class LogOptions {
     bool handlePrint,
     bool printColors,
     bool outputInRelease,
+    bool usePrint,
     MessageFormatting? messageFormatting,
     OverrideLoggerOutput? overrideOutput,
   }) = _LogOptionsImpl;
@@ -30,6 +31,10 @@ abstract base class LogOptions {
 
   /// Output messages to the console in the release
   bool get outputInRelease;
+
+  /// Prefer to use `print` function for output instead of
+  /// the platform-specific output such as `stdout` at VM or `console` at Web.
+  bool get usePrint;
 
   /// Output message formatting callback
   MessageFormatting? get messageFormatting;
@@ -56,6 +61,7 @@ final class _LogOptionsImpl extends LogOptions {
     this.handlePrint = true,
     this.printColors = true,
     this.outputInRelease = false,
+    this.usePrint = false,
     this.messageFormatting,
     this.overrideOutput,
   }) : super._();
@@ -68,6 +74,9 @@ final class _LogOptionsImpl extends LogOptions {
 
   @override
   final bool outputInRelease;
+
+  @override
+  final bool usePrint;
 
   @override
   final MessageFormatting? messageFormatting;

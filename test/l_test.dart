@@ -6,7 +6,7 @@ library l.test;
 import 'dart:async';
 
 import 'package:l/l.dart';
-import 'package:l/src/environment_specific/log_delegate_stub.dart'
+import 'package:l/src/environment_specific/log_delegate_print.dart'
     as log_delegate_stub;
 import 'package:l/src/environment_specific/log_delegate_vm.dart'
     as log_delegate_io;

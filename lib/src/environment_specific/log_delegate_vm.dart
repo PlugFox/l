@@ -5,14 +5,14 @@ import 'package:meta/meta.dart';
 import '../../l.dart';
 import 'console_log_formatter_mixin.dart';
 import 'log_delegate.dart';
-import 'log_delegate_stub.dart';
+import 'log_delegate_print.dart';
 import 'message_formatting_pipeline.dart';
 import 'message_log_formatting_mixin.dart';
 
 /// Environment-specific implementation of [LogDelegate]
 @internal
 LogDelegate createEnvironmentLogDelegate() =>
-    io.stdout.hasTerminal ? LogDelegate$VM(io.stdout) : LogDelegate$Stub();
+    io.stdout.hasTerminal ? LogDelegate$VM(io.stdout) : LogDelegate$Print();
 
 @internal
 final class LogDelegate$VM implements LogDelegate {
