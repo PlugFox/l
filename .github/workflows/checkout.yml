@@ -91,28 +91,28 @@ jobs:
             --timeout=10m --concurrency=12 --color \
               test/l_test.dart
 
-      #- name: 🔍 Check coverage
-      #  id: check-coverage
-      #  timeout-minutes: 2
-      #  run: |
-      #    lcov --list coverage/lcov.info
-      #    THRESHOLD=${{ env.threshold }}
-      #    COVERAGE=$(lcov --summary coverage/lcov.info | grep -i 'lines\|Total:' | tail -n 1 | awk '{print $2}' | sed 's/%//')
-      #    echo "Coverage is $COVERAGE%"
-      #    echo $COVERAGE | awk '{if ($1 < 50) exit 1}'
-
-      - name: Setup LCOV
+      - name: 🎁 Setup LCOV
         uses: hrishikesh-kadam/setup-lcov@v1
 
-      - name: Report code coverage
-        uses: zgosalvez/github-actions-report-lcov@v4
-        with:
-          coverage-files: coverage/lcov.info
-          minimum-coverage: ${{ env.threshold }}
-          artifact-name: code-coverage-report
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          working-directory: ./
-          update-comment: true
+      - name: 🔍 Check coverage
+        id: check-coverage
+        timeout-minutes: 2
+        run: |
+          lcov --list coverage/lcov.info
+          THRESHOLD=${{ env.threshold }}
+          COVERAGE=$(lcov --summary coverage/lcov.info | grep -i 'lines\|Total:' | tail -n 1 | awk '{print $2}' | sed 's/%//')
+          echo "Coverage is $COVERAGE%"
+          echo $COVERAGE | awk '{if ($1 < 50) exit 1}'
+
+      #- name: 🔍 Report code coverage
+      #  uses: zgosalvez/github-actions-report-lcov@v4
+      #  with:
+      #    coverage-files: coverage/lcov.info
+      #    minimum-coverage: ${{ env.threshold }}
+      #    artifact-name: code-coverage-report
+      #    github-token: ${{ secrets.GITHUB_TOKEN }}
+      #    working-directory: ./
+      #    update-comment: true
 
       - name: 📥 Upload coverage report
         timeout-minutes: 5
