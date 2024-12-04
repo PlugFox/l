@@ -35,7 +35,7 @@ outdated: get ## Check for outdated dependencies
 
 .PHONY: test
 test: get ## Run the tests
-	@dart test --debug --coverage=coverage --platform vm,chrome test/unit_test.dart
+	@dart test --debug --coverage=coverage --platform vm,chrome test/l_test.dart
 
 .PHONY: publish-check
 publish-check: ## Check the package before publishing
