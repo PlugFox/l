@@ -2,6 +2,22 @@ import 'package:meta/meta.dart';
 
 import '../l.dart';
 
+/// Log output destination
+enum LogOutput {
+  /// Output to platform-specific output
+  /// such as `stdout` at VM or `console` at Web.
+  platform,
+
+  /// Output to `Zone.root.print` function
+  print,
+
+  /// Use `dart:developer` library for output
+  developer,
+
+  /// Ignore output
+  ignore,
+}
+
 /// Output message formatting
 typedef MessageFormatting = Object Function(LogMessage event);
 
@@ -16,7 +32,7 @@ abstract base class LogOptions {
     bool handlePrint,
     bool printColors,
     bool outputInRelease,
-    bool usePrint,
+    LogOutput output,
     MessageFormatting? messageFormatting,
     OverrideLoggerOutput? overrideOutput,
   }) = _LogOptionsImpl;
@@ -32,9 +48,9 @@ abstract base class LogOptions {
   /// Output messages to the console in the release
   bool get outputInRelease;
 
-  /// Prefer to use `print` function for output instead of
-  /// the platform-specific output such as `stdout` at VM or `console` at Web.
-  bool get usePrint;
+  /// Output destination, default is `platform`
+  /// Allow to change the output destination to `print` or `dart:developer`
+  LogOutput get output;
 
   /// Output message formatting callback
   MessageFormatting? get messageFormatting;
@@ -61,7 +77,7 @@ final class _LogOptionsImpl extends LogOptions {
     this.handlePrint = true,
     this.printColors = true,
     this.outputInRelease = false,
-    this.usePrint = false,
+    this.output = LogOutput.platform,
     this.messageFormatting,
     this.overrideOutput,
   }) : super._();
@@ -76,7 +92,7 @@ final class _LogOptionsImpl extends LogOptions {
   final bool outputInRelease;
 
   @override
-  final bool usePrint;
+  final LogOutput output;
 
   @override
   final MessageFormatting? messageFormatting;

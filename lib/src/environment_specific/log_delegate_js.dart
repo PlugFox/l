@@ -51,7 +51,7 @@ LogDelegate createEnvironmentLogDelegate() => LogDelegate$JS(window.console);
 final class LogDelegate$JS implements LogDelegate {
   LogDelegate$JS(this.console);
 
-  final MessageFormattingPipeline _formatter = MessageFormattingPipelineWeb();
+  final MessageFormattingPipeline _formatter = MessageFormattingPipelineJS();
 
   @protected
   final Console console;
@@ -78,5 +78,5 @@ final class LogDelegate$JS implements LogDelegate {
 
 /// Environment-specific implementation of [MessageFormattingPipeline]
 @internal
-final class MessageFormattingPipelineWeb = MessageFormattingPipeline
+final class MessageFormattingPipelineJS = MessageFormattingPipeline
     with MessageLogFormatterMixin;

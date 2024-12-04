@@ -18,7 +18,7 @@ LogDelegate createEnvironmentLogDelegate() =>
 final class LogDelegate$VM implements LogDelegate {
   LogDelegate$VM(this.console);
 
-  final MessageFormattingPipeline _formatter = MessageFormattingPipelineIO();
+  final MessageFormattingPipeline _formatter = MessageFormattingPipelineVM();
 
   @protected
   final io.Stdout console;
@@ -33,5 +33,5 @@ final class LogDelegate$VM implements LogDelegate {
 
 /// Environment-specific implementation of [MessageFormattingPipeline]
 @internal
-final class MessageFormattingPipelineIO = MessageFormattingPipeline
+final class MessageFormattingPipelineVM = MessageFormattingPipeline
     with ConsoleLogFormatterMixin, MessageLogFormatterMixin;

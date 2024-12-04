@@ -40,6 +40,7 @@ void main([List<String>? args]) => l.capture<void>(
         overrideOutput: overrideOutput ? _customPrinter : null,
         outputInRelease: true, // Whether to output in release mode.
         printColors: true, // Whether to print colors in the console.
+        output: LogOutput.platform, // Whether to use `print()` for output.
       ),
     );
 

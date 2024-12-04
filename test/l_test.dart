@@ -18,6 +18,7 @@ void main() {
   group('l.logLevel', logLevel);
   group('l.environmentSpecific', environmentSpecific);
   group('l.jsonSerialization', jsonSerialization);
+  group('l.output', logOutput);
 }
 
 void mainFunctional() {
@@ -394,5 +395,68 @@ void jsonSerialization() {
     expect(logMessage.timestamp, equals(timestamp));
     expect(logMessage.message, equals(message));
     expect(logMessage.level, equals(level));
+  });
+}
+
+void logOutput() {
+  void printAllVariants() {
+    l
+      ..s('01. Shout')
+      ..v1('02. Regular 1')
+      ..e('03. Error')
+      ..v2('04. Regular 2')
+      ..w('05. Warning')
+      ..v3('06. Regular 3')
+      ..i('07. Info')
+      ..v4('08. Regular 4')
+      ..d('09. Debug')
+      ..v5('10. Regular 5')
+      ..v6('11. Regular 6');
+    print('12. Handle print');
+  }
+
+  test('Platform', () {
+    l.capture(
+      printAllVariants,
+      LogOptions(
+        outputInRelease: true,
+        handlePrint: false,
+        printColors: false,
+        output: LogOutput.platform,
+      ),
+    );
+  });
+  test('Print', () {
+    l.capture(
+      printAllVariants,
+      LogOptions(
+        outputInRelease: true,
+        handlePrint: false,
+        printColors: false,
+        output: LogOutput.print,
+      ),
+    );
+  });
+  test('Developer', () {
+    l.capture(
+      printAllVariants,
+      LogOptions(
+        outputInRelease: true,
+        handlePrint: false,
+        printColors: false,
+        output: LogOutput.developer,
+      ),
+    );
+  });
+  test('Ignore', () {
+    l.capture(
+      printAllVariants,
+      LogOptions(
+        outputInRelease: true,
+        handlePrint: false,
+        printColors: false,
+        output: LogOutput.ignore,
+      ),
+    );
   });
 }
