@@ -11,6 +11,10 @@ import 'package:l/l.dart';
 /// Whether to override the output of the logger.
 const bool overrideOutput = true;
 
+/// ```bash
+/// dart compile exe -o example/out/main.exe example/main.dart
+/// dart compile js -O3 --generate-code-with-compile-time-errors -o example/out/main.dart.js  example/main.dart
+/// ```
 void main([List<String>? args]) => l.capture<void>(
       () => runZonedGuarded<void>(
         () {
@@ -34,7 +38,7 @@ void main([List<String>? args]) => l.capture<void>(
         handlePrint: true, // Whether to handle `print()` calls.
         messageFormatting: _customFormatter,
         overrideOutput: overrideOutput ? _customPrinter : null,
-        outputInRelease: false, // Whether to output in release mode.
+        outputInRelease: true, // Whether to output in release mode.
         printColors: true, // Whether to print colors in the console.
       ),
     );

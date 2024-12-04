@@ -38,6 +38,11 @@ extension type Console._(JSObject _) {
 @internal
 external Window get window;
 
+/// The global console object
+@JS()
+@internal
+external Console get console;
+
 /// Environment-specific implementation of [LogDelegate]
 @internal
 LogDelegate createEnvironmentLogDelegate() => LogDelegate$JS(window.console);

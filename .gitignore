@@ -75,3 +75,6 @@ log.pana.json
 .coverage/
 /test/**/*.json
 /test/.test_coverage.dart
+
+# Example build output
+example/out/
