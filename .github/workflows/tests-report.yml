@@ -1,0 +1,27 @@
+name: "Tests Report"
+
+on:
+  workflow_run:
+    workflows: ["Checkout"]
+    types:
+      - completed
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
+jobs:
+  report:
+    name: "🚛 Tests report"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Test report
+        uses: dorny/test-reporter@v1
+        with:
+          artifact: test-results
+          name: Test Report
+          path: "**/tests.json"
+          reporter: flutter-json
+          fail-on-error: false

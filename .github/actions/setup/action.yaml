@@ -1,0 +1,63 @@
+name: Setup
+description: Sets up the Dart environment
+
+inputs:
+  dart-version:
+    description: 'The version of Dart to use'
+    required: false
+    default: '3.4.0'
+  pub-cache:
+    description: 'The name of the pub cache variable'
+    required: false
+    default: app
+
+runs:
+  using: composite
+  steps:
+    - name: 📦 Checkout the repo
+      uses: actions/checkout@v4
+
+    - name: 🔢 Set up version from tags
+      id: set-version
+      if: startsWith(github.ref, 'refs/tags')
+      shell: bash
+      run: |
+        BASE_VERSION="${GITHUB_REF#refs/tags/v}"
+        UNIXTIME=$(date +%s)
+        VERSION="${BASE_VERSION}+${UNIXTIME}"
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+        sed -i "s/^version: .*/version: ${VERSION}/" pubspec.yaml
+        echo "Version set to $VERSION"
+
+    - name: 🚂 Setup Dart
+      uses: dart-lang/setup-dart@v1
+      with:
+        sdk: '${{ inputs.dart-version }}'
+
+    - name: 📤 Restore Pub modules
+      id: cache-pub-restore
+      uses: actions/cache/restore@v4
+      with:
+        path: |
+          /home/runner/.pub-cache
+        key: ${{ runner.os }}-pub-${{ inputs.pub-cache }}-${{ hashFiles('pubspec.lock') }}
+
+    - name: 👷 Install Dependencies
+      shell: bash
+      run: |
+        echo /home/runner/.pub-cache/bin >> $GITHUB_PATH
+        dart pub get
+
+    #- name: ⏲️ Run build runner
+    #  shell: bash
+    #  run: |
+    #    dart run build_runner build --delete-conflicting-outputs --release
+
+    - name: 📥 Save Pub modules
+      id: cache-pub-save
+      if: steps.cache-pub-restore.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v4
+      with:
+        path: |
+          /home/runner/.pub-cache
+        key: ${{ steps.cache-pub-restore.outputs.cache-primary-key }}

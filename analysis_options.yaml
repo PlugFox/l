@@ -1,17 +1,12 @@
-# Customizing static analysis
-# https://dart.dev/guides/language/analysis-options/
-# https://dart-lang.github.io/linter/lints/
-
 include: package:lints/recommended.yaml
 
 analyzer:
   exclude:
-    # Build
-    - 'build/**'
-    # Test
-    #- 'test/**'
+    # Tests
+    - "test/**.mocks.dart"
+    - ".test_coverage.dart"
     # Assets
-    - 'assets/**'
+    - "assets/**"
 
   # Enable the following options to enable strong mode.
   language:
@@ -20,76 +15,61 @@ analyzer:
     strict-inference: true
 
   errors:
+    # Allow having TODOs in the code
+    todo: ignore
+
     # Info
-    todo: info
     directives_ordering: info
     always_declare_return_types: info
 
     # Warning
     unsafe_html: warning
+    missing_return: warning
+    missing_required_param: warning
     no_logic_in_create_state: warning
     empty_catches: warning
 
     # Error
     prefer_relative_imports: error
+    avoid_relative_lib_imports: error
     avoid_slow_async_io: error
     avoid_types_as_parameter_names: error
-    cancel_subscriptions: error
-    close_sinks: error
     valid_regexps: error
     always_require_non_null_named_parameters: error
 
-  plugins:
-    - dart_code_metrics
-
 linter:
   rules:
-    # Only for public packages
+    # Public packages
     public_member_api_docs: true
     lines_longer_than_80_chars: true
-    do_not_use_environment: true
-    require_trailing_commas: true
-    sort_pub_dependencies: true
-    sort_constructors_first: true
-    sort_unnamed_constructors_first: true
-    prefer_relative_imports: true
-    avoid_annotating_with_dynamic: true
-    library_private_types_in_public_api: true
-    depend_on_referenced_packages: true
 
-    # Disabled
-    unnecessary_final: false
-    always_specify_types: false
-    avoid_as: false
-    avoid_redundant_argument_values: false
-    comment_references: false # Unused because https://github.com/dart-lang/sdk/issues/36974
-    flutter_style_todos: false
-    prefer_double_quotes: false
-    use_key_in_widget_constructors: false
-    avoid_web_libraries_in_flutter: false
-    always_put_control_body_on_new_line: false
-    diagnostic_describe_all_properties: false
-    prefer_final_parameters: false
-    avoid_types_on_closure_parameters: false
-    avoid_relative_lib_imports: false
+    # Enabling rules
+    prefer_relative_imports: true
+    avoid_relative_lib_imports: true
+
+    # Disable rules
+    sort_pub_dependencies: false
     always_use_package_imports: false
+    prefer_final_locals: false
+    avoid_escaping_inner_quotes: false
+    curly_braces_in_flow_control_structures: false
 
     # Enabled
     use_named_constants: true
-    use_is_even_rather_than_modulo: true
-    unnecessary_await_in_return: true
-    tighten_type_of_initializing_formals: true
+    unnecessary_constructor_name: true
+    sort_constructors_first: true
     exhaustive_cases: true
+    sort_unnamed_constructors_first: true
+    type_literal_in_constant_pattern: true
     always_put_required_named_parameters_first: true
+    avoid_annotating_with_dynamic: true
     avoid_bool_literals_in_conditional_expressions: true
     avoid_double_and_int_checks: true
-    avoid_escaping_inner_quotes: true
     avoid_field_initializers_in_const_classes: true
     avoid_implementing_value_types: true
     avoid_js_rounded_ints: true
     avoid_print: true
     avoid_renaming_method_parameters: true
-    avoid_returning_null_for_future: true
     avoid_returning_null_for_void: true
     avoid_single_cascade_in_expression_statements: true
     avoid_slow_async_io: true
@@ -124,7 +104,6 @@ linter:
     prefer_constructors_over_static_methods: true
     prefer_expression_function_bodies: true
     prefer_final_in_for_each: true
-    prefer_final_locals: false
     prefer_foreach: true
     prefer_if_elements_to_conditional_expressions: true
     prefer_inlined_adds: true
@@ -154,7 +133,6 @@ linter:
 
     # Pedantic 1.9.0
     always_declare_return_types: true
-    always_require_non_null_named_parameters: true
     annotate_overrides: true
     avoid_empty_else: true
     avoid_init_to_null: true
@@ -163,7 +141,6 @@ linter:
     avoid_shadowing_type_parameters: true
     avoid_types_as_parameter_names: true
     camel_case_extensions: true
-    curly_braces_in_flow_control_structures: true
     empty_catches: true
     empty_constructor_bodies: true
     library_names: true
@@ -219,51 +196,10 @@ linter:
     prefer_mixin: true
     use_setters_to_change_properties: true
     avoid_setters_without_getters: true
-    avoid_returning_null: true
     avoid_returning_this: true
     type_annotate_public_apis: true
+    avoid_types_on_closure_parameters: true
     avoid_private_typedef_functions: true
     avoid_positional_boolean_parameters: true
     hash_and_equals: true
     avoid_equals_and_hash_code_on_mutable_classes: true
-    avoid_dynamic_calls: true
-    avoid_multiple_declarations_per_line: true
-    avoid_type_to_string: true
-    deprecated_consistency: true
-    eol_at_end_of_file: true
-    noop_primitive_operations: true
-    prefer_null_aware_method_calls: true
-    unnecessary_constructor_name: true
-    use_if_null_to_convert_nulls_to_bools: true
-    use_test_throws_matchers: true
-
-    # Experimental
-    use_late_for_private_fields_and_variables: true
-    use_build_context_synchronously: true
-    unnecessary_nullable_for_final_variable_declarations: true
-    unnecessary_null_checks: true
-    null_check_on_nullable_type_parameter: true
-    cast_nullable_to_non_nullable: true
-    no_default_cases: false
-
-    # Deprecated
-    #avoid_as (deprecated)
-    #prefer_bool_in_asserts (deprecated)
-    #super_goes_last (deprecated)
-
-dart_code_metrics:
-  anti-patterns:
-    - long-method
-  metrics:
-    cyclomatic-complexity: 20
-    number-of-arguments: 12
-    maximum-nesting-level: 5
-  metrics-exclude:
-    - test/**
-  rules:
-    - no-boolean-literal-compare
-    #- no-empty-block
-    - prefer-trailing-comma
-    - prefer-conditional-expressions
-    - no-equal-then-else
-    - avoid-returning-widgets
