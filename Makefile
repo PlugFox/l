@@ -55,7 +55,7 @@ deploy: publish
 coverage: get ## Generate the coverage report
 	@dart pub global activate coverage
 	@dart pub global run coverage:test_with_coverage -fb -o coverage -- \
-		--platform vm --compiler=kernel --coverage=coverage \
+		--platform=vm,chrome --compiler=kernel --coverage=coverage \
 		--reporter=expanded --file-reporter=json:coverage/tests.json \
 		--timeout=10m --concurrency=12 --color \
 			test/l_test.dart

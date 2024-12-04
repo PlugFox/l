@@ -82,12 +82,15 @@ jobs:
       #- name: Check with pana
       #  run: dart pub global activate pana && pana --json --no-warning --line-length 80
 
+      #- name: 🌐 Setup chrome
+      #  uses: browser-actions/setup-chrome@v1
+
       - name: 🧪 Run tests
         timeout-minutes: 5
         run: |
           dart pub global activate coverage
           dart pub global run coverage:test_with_coverage -fb -o coverage -- \
-            --platform=chrome,vm --compiler=kernel --coverage=coverage \
+            --platform=vm --compiler=kernel --coverage=coverage \
             --reporter=github --file-reporter=json:reports/tests.json \
             --timeout=10m --concurrency=12 --color \
               test/l_test.dart
