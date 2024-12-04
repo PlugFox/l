@@ -20,7 +20,7 @@ Work with native console.
 ### Example of usage
 
 ![](example.png)
-[Example of using the library](https://pub.dev/packages/platform_info/example) to display a message in the console.
+[Example of using the library](https://pub.dev/packages/l/example) to display a message in the console.
 
 ### Key features
 

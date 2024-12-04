@@ -1,93 +1,135 @@
-name: Logger
+name: Checkout
 
 on:
   workflow_dispatch:
   push:
     branches:
+      - "main"
       - "master"
-      - "develop"
-      - "dev"
-      - "feature/**"
-      - "bugfix/**"
-      - "hotfix/**"
-      - "support/**"
-    paths:
-      - "lib/**.dart"
-      - "test/**.dart"
-      - "example/**.dart"
-      - "pubspec.yaml"
   pull_request:
     branches:
+      - "main"
       - "master"
-      - "develop"
       - "dev"
+      - "develop"
       - "feature/**"
       - "bugfix/**"
       - "hotfix/**"
       - "support/**"
     paths:
+      - "pubspec.yaml"
+      - ".github/**.yaml"
+      - ".github/**.yml"
       - "lib/**.dart"
       - "test/**.dart"
       - "example/**.dart"
-      - "pubspec.yaml"
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
 
 jobs:
   checkout:
-    name: "Checkout"
+    name: "🧪 Check code with analysis, format, and tests"
     runs-on: ubuntu-latest
-    container:
-      image: dart:beta
+    env:
+      threshold: 90
     defaults:
       run:
         working-directory: ./
     timeout-minutes: 10
     steps:
-      - name: 🚂 Get latest code
-        uses: actions/checkout@v3
+      - name: 📦 Get the .github actions
+        uses: actions/checkout@v4
         with:
           fetch-depth: 2
+          sparse-checkout: |
+            .github
 
-      - name: 🚃 Cache pub modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-pub-package
+      - name: 🚂 Setup Dart and dependencies
+        uses: ./.github/actions/setup
         with:
-          path: |
-            $PWD/.pub_cache/
-          key: ${{ runner.os }}-pub-${{ env.cache-name }}-${{ hashFiles('**/pubspec.yaml') }}
-
-      - name: 🗄️ Export pub cache directory
-        run: export PUB_CACHE=$PWD/.pub_cache/
+          dart-version: 3.4.0
 
       - name: 👷 Install Dependencies
         timeout-minutes: 1
         run: |
-          dart pub get -C .
+          dart pub get
 
-      - name: 🔎 Check format
+      - name: 🚦 Check code format
+        id: check-format
         timeout-minutes: 1
-        run: dart format --set-exit-if-changed -l 80 -o none lib/
+        run: |
+          find lib test -name "*.dart" ! -name "*.*.dart" -print0 | xargs -0 dart format --set-exit-if-changed --line-length 80 -o none lib/ test/
 
       - name: 📈 Check analyzer
+        id: check-analyzer
         timeout-minutes: 1
-        run: dart analyze --fatal-infos --fatal-warnings lib/
+        run: dart analyze --fatal-infos --fatal-warnings lib/ test/
+
+      - name: 👀 Verify versions
+        id: verify-versions
+        timeout-minutes: 1
+        run: |
+          test -f pubspec.yaml && test -f CHANGELOG.md
+          version_pubspec=$(grep '^version:' pubspec.yaml | awk '{print $2}' | sed 's/[^[:print:]]//g')
+          test -n "$version_pubspec"
+          echo "Version from pubspec.yaml: '$version_pubspec'"
+          echo "$version_pubspec" > /tmp/version_pubspec
+          grep -q "# $version_pubspec" CHANGELOG.md || (echo "Version not found in CHANGELOG.md" >&2; exit 1)
 
       #- name: Check with pana
       #  run: dart pub global activate pana && pana --json --no-warning --line-length 80
-      - name: 🧪 Run tests
-        run: |
-          dart test --coverage=coverage \
-            && dart run coverage:format_coverage --lcov --in=coverage \
-            --out=coverage/lcov.info --report-on=lib
 
-      - name: 📥 Upload coverage to Codecov
-        uses: codecov/codecov-action@v2.1.0
+      #- name: 🌐 Setup chrome
+      #  uses: browser-actions/setup-chrome@v1
+
+      - name: 🧪 Run tests
+        timeout-minutes: 5
+        run: |
+          dart pub global activate coverage
+          dart pub global run coverage:test_with_coverage -fb -o coverage -- \
+            --platform=vm --compiler=kernel --coverage=coverage \
+            --reporter=github --file-reporter=json:reports/tests.json \
+            --timeout=10m --concurrency=12 --color \
+              test/l_test.dart
+
+      - name: 🎁 Setup LCOV
+        timeout-minutes: 1
+        uses: hrishikesh-kadam/setup-lcov@v1
+
+      - name: 🔍 Check coverage
+        id: check-coverage
+        timeout-minutes: 1
+        run: |
+          lcov --list coverage/lcov.info
+          THRESHOLD=${{ env.threshold }}
+          COVERAGE=$(lcov --summary coverage/lcov.info | grep -i 'lines\|Total:' | tail -n 1 | awk '{print $2}' | sed 's/%//')
+          echo "Coverage is $COVERAGE%"
+          echo $COVERAGE | awk '{if ($1 < 50) exit 1}'
+
+      #- name: 🔍 Report code coverage
+      #  uses: zgosalvez/github-actions-report-lcov@v4
+      #  with:
+      #    coverage-files: coverage/lcov.info
+      #    minimum-coverage: ${{ env.threshold }}
+      #    artifact-name: code-coverage-report
+      #    github-token: ${{ secrets.GITHUB_TOKEN }}
+      #    working-directory: ./
+      #    update-comment: true
+
+      - name: 📥 Upload coverage report
+        timeout-minutes: 5
+        if: ${{ github.actor != 'dependabot[bot]' }}
+        uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/lcov.info
 
-      - name: 🧮 Check Code Coverage
-        uses: VeryGoodOpenSource/very_good_coverage@v1.2.1
+      - name: 📥 Upload test report
+        uses: actions/upload-artifact@v4
+        if: (success() || failure()) && ${{ github.actor != 'dependabot[bot]' }}
         with:
-          path: coverage/lcov.info
-          min_coverage: 90
-          #exclude: '**.g.dart **.freezed.dart'
+          name: test-results
+          path: reports/tests.json

@@ -10,13 +10,13 @@ import 'message_log_formatting_mixin.dart';
 
 /// Environment-specific implementation of [LogDelegate]
 @internal
-LogDelegate createEnvironmentLogDelegate() => LogDelegate$Stub();
+LogDelegate createEnvironmentLogDelegate() => LogDelegate$Print();
 
 @internal
-final class LogDelegate$Stub implements LogDelegate {
-  LogDelegate$Stub();
+final class LogDelegate$Print implements LogDelegate {
+  LogDelegate$Print();
 
-  final MessageFormattingPipeline _formatter = MessageFormattingPipelineStub();
+  final MessageFormattingPipeline _formatter = MessageFormattingPipelinePrint();
 
   @override
   void log(LogMessage event) {
@@ -28,7 +28,7 @@ final class LogDelegate$Stub implements LogDelegate {
   void _printToConsole(String line) => Zone.root.print(line);
 }
 
-/// Environment-specific implementation of [MessageFormattingPipeline]
+/// Message formatting pipeline for printing to the console
 @internal
-final class MessageFormattingPipelineStub = MessageFormattingPipeline
+final class MessageFormattingPipelinePrint = MessageFormattingPipeline
     with ConsoleLogFormatterMixin, MessageLogFormatterMixin;

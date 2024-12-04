@@ -1,0 +1,13 @@
+timeout: 1x
+
+platforms:
+  - vm
+
+file_reporters:
+  json: reports/tests.json
+
+tags:
+  unit:
+    timeout: 1x
+  smoke:
+    timeout: 2x
