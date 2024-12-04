@@ -34,7 +34,7 @@ jobs:
     name: "🧪 Check code with analysis, format, and tests"
     runs-on: ubuntu-latest
     env:
-      threshold: 50
+      threshold: 90
     defaults:
       run:
         working-directory: ./

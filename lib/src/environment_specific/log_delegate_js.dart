@@ -18,19 +18,19 @@ extension type Window._(JSObject _) {
 @internal
 extension type Console._(JSObject _) {
   /// Logs a message to the console
-  external void log(Object? arg);
+  external void log(JSAny? arg);
 
   /// Logs a warning message to the console
-  external void warn(Object? arg);
+  external void warn(JSAny? arg);
 
   /// Logs an error message to the console
-  external void error(Object? arg);
+  external void error(JSAny? arg);
 
   /// Logs an info message to the console
-  external void info(Object? arg);
+  external void info(JSAny? arg);
 
   /// Logs a debug message to the console
-  external void debug(Object? arg);
+  external void debug(JSAny? arg);
 }
 
 /// The global window object
@@ -56,17 +56,17 @@ final class LogDelegate$JS implements LogDelegate {
     final output = _formatter.format(event);
     if (output == null) return;
     event.level.when<void>(
-      shout: () => console.warn(output),
-      v: () => console.log(output),
-      error: () => console.error(output),
-      vv: () => console.log(output),
-      warning: () => console.warn(output),
-      vvv: () => console.log(output),
-      info: () => console.info(output),
-      vvvv: () => console.log(output),
-      debug: () => console.debug(output),
-      vvvvv: () => console.log(output),
-      vvvvvv: () => console.log(output),
+      shout: () => console.warn(output.toJS),
+      v: () => console.log(output.toJS),
+      error: () => console.error(output.toJS),
+      vv: () => console.log(output.toJS),
+      warning: () => console.warn(output.toJS),
+      vvv: () => console.log(output.toJS),
+      info: () => console.info(output.toJS),
+      vvvv: () => console.log(output.toJS),
+      debug: () => console.debug(output.toJS),
+      vvvvv: () => console.log(output.toJS),
+      vvvvvv: () => console.log(output.toJS),
     );
   }
 }
