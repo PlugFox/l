@@ -142,10 +142,11 @@ sealed class LogLevel {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || (other is LogLevel && level == other.level);
+      identical(this, other) ||
+      (other is LogLevel && level == other.level && prefix == other.prefix);
 
   @override
-  int get hashCode => level;
+  int get hashCode => level ^ prefix.hashCode << 3;
 }
 
 final class _LogLevelShout extends LogLevel {
