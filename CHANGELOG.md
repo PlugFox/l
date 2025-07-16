@@ -1,3 +1,7 @@
+## 5.0.1
+
+- Fix equality and hash code implementation for `LogLevel` class
+
 ## 5.0.0
 
 - Major release

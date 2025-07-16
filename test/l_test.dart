@@ -1,7 +1,7 @@
 // ignore_for_file: unnecessary_statements, avoid_print, cascade_invocations
 // ignore_for_file: non_const_call_to_literal_constructor, unnecessary_lambdas
 // ignore_for_file: prefer_const_declarations, prefer_const_constructors
-library l.test;
+library;
 
 import 'dart:async';
 
@@ -177,6 +177,25 @@ void runZonedOutput() {
 }
 
 void logLevel() {
+  test(
+    'equality',
+    () {
+      final level1 = LogLevel.info();
+      final level2 = LogLevel.info();
+      final level3 = LogLevel.error();
+      expect(level1, level2);
+      expect(level1.hashCode, level2.hashCode);
+      expect(level1, isNot(level3));
+      expect(level1.hashCode, isNot(level3.hashCode));
+      expect(level2, isNot(level3));
+      expect(level2.hashCode, isNot(level3.hashCode));
+      expect(
+        LogLevel.values.toSet().length,
+        LogLevel.values.length,
+      );
+    },
+  );
+
   test(
     'maybeWhen',
     () {
