@@ -181,7 +181,6 @@ extension _ConsoleColorX on _ConsoleColor {
       case _ConsoleColor.white:
         return '47m';
       case _ConsoleColor.byDefault:
-      default:
         return '';
     }
   }
@@ -206,7 +205,6 @@ extension _ConsoleFontX on _ConsoleFont {
       //case _ConsoleFont.reversed:
       // return '7m';
       case _ConsoleFont.byDefault:
-      default:
         return '';
     }
   }

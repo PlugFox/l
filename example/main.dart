@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, avoid_print
 // ignore_for_file: use_named_constants, do_not_use_environment
 
-library l.example;
+library;
 
 import 'dart:async';
 import 'dart:convert';

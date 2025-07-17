@@ -63,7 +63,7 @@ sealed class LogMessage implements Comparable<LogMessage> {
               context: context,
             );
 
-  /// Restore [LogMessage] from Map<String, Object?>
+  /// Restore [LogMessage] from Map&lt;String, Object?&gt;
   ///
   /// {@macro log_message}
   factory LogMessage.fromJson(Map<String, Object?> json) {
@@ -141,7 +141,7 @@ sealed class LogMessage implements Comparable<LogMessage> {
   /// Make a copy of the message
   LogMessage copy() => copyWith();
 
-  /// Message for logging to Map<String, Object?>
+  /// Message for logging to Map&lt;String, Object?&gt;
   ///
   /// [message] is converted to [String] `message`
   /// [level] is converted to [String] `level` prefix (e.g. `e`)

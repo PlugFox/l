@@ -15,7 +15,7 @@
  *
  */
 
-library l;
+library;
 
 import 'src/inner_logger.dart' show InnerLoggerImpl;
 import 'src/logger.dart';
